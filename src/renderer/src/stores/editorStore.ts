@@ -18,14 +18,28 @@ export interface OpenTab {
 /** 已修改未保存的单元格：tableId → Set<"rowNumber:excelCol"> */
 export type DirtyCellMap = Record<string, Set<string>>
 
+/** 网格当前选中单元格，用稳定身份（Excel 行号 + 列号）表达，不受列过滤影响 */
+export interface CellPos {
+  rowNumber: number
+  excelCol: number
+}
+
 interface EditorState {
   tabs: OpenTab[]
   activeId: string
   data: Record<string, TableData>
   dirtyCells: DirtyCellMap
+  /** tableId → 选中的 group 过滤（'' 表示不过滤） */
+  groupFilter: Record<string, string>
+  selection: Record<string, CellPos | undefined>
   open: (tableId: string, tableName: string) => Promise<void>
   activate: (tableId: string) => void
   setCellText: (tableId: string, rowNumber: number, excelCol: number, text: string) => Promise<void>
+  setSelection: (tableId: string, pos: CellPos | undefined) => void
+  setGroupFilter: (tableId: string, group: string) => void
+  refresh: (tableId: string) => Promise<boolean>
+  addRow: (tableId: string) => Promise<void>
+  deleteRow: (tableId: string) => Promise<void>
   save: (tableId: string) => Promise<string | null>
   close: (tableId: string) => Promise<void>
   closeOthers: (tableId: string) => Promise<void>
@@ -44,9 +58,13 @@ export const useEditorStore = create<EditorState>((set, get) => {
       const tabs = s.tabs.filter((t) => !ids.includes(t.tableId))
       const data = { ...s.data }
       const dirtyCells = { ...s.dirtyCells }
+      const groupFilter = { ...s.groupFilter }
+      const selection = { ...s.selection }
       for (const id of ids) {
         delete data[id]
         delete dirtyCells[id]
+        delete groupFilter[id]
+        delete selection[id]
       }
       let activeId = s.activeId
       if (ids.includes(activeId)) {
@@ -54,7 +72,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
           ? preferActive
           : (tabs[tabs.length - 1]?.tableId ?? '')
       }
-      return { tabs, data, dirtyCells, activeId }
+      return { tabs, data, dirtyCells, groupFilter, selection, activeId }
     })
     showTableInSchema(get().activeId)
   }
@@ -66,11 +84,18 @@ export const useEditorStore = create<EditorState>((set, get) => {
     return window.confirm(`${dirtyNames.join('、')} 有未保存的修改，${suffix}`)
   }
 
+  const setError = (tableId: string, msg: string): void =>
+    set((s) => ({ tabs: s.tabs.map((t) => (t.tableId === tableId ? { ...t, error: msg } : t)) }))
+
+  const errMsg = (e: unknown): string => (e instanceof Error ? e.message : String(e))
+
   return {
   tabs: [],
   activeId: '',
   data: {},
   dirtyCells: {},
+  groupFilter: {},
+  selection: {},
 
   open: async (tableId, tableName) => {
     if (!window.api) return
@@ -105,6 +130,85 @@ export const useEditorStore = create<EditorState>((set, get) => {
   activate: (tableId) => {
     set({ activeId: tableId })
     showTableInSchema(tableId)
+  },
+
+  setSelection: (tableId, pos) => {
+    set((s) => ({ selection: { ...s.selection, [tableId]: pos } }))
+  },
+
+  setGroupFilter: (tableId, group) => {
+    set((s) => ({
+      groupFilter: { ...s.groupFilter, [tableId]: group },
+      selection: { ...s.selection, [tableId]: undefined }
+    }))
+  },
+
+  refresh: async (tableId) => {
+    if (!window.api) return false
+    const tab = get().tabs.find((t) => t.tableId === tableId)
+    if (!tab) return false
+    if (tab.dirty && !window.confirm(`${tab.tableName} 有未保存的修改，刷新会丢弃它们，确定？`)) return false
+    try {
+      const data = await window.api.data.refresh(tableId)
+      set((s) => ({
+        data: { ...s.data, [tableId]: data },
+        tabs: s.tabs.map((t) => (t.tableId === tableId ? { ...t, dirty: false, error: '' } : t)),
+        dirtyCells: { ...s.dirtyCells, [tableId]: new Set<string>() },
+        selection: { ...s.selection, [tableId]: undefined }
+      }))
+      return true
+    } catch (e) {
+      setError(tableId, errMsg(e))
+      return false
+    }
+  },
+
+  addRow: async (tableId) => {
+    if (!window.api) return
+    try {
+      const data = await window.api.data.addRow(tableId)
+      const last = data.rows[data.rows.length - 1]
+      const firstCol = data.columns[0]?.excelCol
+      set((s) => ({
+        data: { ...s.data, [tableId]: data },
+        selection:
+          last && firstCol !== undefined
+            ? { ...s.selection, [tableId]: { rowNumber: last.rowNumber, excelCol: firstCol } }
+            : s.selection
+      }))
+    } catch (e) {
+      setError(tableId, errMsg(e))
+    }
+  },
+
+  deleteRow: async (tableId) => {
+    if (!window.api) return
+    const pos = get().selection[tableId]
+    const data = get().data[tableId]
+    if (!pos || !data) return
+    const row = data.rows.find((r) => r.rowNumber === pos.rowNumber)
+    const hadContent = !!row && row.cells.some((c) => c !== null && c !== '')
+    try {
+      const fresh = await window.api.data.deleteRow({ tableId, rowNumber: pos.rowNumber })
+      // 下方行整体上移，脏格标记的行号跟着修正，删掉那行自身的标记
+      const shifted = new Set<string>()
+      for (const key of get().dirtyCells[tableId] ?? []) {
+        const [r, col] = key.split(':')
+        const rowNumber = Number(r)
+        if (rowNumber === pos.rowNumber) continue
+        shifted.add(`${rowNumber > pos.rowNumber ? rowNumber - 1 : rowNumber}:${col}`)
+      }
+      set((s) => ({
+        data: { ...s.data, [tableId]: fresh },
+        dirtyCells: { ...s.dirtyCells, [tableId]: shifted },
+        selection: { ...s.selection, [tableId]: undefined },
+        tabs: hadContent
+          ? s.tabs.map((t) => (t.tableId === tableId ? { ...t, dirty: true } : t))
+          : s.tabs
+      }))
+    } catch (e) {
+      setError(tableId, errMsg(e))
+    }
   },
 
   setCellText: async (tableId, rowNumber, excelCol, text) => {

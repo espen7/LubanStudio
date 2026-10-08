@@ -7,8 +7,17 @@ export interface ColumnBinding {
   /** 表头展示文本（多级表头展平为 parent.child） */
   label: string
   typeText: string
+  /** 字段分组（luban group）；空数组 = 全组可见 */
+  groups: string[]
   editable: boolean
   readOnlyReason?: string
+}
+
+/** 行增删能力：横向表（行=字段）与多级表头不支持 */
+export interface RowOps {
+  canAdd: boolean
+  canDelete: boolean
+  reason?: string
 }
 
 /** 单元格原始值：string/number/boolean/null（日期与公式结果统一转 string） */
@@ -30,6 +39,7 @@ export interface TableData {
   columns: ColumnBinding[]
   rows: DataRow[]
   warnings: string[]
+  rowOps: RowOps
 }
 
 /** 编辑请求：值统一为用户输入文本，null 表示清空；类型解析在 main 侧按 TypeRef 进行 */
@@ -49,4 +59,13 @@ export interface DataCloseRequest {
   tableId: string
   /** 脏表强制丢弃内存改动 */
   force?: boolean
+}
+
+export interface RowAddRequest {
+  tableId: string
+}
+
+export interface RowDeleteRequest {
+  tableId: string
+  rowNumber: number
 }

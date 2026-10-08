@@ -1,21 +1,37 @@
 import { handle } from './register'
 import { getCurrentProject } from '@main/project/workspace'
 import { getCachedSchema, loadSchema } from './schema'
-import { openTableData, getOpenedTable, closeOpenedTable } from '@main/data/table-data'
-import { getWorkbook, markDirty, saveWorkbook, releaseWorkbook, forceReleaseWorkbook } from '@main/data/excel/workbook'
+import {
+  openTableData,
+  getOpenedTable,
+  closeOpenedTable,
+  listOpenedOnFile,
+  addBlankRow,
+  deleteDataRow
+} from '@main/data/table-data'
+import {
+  getWorkbook,
+  isDirty,
+  markDirty,
+  saveWorkbook,
+  releaseWorkbook,
+  forceReleaseWorkbook
+} from '@main/data/excel/workbook'
 import { applyEdits } from '@main/data/excel/writer'
 import { isEditableField } from '@main/data/excel/cell-io'
-import type { CellEdit, DataCloseRequest } from '@shared/types/data'
+import type { CellEdit, DataCloseRequest, RowDeleteRequest, TableData } from '@shared/types/data'
+
+async function reopen(tableId: string): Promise<TableData> {
+  const project = getCurrentProject()
+  if (!project) throw new Error('未打开项目')
+  const model = getCachedSchema() ?? (await loadSchema())
+  const table = model.tables.find((t) => t.id === tableId)
+  if (!table) throw new Error(`Schema 中不存在表: ${tableId}`)
+  return openTableData(table, project.conf)
+}
 
 export function registerDataIpc(): void {
-  handle('data:open', async (req) => {
-    const project = getCurrentProject()
-    if (!project) throw new Error('未打开项目')
-    const model = getCachedSchema() ?? (await loadSchema())
-    const table = model.tables.find((t) => t.id === req.tableId)
-    if (!table) throw new Error(`Schema 中不存在表: ${req.tableId}`)
-    return openTableData(table, project.conf)
-  })
+  handle('data:open', async (req) => reopen(req.tableId))
 
   handle('data:update-cell', async (req: CellEdit) => {
     const opened = getOpenedTable(req.tableId)
@@ -33,6 +49,31 @@ export function registerDataIpc(): void {
     ])
     markDirty(opened.file)
     return { applied: true }
+  })
+
+  handle('data:add-row', async (req) => {
+    await addBlankRow(req.tableId)
+    return reopen(req.tableId)
+  })
+
+  handle('data:delete-row', async (req: RowDeleteRequest) => {
+    await deleteDataRow(req.tableId, req.rowNumber)
+    return reopen(req.tableId)
+  })
+
+  handle('data:refresh', async (req) => {
+    const t = getOpenedTable(req.tableId)
+    if (isDirty(t.file)) {
+      const others = listOpenedOnFile(t.file).filter((id) => id !== req.tableId)
+      if (others.length > 0) {
+        throw new Error(
+          `该数据文件还有 ${others.length} 个其他表处于打开状态且有未保存的修改，刷新会一并丢弃；请先保存它们`
+        )
+      }
+    }
+    closeOpenedTable(req.tableId)
+    forceReleaseWorkbook(t.file)
+    return reopen(req.tableId)
   })
 
   handle('data:save', async (req) => {

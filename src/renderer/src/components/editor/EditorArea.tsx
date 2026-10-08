@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Table2 } from 'lucide-react'
 import { useEditorStore } from '@renderer/stores/editorStore'
 import { EditorTabs } from './EditorTabs'
+import { EditorToolbar } from './EditorToolbar'
 import { GridView } from './GridView'
 
 export function EditorArea(): React.JSX.Element {
@@ -70,6 +71,7 @@ export function EditorArea(): React.JSX.Element {
         </div>
       ) : (
         <>
+          <EditorToolbar tableId={activeId} onNotice={setNotice} />
           <GridView tableId={activeId} />
           {(notice || activeTab.error || data.warnings.length > 0) && (
             <div className="shrink-0 border-t border-line px-2 py-1 text-[11px] leading-4">

@@ -2,9 +2,9 @@ import { existsSync } from 'node:fs'
 import { extname } from 'node:path'
 import type ExcelJS from 'exceljs'
 import type { LubanConf } from '@shared/types/project'
-import type { CellValue, ColumnBinding, DataRow, TableData } from '@shared/types/data'
+import type { CellValue, ColumnBinding, DataRow, RowOps, TableData } from '@shared/types/data'
 import type { FieldSchema, TableSchema } from '@shared/types/schema'
-import { getWorkbook } from './excel/workbook'
+import { getWorkbook, markDirty } from './excel/workbook'
 import { parseDataHeader, parseHorizontalHeader, readCellValue, type HorizontalHeader } from './excel/header'
 import { classifyType, isEditableField } from './excel/cell-io'
 import { resolveDataFile } from '@main/schema/normalizer'
@@ -17,9 +17,20 @@ interface OpenedTable {
   fieldByRow?: Map<number, FieldSchema>
   /** 横向表值列 */
   valueCol?: number
+  /** 首条数据行的 Excel 行号；表头行不可增删 */
+  dataFirstRow: number
+  /** 数据列的 Excel 列号，判空行用 */
+  dataCols: number[]
+  rowOps: RowOps
 }
 
 const opened = new Map<string, OpenedTable>()
+
+/**
+ * 会话内新增的空白尾行（tableId → 应展示为空白行的最后一行）。
+ * 空白行不落盘（无 cell 即无 XML），所以只记行号；用户一旦填入内容它就变成普通数据行。
+ */
+const blankTailUntilRow = new Map<string, number>()
 
 export function getOpenedTable(tableId: string): OpenedTable {
   const t = opened.get(tableId)
@@ -29,6 +40,57 @@ export function getOpenedTable(tableId: string): OpenedTable {
 
 export function closeOpenedTable(tableId: string): void {
   opened.delete(tableId)
+  blankTailUntilRow.delete(tableId)
+}
+
+/** 同一数据文件上其他已打开的表（刷新前判断是否会波及它们） */
+export function listOpenedOnFile(file: string): string[] {
+  return [...opened.entries()].filter(([, t]) => t.file === file).map(([id]) => id)
+}
+
+function mustSheet(wb: ExcelJS.Workbook, sheetName: string): ExcelJS.Worksheet {
+  const ws = wb.getWorksheet(sheetName)
+  if (!ws) throw new Error(`Sheet 不存在: ${sheetName}`)
+  return ws
+}
+
+/** 从最下行往上找最后一条非空数据行（Excel 的 rowCount 常被空样式行灌水） */
+function lastDataRow(ws: ExcelJS.Worksheet, from: number, cols: number[]): number {
+  for (let r = ws.actualRowCount; r >= from; r--) {
+    const row = ws.getRow(r)
+    if (cols.some((c) => {
+      const v = readCellValue(row.getCell(c))
+      return v !== null && v !== ''
+    })) {
+      return r
+    }
+  }
+  return from - 1
+}
+
+/** 追加一条空白尾行（内存态，Ctrl+S 前不写盘） */
+export async function addBlankRow(tableId: string): Promise<void> {
+  const t = getOpenedTable(tableId)
+  if (!t.rowOps.canAdd) throw new Error(t.rowOps.reason ?? '该表不支持新增行')
+  const { wb } = await getWorkbook(t.file)
+  const ws = mustSheet(wb, t.sheetName)
+  const last = lastDataRow(ws, t.dataFirstRow, t.dataCols)
+  blankTailUntilRow.set(tableId, Math.max(last, blankTailUntilRow.get(tableId) ?? 0) + 1)
+}
+
+/** 删除一条数据行：真实行 splice 工作表并标脏，空白尾行只回退展示计数 */
+export async function deleteDataRow(tableId: string, rowNumber: number): Promise<void> {
+  const t = getOpenedTable(tableId)
+  if (!t.rowOps.canDelete) throw new Error(t.rowOps.reason ?? '该表不支持删除行')
+  if (rowNumber < t.dataFirstRow) throw new Error('表头行不能删除')
+  const { wb } = await getWorkbook(t.file)
+  const ws = mustSheet(wb, t.sheetName)
+  if (rowNumber <= lastDataRow(ws, t.dataFirstRow, t.dataCols)) {
+    ws.spliceRows(rowNumber, 1)
+    markDirty(t.file)
+  }
+  const cur = blankTailUntilRow.get(tableId)
+  if (cur !== undefined && cur >= rowNumber) blankTailUntilRow.set(tableId, cur - 1)
 }
 
 /** input.file 形如 `a.xlsx` 或 `a.xlsx@Sheet2`；文件名里的 @ 只有扩展名后一段才算 sheet */
@@ -88,12 +150,15 @@ export async function openTableData(table: TableSchema, conf: LubanConf): Promis
   }
   const columns: ColumnBinding[] = header.columns.map((c) => {
     const field = fieldByName.get(c.name)
+    // schema 声明的分组优先，文件 ##group 行兜底
+    const groups = field?.groups.length ? field.groups : c.groups
     if (!field) {
       return {
         excelCol: c.excelCol,
         fieldName: null,
         label: c.label,
         typeText: c.rawType,
+        groups,
         editable: false,
         readOnlyReason: 'Schema 中无此字段'
       }
@@ -104,6 +169,7 @@ export async function openTableData(table: TableSchema, conf: LubanConf): Promis
         fieldName: field.name,
         label: c.label,
         typeText: field.rawType,
+        groups,
         editable: false,
         readOnlyReason: '多级表头只读'
       }
@@ -114,6 +180,7 @@ export async function openTableData(table: TableSchema, conf: LubanConf): Promis
         fieldName: field.name,
         label: c.label,
         typeText: field.rawType,
+        groups,
         editable: false,
         readOnlyReason: readOnlyReason(field)
       }
@@ -123,6 +190,7 @@ export async function openTableData(table: TableSchema, conf: LubanConf): Promis
       fieldName: field.name,
       label: c.label,
       typeText: field.rawType,
+      groups,
       editable: true
     }
   })
@@ -135,6 +203,7 @@ export async function openTableData(table: TableSchema, conf: LubanConf): Promis
     }
   }
 
+  const dataCols = columns.map((c) => c.excelCol)
   const rows: DataRow[] = []
   for (let r = header.dataFirstRow; r <= ws.actualRowCount; r++) {
     const row = ws.getRow(r)
@@ -142,8 +211,24 @@ export async function openTableData(table: TableSchema, conf: LubanConf): Promis
     if (cells.every((v) => v === null || v === '')) continue
     rows.push({ rowNumber: r, cells })
   }
+  const lastReal = rows.length ? rows[rows.length - 1].rowNumber : header.dataFirstRow - 1
+  const blankUntil = blankTailUntilRow.get(table.id) ?? 0
+  for (let r = lastReal + 1; r <= blankUntil; r++) {
+    rows.push({ rowNumber: r, cells: columns.map(() => null) })
+  }
 
-  opened.set(table.id, { file: abs, sheetName: ws.name, fieldByCol })
+  const rowOps: RowOps = header.multiLevel
+    ? { canAdd: false, canDelete: false, reason: '多级表头（嵌套结构）暂不支持增删行' }
+    : { canAdd: true, canDelete: true }
+
+  opened.set(table.id, {
+    file: abs,
+    sheetName: ws.name,
+    fieldByCol,
+    dataFirstRow: header.dataFirstRow,
+    dataCols,
+    rowOps
+  })
   return {
     tableId: table.id,
     tableName: table.name,
@@ -151,7 +236,8 @@ export async function openTableData(table: TableSchema, conf: LubanConf): Promis
     sheetName: ws.name,
     columns,
     rows,
-    warnings
+    warnings,
+    rowOps
   }
 }
 
@@ -169,22 +255,23 @@ function buildHorizontalTableData(
   )
 
   const columns: ColumnBinding[] = [
-    { excelCol: hh.varCol, fieldName: null, label: '字段', typeText: '', editable: false },
-    { excelCol: hh.typeCol, fieldName: null, label: '类型', typeText: '', editable: false }
+    { excelCol: hh.varCol, fieldName: null, label: '字段', typeText: '', groups: [], editable: false },
+    { excelCol: hh.typeCol, fieldName: null, label: '类型', typeText: '', groups: [], editable: false }
   ]
   if (hh.groupCol) {
-    columns.push({ excelCol: hh.groupCol, fieldName: null, label: '分组', typeText: '', editable: false })
+    columns.push({ excelCol: hh.groupCol, fieldName: null, label: '分组', typeText: '', groups: [], editable: false })
   }
   columns.push({
     excelCol: hh.valueCol,
     fieldName: null,
     label: '值',
     typeText: '',
+    groups: [],
     editable: true,
     readOnlyReason: undefined
   })
   if (hh.commentCol) {
-    columns.push({ excelCol: hh.commentCol, fieldName: null, label: '注释', typeText: '', editable: false })
+    columns.push({ excelCol: hh.commentCol, fieldName: null, label: '注释', typeText: '', groups: [], editable: false })
   }
 
   const rows: DataRow[] = []
@@ -223,7 +310,21 @@ function buildHorizontalTableData(
     })
   }
 
-  opened.set(table.id, { file: abs, sheetName: ws.name, fieldByCol: new Map(), fieldByRow, valueCol: hh.valueCol })
+  const rowOps: RowOps = {
+    canAdd: false,
+    canDelete: false,
+    reason: '横向表每行是一个字段，不支持增删行'
+  }
+  opened.set(table.id, {
+    file: abs,
+    sheetName: ws.name,
+    fieldByCol: new Map(),
+    fieldByRow,
+    valueCol: hh.valueCol,
+    dataFirstRow: hh.headerRow + 1,
+    dataCols: [hh.varCol],
+    rowOps
+  })
   return {
     tableId: table.id,
     tableName: table.name,
@@ -231,7 +332,8 @@ function buildHorizontalTableData(
     sheetName: ws.name,
     columns,
     rows,
-    warnings
+    warnings,
+    rowOps
   }
 }
 

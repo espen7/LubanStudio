@@ -1,5 +1,11 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import type { CellEdit, DataCloseRequest, DataSaveResult, TableData } from '@shared/types/data'
+import type {
+  CellEdit,
+  DataCloseRequest,
+  DataSaveResult,
+  RowDeleteRequest,
+  TableData
+} from '@shared/types/data'
 import type { LubanProject, RecentProject } from '@shared/types/project'
 import type { AppSettings } from '@shared/types/settings'
 import type { SchemaModel } from '@shared/types/schema'
@@ -20,6 +26,11 @@ const api = {
     open: (tableId: string): Promise<TableData> => ipcRenderer.invoke('data:open', { tableId }),
     updateCell: (edit: CellEdit): Promise<{ applied: boolean }> =>
       ipcRenderer.invoke('data:update-cell', edit),
+    addRow: (tableId: string): Promise<TableData> => ipcRenderer.invoke('data:add-row', { tableId }),
+    deleteRow: (req: RowDeleteRequest): Promise<TableData> =>
+      ipcRenderer.invoke('data:delete-row', req),
+    refresh: (tableId: string): Promise<TableData> =>
+      ipcRenderer.invoke('data:refresh', { tableId }),
     save: (tableId: string): Promise<DataSaveResult> => ipcRenderer.invoke('data:save', { tableId }),
     close: (req: DataCloseRequest): Promise<void> => ipcRenderer.invoke('data:close', req)
   },

@@ -1,4 +1,11 @@
-import type { DataCloseRequest, CellEdit, DataSaveResult, TableData } from '../types/data'
+import type {
+  CellEdit,
+  DataCloseRequest,
+  DataSaveResult,
+  RowAddRequest,
+  RowDeleteRequest,
+  TableData
+} from '../types/data'
 import type { LubanProject, RecentProject } from '../types/project'
 import type { AppSettings } from '../types/settings'
 import type { SchemaModel } from '../types/schema'
@@ -12,6 +19,9 @@ export interface IpcContract {
   'schema:reload': { req: void; res: SchemaModel }
   'data:open': { req: { tableId: string }; res: TableData }
   'data:update-cell': { req: CellEdit; res: { applied: boolean } }
+  'data:add-row': { req: RowAddRequest; res: TableData }
+  'data:delete-row': { req: RowDeleteRequest; res: TableData }
+  'data:refresh': { req: { tableId: string }; res: TableData }
   'data:save': { req: { tableId: string }; res: DataSaveResult }
   'data:close': { req: DataCloseRequest; res: void }
   'settings:get': { req: void; res: AppSettings }

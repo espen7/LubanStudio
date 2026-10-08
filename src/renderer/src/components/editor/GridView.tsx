@@ -1,5 +1,6 @@
 import '@glideapps/glide-data-grid/dist/index.css'
 import {
+  CompactSelection,
   DataEditor,
   GridCellKind,
   type DrawCellCallback,
@@ -12,6 +13,7 @@ import {
 } from '@glideapps/glide-data-grid'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useEditorStore } from '@renderer/stores/editorStore'
+import { useSchemaStore } from '@renderer/stores/schemaStore'
 import { editToText, toGridCell, toGridColumns } from './grid-adapter'
 
 const dataGridTheme: Partial<Theme> = {
@@ -20,21 +22,28 @@ const dataGridTheme: Partial<Theme> = {
   fontFamily: '"Segoe UI", "Microsoft YaHei", system-ui, sans-serif'
 }
 
+const emptyCell: GridCell = { kind: GridCellKind.Text, data: '', displayData: '', allowOverlay: false }
+
 export function GridView({ tableId }: { tableId: string }): React.JSX.Element {
   const data = useEditorStore((s) => s.data[tableId])
   const dirtyCells = useEditorStore((s) => s.dirtyCells[tableId])
   const setCellText = useEditorStore((s) => s.setCellText)
+  const selection = useEditorStore((s) => s.selection[tableId])
+  const setSelection = useEditorStore((s) => s.setSelection)
+  const groupFilter = useEditorStore((s) => s.groupFilter[tableId])
+  const indexField = useSchemaStore((s) =>
+    s.model?.tables.find((t) => t.id === tableId)?.index
+  )
   const containerRef = useRef<HTMLDivElement | null>(null)
   const [size, setSize] = useState({ width: 0, height: 0 })
   const [colWidths, setColWidths] = useState<Record<string, number>>({})
-  const [gridSelection, setGridSelection] = useState<GridSelection | undefined>(undefined)
   const dirtyRef = useRef(dirtyCells)
   dirtyRef.current = dirtyCells
 
   useEffect(() => {
-    setGridSelection(undefined)
+    setSelection(tableId, undefined)
     setColWidths({})
-  }, [tableId])
+  }, [tableId, setSelection])
 
   useEffect(() => {
     const el = containerRef.current
@@ -47,34 +56,91 @@ export function GridView({ tableId }: { tableId: string }): React.JSX.Element {
     return () => ro.disconnect()
   }, [])
 
+  // 可见列 → data.columns 下标；无 group 的列在任何过滤下都保留（Luban 语义），主键列始终保留
+  const colIndex = useMemo(() => {
+    const all = data?.columns.map((_, i) => i) ?? []
+    const f = groupFilter ?? ''
+    if (!data || !f) return all
+    return all.filter((i) => {
+      const c = data.columns[i]
+      if (indexField && c.fieldName === indexField) return true
+      return c.groups.length === 0 || c.groups.includes(f)
+    })
+  }, [data, groupFilter, indexField])
+
   const columns = useMemo(
-    () => (data ? toGridColumns(data.columns, colWidths) : []),
-    [data, colWidths]
+    () => (data ? toGridColumns(colIndex.map((i) => data.columns[i]), colWidths) : []),
+    [data, colIndex, colWidths]
+  )
+
+  const selRow = useMemo(
+    () => (data && selection ? data.rows.findIndex((r) => r.rowNumber === selection.rowNumber) : -1),
+    [data, selection]
+  )
+  const selCol = useMemo(
+    () =>
+      data && selection
+        ? colIndex.findIndex((i) => data.columns[i].excelCol === selection.excelCol)
+        : -1,
+    [data, selection, colIndex]
+  )
+  // 依赖只取行列下标，保证对象身份稳定，避免回灌给受控 DataEditor 时反复触发 onChange
+  const gridSelection = useMemo<GridSelection | undefined>(() => {
+    if (selRow < 0 || selCol < 0) return undefined
+    return {
+      current: {
+        cell: [selCol, selRow],
+        range: { x: selCol, y: selRow, width: 1, height: 1 },
+        rangeStack: []
+      },
+      columns: CompactSelection.empty(),
+      rows: CompactSelection.empty()
+    }
+  }, [selRow, selCol])
+
+  const onGridSelectionChange = useCallback(
+    (sel: GridSelection | undefined): void => {
+      if (!data || !sel) {
+        setSelection(tableId, undefined)
+        return
+      }
+      // 点行号选中整行时没有 current.cell，退到 rows 首行 + 首个可见列
+      const row = sel.current?.cell[1] ?? (sel.rows.length > 0 ? sel.rows.first() : undefined)
+      const col = sel.current?.cell[0] ?? 0
+      const rowData = row === undefined ? undefined : data.rows[row]
+      const binding = col === undefined ? undefined : data.columns[colIndex[col]]
+      if (!rowData || !binding) {
+        setSelection(tableId, undefined)
+        return
+      }
+      setSelection(tableId, { rowNumber: rowData.rowNumber, excelCol: binding.excelCol })
+    },
+    [data, colIndex, tableId, setSelection]
   )
 
   const getCellContent = useCallback(
     ([col, row]: Item): GridCell => {
-      if (!data) return { kind: GridCellKind.Text, data: '', displayData: '', allowOverlay: false }
-      const binding = data.columns[col]
+      if (!data) return emptyCell
+      const src = colIndex[col]
+      const binding = data.columns[src]
       const rowData = data.rows[row]
-      if (!binding || !rowData) {
-        return { kind: GridCellKind.Text, data: '', displayData: '', allowOverlay: false }
-      }
-      return toGridCell(binding, rowData.cells[col] ?? null, rowData.cellEditable?.[col])
+      if (!binding || !rowData) return emptyCell
+      return toGridCell(binding, rowData.cells[src] ?? null, rowData.cellEditable?.[src])
     },
-    [data]
+    [data, colIndex]
   )
 
   const onCellEdited = useCallback(
     (cell: Item, newVal: EditableGridCell): void => {
       if (!data) return
-      const binding = data.columns[cell[0]]
+      const src = colIndex[cell[0]]
+      const binding = data.columns[src]
       const rowData = data.rows[cell[1]]
       if (!binding || !rowData) return
-      if (!(rowData.cellEditable ? rowData.cellEditable[cell[0]] : binding.editable)) return
+      if (!(rowData.cellEditable ? rowData.cellEditable[src] : binding.editable)) return
       void setCellText(data.tableId, rowData.rowNumber, binding.excelCol, editToText(newVal))
     },
-    [data, setCellText]
+    [data, colIndex, setCellText]
   )
 
   const onColumnResize = useCallback((col: GridColumn, newSize: number): void => {
@@ -87,7 +153,7 @@ export function GridView({ tableId }: { tableId: string }): React.JSX.Element {
       drawContent()
       const dirty = dirtyRef.current
       if (!dirty || !data) return
-      const binding = data.columns[args.col]
+      const binding = data.columns[colIndex[args.col]]
       const rowData = data.rows[args.row]
       if (!binding || !rowData) return
       if (dirty.has(`${rowData.rowNumber}:${binding.excelCol}`)) {
@@ -96,7 +162,7 @@ export function GridView({ tableId }: { tableId: string }): React.JSX.Element {
         ctx.fillRect(rect.x + 1, rect.y + 1, rect.width - 2, rect.height - 2)
       }
     },
-    [data]
+    [data, colIndex]
   )
 
   return (
@@ -111,7 +177,7 @@ export function GridView({ tableId }: { tableId: string }): React.JSX.Element {
           onCellEdited={onCellEdited}
           onColumnResize={onColumnResize}
           gridSelection={gridSelection}
-          onGridSelectionChange={setGridSelection}
+          onGridSelectionChange={onGridSelectionChange}
           drawCell={drawCell}
           rowMarkers="number"
           rowMarkerWidth={52}

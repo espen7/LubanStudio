@@ -1,15 +1,22 @@
 import ExcelJS from 'exceljs'
-import { copyFileSync, existsSync, mkdirSync } from 'node:fs'
+import { copyFileSync, existsSync, mkdirSync, rmSync } from 'node:fs'
 import { mkdtempSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
 import { parseLubanConf } from '../project/conf-parser'
 import { buildSchemaFromSources } from '../schema/normalizer'
-import { openTableData } from './table-data'
-import { getWorkbook, markDirty, saveWorkbook, forceReleaseWorkbook } from './excel/workbook'
+import { addBlankRow, closeOpenedTable, deleteDataRow, openTableData } from './table-data'
+import {
+  forceReleaseWorkbook,
+  getWorkbook,
+  isDirty,
+  markDirty,
+  saveWorkbook
+} from './excel/workbook'
 import { applyEdits } from './excel/writer'
-import type { FieldSchema } from '@shared/types/schema'
+import type { FieldSchema, TableSchema } from '@shared/types/schema'
+import type { LubanConf } from '@shared/types/project'
 import { parseType } from '../schema/type-parser'
 
 const SANDBOX = join(__dirname, '../../../.sandbox')
@@ -90,5 +97,115 @@ describe.skipIf(!hasSandbox)('openTableData（真实 MiniTemplate 文件）', ()
     const bak = new ExcelJS.Workbook()
     await bak.xlsx.readFile(backupPath!)
     expect(bak.getWorksheet(data.sheetName)!.getRow(row.rowNumber).getCell(idCol.excelCol).value).toBe(oldVal)
+  })
+})
+
+const TABLE_ID = 'test.Trowops'
+
+function mkField(name: string, rawType: string, groups: string[]): FieldSchema {
+  const { type, options } = parseType(rawType)
+  return { name, type, rawType, options: { attrs: options.attrs }, groups }
+}
+
+const ROWOPS_TABLE: TableSchema = {
+  id: TABLE_ID,
+  module: 'test',
+  name: 'Trowops',
+  mode: 'map',
+  index: 'id',
+  valueType: 'RowOps',
+  inputs: [{ tableName: 'Trowops', file: 'Trowops.xlsx' }],
+  groups: [],
+  readSchemaFromFile: false,
+  fields: [mkField('id', 'int', []), mkField('name', 'string', ['c']), mkField('hp', 'int', ['e'])]
+}
+
+async function writeFixture(dir: string, multiLevel: boolean): Promise<LubanConf> {
+  const wb = new ExcelJS.Workbook()
+  const ws = wb.addWorksheet('Trowops')
+  if (multiLevel) {
+    ws.getRow(1).values = ['##var', 'id', 'nest']
+    ws.getRow(2).values = ['##var', 'id', 'a']
+    ws.getRow(3).values = ['##type', 'int', 'int']
+    ws.getRow(4).values = [null, 1, 2]
+  } else {
+    ws.getRow(1).values = ['##var', 'id', 'name', 'hp', 'gold']
+    ws.getRow(2).values = ['##type', 'int', 'string', 'int', 'int']
+    ws.getRow(3).values = ['##group', '', 'c', 's', 'c,s']
+    ws.getRow(4).values = [null, 1, 'a', 10, 100]
+    ws.getRow(5).values = [null, 2, 'b', 20, 200]
+  }
+  await wb.xlsx.writeFile(join(dir, 'Trowops.xlsx'))
+  return {
+    root: dir,
+    dataDir: dir,
+    groups: [],
+    schemaFiles: [],
+    targets: [],
+    xargs: []
+  }
+}
+
+describe('行增删 + 列分组（自建临时表）', () => {
+  let dir = ''
+  let conf: LubanConf
+
+  async function setup(multiLevel = false): Promise<void> {
+    dir = mkdtempSync(join(tmpdir(), 'luban-rowops-'))
+    conf = await writeFixture(dir, multiLevel)
+  }
+
+  afterEach(() => {
+    closeOpenedTable(TABLE_ID)
+    if (dir) forceReleaseWorkbook(join(dir, 'Trowops.xlsx'))
+    rmSync(dir || 'x', { recursive: true, force: true })
+  })
+
+  it('列分组：schema 声明优先，无 schema 字段时回退 ##group 行', async () => {
+    await setup()
+    const data = await openTableData(ROWOPS_TABLE, conf)
+    expect(data.columns.map((c) => c.groups)).toEqual([[], ['c'], ['e'], ['c', 's']])
+    expect(data.rowOps).toEqual({ canAdd: true, canDelete: true })
+  })
+
+  it('新增空白行只存在于内存，删除数据行才改动工作簿', async () => {
+    await setup()
+    const file = join(dir, 'Trowops.xlsx')
+    expect((await openTableData(ROWOPS_TABLE, conf)).rows.map((r) => r.rowNumber)).toEqual([4, 5])
+
+    await addBlankRow(TABLE_ID)
+    await addBlankRow(TABLE_ID)
+    const withBlanks = await openTableData(ROWOPS_TABLE, conf)
+    expect(withBlanks.rows.map((r) => r.rowNumber)).toEqual([4, 5, 6, 7])
+    expect(withBlanks.rows[2].cells.every((c) => c === null)).toBe(true)
+    expect(isDirty(file)).toBe(false)
+
+    // 删空白尾行：行数回退，文件仍不脏
+    await deleteDataRow(TABLE_ID, 7)
+    expect((await openTableData(ROWOPS_TABLE, conf)).rows.map((r) => r.rowNumber)).toEqual([4, 5, 6])
+    expect(isDirty(file)).toBe(false)
+
+    // 删真实数据行：下方行上移，空白尾行跟着前移
+    await deleteDataRow(TABLE_ID, 5)
+    const afterDelete = await openTableData(ROWOPS_TABLE, conf)
+    expect(afterDelete.rows.map((r) => r.rowNumber)).toEqual([4, 5])
+    expect(afterDelete.rows[0].cells[0]).toBe(1)
+    expect(isDirty(file)).toBe(true)
+
+    await saveWorkbook(file)
+    closeOpenedTable(TABLE_ID)
+    forceReleaseWorkbook(file)
+    const re = new ExcelJS.Workbook()
+    await re.xlsx.readFile(file)
+    const ws = re.getWorksheet('Trowops')!
+    expect(ws.getRow(4).getCell(2).value).toBe(1)
+    expect(ws.getRow(5).getCell(2).value).toBeNull()
+  })
+
+  it('多级表头禁用增删行', async () => {
+    await setup(true)
+    const data = await openTableData(ROWOPS_TABLE, conf)
+    expect(data.rowOps.canAdd).toBe(false)
+    await expect(addBlankRow(TABLE_ID)).rejects.toThrow(/多级表头/)
   })
 })
