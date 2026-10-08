@@ -1,9 +1,20 @@
-import type { ElectronAPI } from '@electron-toolkit/preload'
+import type { LubanProject, RecentProject } from '@shared/types/project'
+import type { AppSettings } from '@shared/types/settings'
 
 declare global {
   interface Window {
-    electron: ElectronAPI
-    // api: LubanApi（M2 随 IPC 契约补全）
+    api: {
+      project: {
+        pickConf(): Promise<string | null>
+        open(confPath: string): Promise<LubanProject>
+        close(): Promise<void>
+        recent(): Promise<RecentProject[]>
+      }
+      settings: {
+        get(): Promise<AppSettings>
+        patch(patch: Partial<AppSettings>): Promise<AppSettings>
+      }
+    }
   }
 }
 

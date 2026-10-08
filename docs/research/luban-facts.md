@@ -108,7 +108,9 @@ set LUBAN_DLL=%WORKSPACE%\Tools\Luban\Luban.dll
 dotnet %LUBAN_DLL% -t all -d json --conf luban.conf -x outputDataDir=output
 ```
 
-- 参数全集（源码 `src/Luban/Program.cs`）：`--conf`、`-t/--target`（必填）、`-c/--codeTarget`（可多次）、`-d/--dataTarget`（可多次）、`-x key=value`（outputCodeDir、outputDataDir、pathValidator.rootDir 等）、`-w/--watchDir`、`--strict`、`--errorFormat text|json`、`--locale`、`-f`、`-i/-e`（tag 过滤）、`-o`（限定表）、`--variant`、`--timeZone`、`--customTemplateDir`、`-l/--logConfig`、`-v`、`-h`
+- 参数全集（源码 `src/Luban/Program.cs` + v5.1 `--help` 实测）：`--conf`、`-t/--target`（必填）、`-c/--codeTarget`（可多次）、`-d/--dataTarget`（可多次）、`-x key=value`、`-p/--pipeline`、`-f/--forceLoadTableDatas`、`-i/-e`（tag 过滤）、`-o/--outputTable`（限定表）、`-w/--watchDir`、`--strict`、`--errorFormat text|json`（默认 text）、`--locale`、`--variant`、`--timeZone`、`--customTemplateDir`、`-l/--logConfig`、`-v/--verbose`、`--version`、`--help`
+
+**版本探测（实证）**：`--version` 把 `Luban 5.1.0+<hash>` 打到 **stderr** 且仍 exit 1（缺必填参数）；启动 banner 也在 stderr。`-v` 是 verbose 不是版本。探测实现：忽略退出码、合并 stdout+stderr、正则 `/Luban (\d+\.\d+\.\d+)/`。
 
 ## 6. 错误输出格式（实证：docs/samples/）
 

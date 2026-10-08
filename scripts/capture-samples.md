@@ -10,9 +10,9 @@ curl -sL -o .sandbox/releases/Luban-v5.1.0.7z https://github.com/focus-creative-
 7z x .sandbox/releases/Luban-v4.12.0.7z -o.sandbox/releases/v4
 7z x .sandbox/releases/Luban-v5.1.0.7z -o.sandbox/releases/v5
 
-# 2. 版本探测（v4/v5 同构：首行 "Luban x.y.z+hash"，缺 --conf 时 exit 1 但版本已打印）
-dotnet .sandbox/releases/v4/Luban/Luban.dll -v > docs/samples/v4/version-probe.txt
-dotnet .sandbox/releases/v5/Luban/Luban.dll -v > docs/samples/v5/version-probe.txt
+# 2. 版本探测（--version 打到 stderr 且 exit 1；首行 "Luban x.y.z+hash"。注意 -v 是 verbose 不是版本）
+dotnet .sandbox/releases/v4/Luban/Luban.dll --version > docs/samples/v4/version-probe.txt 2>&1
+dotnet .sandbox/releases/v5/Luban/Luban.dll --version > docs/samples/v5/version-probe.txt 2>&1
 
 # 3. 成功导出（MiniTemplate，v4/v5 参数完全一致）
 cd .sandbox/luban_examples/MiniTemplate
