@@ -4,6 +4,7 @@
   "description": "Luban 游戏配置桌面 IDE",
   "main": "./out/main/index.js",
   "author": "jdg",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "electron-vite dev",

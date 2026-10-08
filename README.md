@@ -65,4 +65,4 @@ LubanStudio/
 
 ## 许可
 
-仅供学习与内部使用。
+[MIT](LICENSE)。
