@@ -1,0 +1,168 @@
+{
+  "version": 2,
+  "target": "all",
+  "manager": "Tables",
+  "topModule": "cfg",
+  "groups": [
+    "c",
+    "s",
+    "e"
+  ],
+  "tables": [
+    {
+      "fullName": "demo.Tbitem",
+      "name": "Tbitem",
+      "namespace": "demo",
+      "valueType": "demo.item",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "#demo.item.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": true,
+      "outputDataFile": "demo_tbitem",
+      "source": {
+        "file": "Data/#demo.item.xlsx"
+      }
+    }
+  ],
+  "beans": [
+    {
+      "fullName": "demo.item",
+      "name": "item",
+      "namespace": "demo",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "comment": "id",
+          "groups": [],
+          "hostType": "demo.item"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "comment": "名称",
+          "groups": [
+            "c",
+            "s"
+          ],
+          "hostType": "demo.item"
+        },
+        {
+          "name": "desc",
+          "type": "string",
+          "comment": "描述",
+          "groups": [
+            "c"
+          ],
+          "hostType": "demo.item"
+        },
+        {
+          "name": "count",
+          "type": "int",
+          "comment": "个数",
+          "groups": [],
+          "hostType": "demo.item"
+        }
+      ],
+      "source": {
+        "file": "Data/#demo.item.xlsx"
+      }
+    },
+    {
+      "fullName": "vector2",
+      "name": "vector2",
+      "namespace": "",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x",
+          "type": "float",
+          "groups": [],
+          "hostType": "vector2"
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "groups": [],
+          "hostType": "vector2"
+        }
+      ],
+      "source": {
+        "file": "Defines/builtin.xml"
+      }
+    },
+    {
+      "fullName": "vector3",
+      "name": "vector3",
+      "namespace": "",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x",
+          "type": "float",
+          "groups": [],
+          "hostType": "vector3"
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "groups": [],
+          "hostType": "vector3"
+        },
+        {
+          "name": "z",
+          "type": "float",
+          "groups": [],
+          "hostType": "vector3"
+        }
+      ],
+      "source": {
+        "file": "Defines/builtin.xml"
+      }
+    },
+    {
+      "fullName": "vector4",
+      "name": "vector4",
+      "namespace": "",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x",
+          "type": "float",
+          "groups": [],
+          "hostType": "vector4"
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "groups": [],
+          "hostType": "vector4"
+        },
+        {
+          "name": "z",
+          "type": "float",
+          "groups": [],
+          "hostType": "vector4"
+        },
+        {
+          "name": "w",
+          "type": "float",
+          "groups": [],
+          "hostType": "vector4"
+        }
+      ],
+      "source": {
+        "file": "Defines/builtin.xml"
+      }
+    }
+  ],
+  "enums": []
+}

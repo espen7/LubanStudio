@@ -1,0 +1,8 @@
+2026/10/08 11:17:24.713|INFO| ==========================================================================================
+2026/10/08 11:17:24.713|INFO|
+2026/10/08 11:17:24.713|INFO|  Luban is developed by Code Philosophy Technology Co., LTD. https://code-philosophy.com
+2026/10/08 11:17:24.713|INFO|
+2026/10/08 11:17:24.713|INFO| ==========================================================================================
+2026/10/08 11:17:24.757|INFO|load schema. collector: "default"
+2026/10/08 11:17:24.817|ERROR|===> "定义文件:D:/workspace/github/LubanStudio/.sandbox/run/err-v4/Defines/test.xml 定义:<table name="TbTestTableVariant" variant="zh" value="TestTableVariant" input="test/table_variant_zh.csv" /> 包含未知属性 attr:variant"
+2026/10/08 11:17:24.817|ERROR|run failed!!!

@@ -1,0 +1,12 @@
+2026/10/08 11:13:42.499|INFO| ==========================================================================================
+2026/10/08 11:13:42.499|INFO|
+2026/10/08 11:13:42.499|INFO|  Luban is developed by Code Philosophy Technology Co., LTD. https://code-philosophy.com
+2026/10/08 11:13:42.499|INFO|  Github: https://github.com/focus-creative-games/luban
+2026/10/08 11:13:42.499|INFO|  Document: https://www.datable.cn
+2026/10/08 11:13:42.499|INFO|
+2026/10/08 11:13:42.499|INFO| ==========================================================================================
+2026/10/08 11:13:42.531|INFO|load schema. collector: "default"
+2026/10/08 11:13:42.630|INFO|process code target:"schema-json" begin
+2026/10/08 11:13:42.630|INFO|[new] out-schema/schema.json 
+2026/10/08 11:13:42.630|INFO|process code target:"schema-json" end
+2026/10/08 11:13:42.630|INFO|bye~

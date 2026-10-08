@@ -1,0 +1,48 @@
+Luban 4.12.0+0e1a6179a524e71cc503c20bebbca47cc59c7619
+Copyright (C) 2026 Luban
+
+ERROR(S):
+  Required option 'conf' is missing.
+  Required option 't, target' is missing.
+
+  -s, --schemaCollector        schema collector name
+
+  --conf                       Required. luban conf file
+
+  -t, --target                 Required. target name
+
+  -c, --codeTarget             code target name
+
+  -d, --dataTarget             data target name
+
+  -p, --pipeline               pipeline name
+
+  -f, --forceLoadTableDatas    force load table datas when not any dataTarget
+
+  -i, --includeTag             include tag
+
+  -e, --excludeTag             exclude tag
+
+  --variant                    field variants
+
+  -o, --outputTable            output table
+
+  --timeZone                   time zone
+
+  --customTemplateDir          custom template dirs
+
+  --validationFailAsError      validation fail as error
+
+  -x, --xargs                  args like -x a=1 -x b=2
+
+  -l, --logConfig              (Default: nlog.xml) nlog config file
+
+  -w, --watchDir               watch dir and regererate when dir changes
+
+  -v, --verbose                verbose
+
+  --help                       Display this help screen.
+
+  --version                    Display version information.
+
+

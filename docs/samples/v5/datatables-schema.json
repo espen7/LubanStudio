@@ -1,0 +1,7547 @@
+{
+  "version": 2,
+  "target": "all",
+  "manager": "Tables",
+  "topModule": "cfg",
+  "groups": [
+    "c",
+    "s",
+    "e"
+  ],
+  "tables": [
+    {
+      "fullName": "ai.TbBlackboard",
+      "name": "TbBlackboard",
+      "namespace": "ai",
+      "valueType": "ai.Blackboard",
+      "mode": "map",
+      "index": "name",
+      "inputFiles": [
+        "ai/blackboards"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "ai_tbblackboard",
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.TbBehaviorTree",
+      "name": "TbBehaviorTree",
+      "namespace": "ai",
+      "valueType": "ai.BehaviorTree",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "ai/behaviortrees"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "ai_tbbehaviortree",
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "common.TbGlobalConfig",
+      "name": "TbGlobalConfig",
+      "namespace": "common",
+      "valueType": "common.GlobalConfig",
+      "mode": "one",
+      "index": "",
+      "inputFiles": [
+        "common/全局常量配置表.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "common_tbglobalconfig",
+      "source": {
+        "file": "Defines/common.xml"
+      }
+    },
+    {
+      "fullName": "item.TbItem",
+      "name": "TbItem",
+      "namespace": "item",
+      "valueType": "item.Item",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "通用道具表@item/道具系统表.xlsx"
+      ],
+      "groups": [],
+      "comment": "道具表",
+      "readSchemaFromFile": false,
+      "outputDataFile": "item_tbitem",
+      "source": {
+        "file": "Defines/item.xml"
+      }
+    },
+    {
+      "fullName": "l10n.TbL10NDemo",
+      "name": "TbL10NDemo",
+      "namespace": "l10n",
+      "valueType": "l10n.L10NDemo",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "l10n/Demo.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "l10n_tbl10ndemo",
+      "source": {
+        "file": "Defines/l10n.xml"
+      }
+    },
+    {
+      "fullName": "l10n.TbPatchDemo",
+      "name": "TbPatchDemo",
+      "namespace": "l10n",
+      "valueType": "l10n.PatchDemo",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "l10n/Patch.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "l10n_tbpatchdemo",
+      "source": {
+        "file": "Defines/l10n.xml"
+      }
+    },
+    {
+      "fullName": "tag.TbTestTag",
+      "name": "TbTestTag",
+      "namespace": "tag",
+      "valueType": "tag.TestTag",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "tag_data"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "tag_tbtesttag",
+      "source": {
+        "file": "Defines/tag.xml"
+      }
+    },
+    {
+      "fullName": "test.TbFullTypes",
+      "name": "TbFullTypes",
+      "namespace": "test",
+      "valueType": "test.DemoType2",
+      "mode": "map",
+      "index": "x4",
+      "inputFiles": [
+        "test/full_type.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbfulltypes",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbSingleton",
+      "name": "TbSingleton",
+      "namespace": "test",
+      "valueType": "test.DemoSingletonType",
+      "mode": "one",
+      "index": "",
+      "inputFiles": [
+        "test/table_one.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbsingleton",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbNotIndexList",
+      "name": "TbNotIndexList",
+      "namespace": "test",
+      "valueType": "test.NotIndexList",
+      "mode": "list",
+      "index": "",
+      "inputFiles": [
+        "not_index@test/list.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbnotindexlist",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbMultiUnionIndexList",
+      "name": "TbMultiUnionIndexList",
+      "namespace": "test",
+      "valueType": "test.MultiUnionIndexList",
+      "mode": "list",
+      "index": "id1+id2+id3",
+      "inputFiles": [
+        "multi_union_index@test/list.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbmultiunionindexlist",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbMultiIndexList",
+      "name": "TbMultiIndexList",
+      "namespace": "test",
+      "valueType": "test.MultiIndexList",
+      "mode": "list",
+      "index": "id1,id2,id3",
+      "inputFiles": [
+        "multi_index@test/list.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbmultiindexlist",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbDataFromMisc",
+      "name": "TbDataFromMisc",
+      "namespace": "test",
+      "valueType": "test.DemoType2",
+      "mode": "map",
+      "index": "x4",
+      "inputFiles": [
+        "test/misc_data"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbdatafrommisc",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbMultiRowRecord",
+      "name": "TbMultiRowRecord",
+      "namespace": "test",
+      "valueType": "test.MultiRowRecord",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/multi_rows_record.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbmultirowrecord",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestMultiColumn",
+      "name": "TbTestMultiColumn",
+      "namespace": "test",
+      "valueType": "test.TestMultiColumn",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/multi_column.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbtestmulticolumn",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbMultiRowTitle",
+      "name": "TbMultiRowTitle",
+      "namespace": "test",
+      "valueType": "test.MultiRowTitle",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/multi_level_title.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbmultirowtitle",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestNull",
+      "name": "TbTestNull",
+      "namespace": "test",
+      "valueType": "test.TestNull",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/test_null_data"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbtestnull",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbDemoPrimitive",
+      "name": "TbDemoPrimitive",
+      "namespace": "test",
+      "valueType": "test.DemoPrimitiveTypesTable",
+      "mode": "map",
+      "index": "x4",
+      "inputFiles": [
+        "test/demo_primitive.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbdemoprimitive",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestString",
+      "name": "TbTestString",
+      "namespace": "test",
+      "valueType": "test.TestString",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/test_string.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbteststring",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbDemoGroup",
+      "name": "TbDemoGroup",
+      "namespace": "test",
+      "valueType": "test.DemoGroup",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/demo_group.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbdemogroup",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbDemoGroup_C",
+      "name": "TbDemoGroup_C",
+      "namespace": "test",
+      "valueType": "test.DemoGroup",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/demo_group.xlsx"
+      ],
+      "groups": [
+        "c"
+      ],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbdemogroup_c",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbDemoGroup_S",
+      "name": "TbDemoGroup_S",
+      "namespace": "test",
+      "valueType": "test.DemoGroup",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/demo_group.xlsx"
+      ],
+      "groups": [
+        "s"
+      ],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbdemogroup_s",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbDemoGroup_E",
+      "name": "TbDemoGroup_E",
+      "namespace": "test",
+      "valueType": "test.DemoGroup",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/demo_group.xlsx"
+      ],
+      "groups": [
+        "e"
+      ],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbdemogroup_e",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestGlobal",
+      "name": "TbTestGlobal",
+      "namespace": "test",
+      "valueType": "test.TestGlobal",
+      "mode": "one",
+      "index": "",
+      "inputFiles": [
+        "test/global.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbtestglobal",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestBeRef",
+      "name": "TbTestBeRef",
+      "namespace": "test",
+      "valueType": "test.TestBeRef",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "be_ref1@test/test_ref.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbtestberef",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestBeRef2",
+      "name": "TbTestBeRef2",
+      "namespace": "test",
+      "valueType": "test.TestBeRef",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "be_ref2@test/test_ref.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbtestberef2",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestRef",
+      "name": "TbTestRef",
+      "namespace": "test",
+      "valueType": "test.TestRef",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "ref@test/test_ref.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbtestref",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestSize",
+      "name": "TbTestSize",
+      "namespace": "test",
+      "valueType": "test.TestSize",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/test_size.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbtestsize",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestSet",
+      "name": "TbTestSet",
+      "namespace": "test",
+      "valueType": "test.TestSet",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/test_set.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbtestset",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestRange",
+      "name": "TbTestRange",
+      "namespace": "test",
+      "valueType": "test.TestRange",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/test_range.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbtestrange",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbDetectCsvEncoding",
+      "name": "TbDetectCsvEncoding",
+      "namespace": "test",
+      "valueType": "test.DetectEncoding",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/detect_csv_encoding_utf8.csv",
+        "test/detect_csv_encoding_ansi.csv",
+        "test/detect_csv_encoding_big5.csv",
+        "test/detect_csv_encoding_gb2312.csv"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbdetectcsvencoding",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbItem2",
+      "name": "TbItem2",
+      "namespace": "test",
+      "valueType": "test.ItemBase",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/item.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbitem2",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestIndex",
+      "name": "TbTestIndex",
+      "namespace": "test",
+      "valueType": "test.TestIndex",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/test_index.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbtestindex",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestMap",
+      "name": "TbTestMap",
+      "namespace": "test",
+      "valueType": "test.TestMap",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/test_map.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbtestmap",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbExcelFromJson",
+      "name": "TbExcelFromJson",
+      "namespace": "test",
+      "valueType": "test.ExcelFromJson",
+      "mode": "map",
+      "index": "x4",
+      "inputFiles": [
+        "test/excel_jsons"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbexcelfromjson",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbCompositeJsonTable1",
+      "name": "TbCompositeJsonTable1",
+      "namespace": "test",
+      "valueType": "test.CompositeJsonTable1",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "*table1@test/composite_tables.json",
+        "*@test/composite_tables2.json"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbcompositejsontable1",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbCompositeJsonTable2",
+      "name": "TbCompositeJsonTable2",
+      "namespace": "test",
+      "valueType": "test.CompositeJsonTable2",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "*table2@test/composite_tables.json"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbcompositejsontable2",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbCompositeJsonTable3",
+      "name": "TbCompositeJsonTable3",
+      "namespace": "test",
+      "valueType": "test.CompositeJsonTable3",
+      "mode": "one",
+      "index": "",
+      "inputFiles": [
+        "table3@test/composite_tables.json"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbcompositejsontable3",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbExcelFromJsonMultiRow",
+      "name": "TbExcelFromJsonMultiRow",
+      "namespace": "test",
+      "valueType": "test.ExcelFromJsonMultiRow",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/excel_multi_row_jsons"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbexcelfromjsonmultirow",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestSep",
+      "name": "TbTestSep",
+      "namespace": "test",
+      "valueType": "test.TestSep",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/test_sep.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": true,
+      "outputDataFile": "test_tbtestsep",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestScriptableObject",
+      "name": "TbTestScriptableObject",
+      "namespace": "test",
+      "valueType": "test.TestScriptableObject",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/unity_scriptable_objects"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbtestscriptableobject",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbPath",
+      "name": "TbPath",
+      "namespace": "test",
+      "valueType": "test.Path",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/path.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbpath",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestFieldAlias",
+      "name": "TbTestFieldAlias",
+      "namespace": "test",
+      "valueType": "test.TestFieldAlias",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/field_alias"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbtestfieldalias",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestFieldVariant",
+      "name": "TbTestFieldVariant",
+      "namespace": "test",
+      "valueType": "test.TestFieldVariant",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/field_variant"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbtestfieldvariant",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestFieldVariant2",
+      "name": "TbTestFieldVariant2",
+      "namespace": "test",
+      "valueType": "test.TestFieldVariant2",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/field_variant2.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": true,
+      "outputDataFile": "test_tbtestfieldvariant2",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestTableVariant",
+      "name": "TbTestTableVariant",
+      "namespace": "test",
+      "valueType": "test.TestTableVariant",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/table_variant.csv"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbtesttablevariant",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestMapper",
+      "name": "TbTestMapper",
+      "namespace": "test",
+      "valueType": "test.TestMapper",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/type_mapper.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbtestmapper",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbTestConstAlias",
+      "name": "TbTestConstAlias",
+      "namespace": "test",
+      "valueType": "test.TestConstAlias",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/test_constalias.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": false,
+      "outputDataFile": "test_tbtestconstalias",
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TbDefineFromExcel2",
+      "name": "TbDefineFromExcel2",
+      "namespace": "test",
+      "valueType": "test.DefineFromExcel2",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test/define_from_excel.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": true,
+      "outputDataFile": "test_tbdefinefromexcel2",
+      "source": {
+        "file": "Data/__tables__.xlsx"
+      }
+    },
+    {
+      "fullName": "TbAutoImport1",
+      "name": "TbAutoImport1",
+      "namespace": "",
+      "valueType": "AutoImport1",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "#AutoImport1-测试自动导入表1.xlsx"
+      ],
+      "groups": [],
+      "comment": "测试自动导入表1",
+      "readSchemaFromFile": true,
+      "outputDataFile": "tbautoimport1",
+      "source": {
+        "file": "Data/#AutoImport1-测试自动导入表1.xlsx"
+      }
+    },
+    {
+      "fullName": "test.TbAutoImport2",
+      "name": "TbAutoImport2",
+      "namespace": "test",
+      "valueType": "test.AutoImport2",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test\\#AutoImport2.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": true,
+      "outputDataFile": "test_tbautoimport2",
+      "source": {
+        "file": "Data/test/#AutoImport2.xlsx"
+      }
+    },
+    {
+      "fullName": "test.TbAutoImport3",
+      "name": "TbAutoImport3",
+      "namespace": "test",
+      "valueType": "test.AutoImport3",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test\\#AutoImport3-自动导入的表.xlsx"
+      ],
+      "groups": [],
+      "comment": "自动导入的表",
+      "readSchemaFromFile": true,
+      "outputDataFile": "test_tbautoimport3",
+      "source": {
+        "file": "Data/test/#AutoImport3-自动导入的表.xlsx"
+      }
+    },
+    {
+      "fullName": "test.TbTestFormat",
+      "name": "TbTestFormat",
+      "namespace": "test",
+      "valueType": "test.TestFormat",
+      "mode": "map",
+      "index": "id",
+      "inputFiles": [
+        "test\\#TestFormat.xlsx"
+      ],
+      "groups": [],
+      "readSchemaFromFile": true,
+      "outputDataFile": "test_tbtestformat",
+      "source": {
+        "file": "Data/test/#TestFormat.xlsx"
+      }
+    }
+  ],
+  "beans": [
+    {
+      "fullName": "ai.BehaviorTree",
+      "name": "BehaviorTree",
+      "namespace": "ai",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.BehaviorTree"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.BehaviorTree"
+        },
+        {
+          "name": "desc",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.BehaviorTree"
+        },
+        {
+          "name": "blackboard_id",
+          "type": "string#ref=ai.TbBlackboard",
+          "groups": [],
+          "hostType": "ai.BehaviorTree"
+        },
+        {
+          "name": "root",
+          "type": "ComposeNode",
+          "groups": [],
+          "hostType": "ai.BehaviorTree"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.Blackboard",
+      "name": "Blackboard",
+      "namespace": "ai",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Blackboard"
+        },
+        {
+          "name": "desc",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Blackboard"
+        },
+        {
+          "name": "parent_name",
+          "type": "string#ref=ai.TbBlackboard?",
+          "groups": [],
+          "hostType": "ai.Blackboard"
+        },
+        {
+          "name": "keys",
+          "type": "list,BlackboardKey",
+          "groups": [],
+          "hostType": "ai.Blackboard"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.BlackboardKey",
+      "name": "BlackboardKey",
+      "namespace": "ai",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.BlackboardKey"
+        },
+        {
+          "name": "desc",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.BlackboardKey"
+        },
+        {
+          "name": "is_static",
+          "type": "bool",
+          "groups": [],
+          "hostType": "ai.BlackboardKey"
+        },
+        {
+          "name": "key_type",
+          "type": "EKeyType",
+          "groups": [],
+          "hostType": "ai.BlackboardKey"
+        },
+        {
+          "name": "type_class_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.BlackboardKey"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.KeyData",
+      "name": "KeyData",
+      "namespace": "ai",
+      "isAbstract": true,
+      "groups": [],
+      "fields": [],
+      "children": [
+        "ai.FloatKeyData",
+        "ai.IntKeyData",
+        "ai.StringKeyData",
+        "ai.BlackboardKeyData"
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.BlackboardKeyData",
+      "name": "BlackboardKeyData",
+      "namespace": "ai",
+      "parent": "ai.KeyData",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "value",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.BlackboardKeyData"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.FloatKeyData",
+      "name": "FloatKeyData",
+      "namespace": "ai",
+      "parent": "ai.KeyData",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "value",
+          "type": "float",
+          "groups": [],
+          "hostType": "ai.FloatKeyData"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.IntKeyData",
+      "name": "IntKeyData",
+      "namespace": "ai",
+      "parent": "ai.KeyData",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "value",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.IntKeyData"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.StringKeyData",
+      "name": "StringKeyData",
+      "namespace": "ai",
+      "parent": "ai.KeyData",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "value",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.StringKeyData"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.KeyQueryOperator",
+      "name": "KeyQueryOperator",
+      "namespace": "ai",
+      "isAbstract": true,
+      "groups": [],
+      "fields": [],
+      "children": [
+        "ai.IsSet2",
+        "ai.IsNotSet",
+        "ai.BinaryOperator"
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.BinaryOperator",
+      "name": "BinaryOperator",
+      "namespace": "ai",
+      "parent": "ai.KeyQueryOperator",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "oper",
+          "type": "EOperator",
+          "groups": [],
+          "hostType": "ai.BinaryOperator"
+        },
+        {
+          "name": "data",
+          "type": "KeyData",
+          "groups": [],
+          "hostType": "ai.BinaryOperator"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.IsNotSet",
+      "name": "IsNotSet",
+      "namespace": "ai",
+      "parent": "ai.KeyQueryOperator",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.IsSet2",
+      "name": "IsSet2",
+      "namespace": "ai",
+      "parent": "ai.KeyQueryOperator",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.Node",
+      "name": "Node",
+      "namespace": "ai",
+      "isAbstract": true,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        }
+      ],
+      "children": [
+        "ai.Service",
+        "ai.Decorator",
+        "ai.FlowNode"
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.Decorator",
+      "name": "Decorator",
+      "namespace": "ai",
+      "parent": "ai.Node",
+      "isAbstract": true,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "flow_abort_mode",
+          "type": "EFlowAbortMode",
+          "groups": [],
+          "hostType": "ai.Decorator"
+        }
+      ],
+      "children": [
+        "ai.UeLoop",
+        "ai.UeCooldown",
+        "ai.UeTimeLimit",
+        "ai.UeBlackboard",
+        "ai.UeForceSuccess",
+        "ai.IsAtLocation",
+        "ai.DistanceLessThan"
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.DistanceLessThan",
+      "name": "DistanceLessThan",
+      "namespace": "ai",
+      "parent": "ai.Decorator",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "flow_abort_mode",
+          "type": "EFlowAbortMode",
+          "groups": [],
+          "hostType": "ai.Decorator"
+        },
+        {
+          "name": "actor1_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.DistanceLessThan"
+        },
+        {
+          "name": "actor2_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.DistanceLessThan"
+        },
+        {
+          "name": "distance",
+          "type": "float",
+          "groups": [],
+          "hostType": "ai.DistanceLessThan"
+        },
+        {
+          "name": "reverse_result",
+          "type": "bool",
+          "groups": [],
+          "hostType": "ai.DistanceLessThan"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.IsAtLocation",
+      "name": "IsAtLocation",
+      "namespace": "ai",
+      "parent": "ai.Decorator",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "flow_abort_mode",
+          "type": "EFlowAbortMode",
+          "groups": [],
+          "hostType": "ai.Decorator"
+        },
+        {
+          "name": "acceptable_radius",
+          "type": "float",
+          "groups": [],
+          "hostType": "ai.IsAtLocation"
+        },
+        {
+          "name": "keyboard_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.IsAtLocation"
+        },
+        {
+          "name": "inverse_condition",
+          "type": "bool",
+          "groups": [],
+          "hostType": "ai.IsAtLocation"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.UeBlackboard",
+      "name": "UeBlackboard",
+      "namespace": "ai",
+      "parent": "ai.Decorator",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "flow_abort_mode",
+          "type": "EFlowAbortMode",
+          "groups": [],
+          "hostType": "ai.Decorator"
+        },
+        {
+          "name": "notify_observer",
+          "type": "ENotifyObserverMode",
+          "groups": [],
+          "hostType": "ai.UeBlackboard"
+        },
+        {
+          "name": "blackboard_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.UeBlackboard"
+        },
+        {
+          "name": "key_query",
+          "type": "KeyQueryOperator",
+          "groups": [],
+          "hostType": "ai.UeBlackboard"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.UeCooldown",
+      "name": "UeCooldown",
+      "namespace": "ai",
+      "parent": "ai.Decorator",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "flow_abort_mode",
+          "type": "EFlowAbortMode",
+          "groups": [],
+          "hostType": "ai.Decorator"
+        },
+        {
+          "name": "cooldown_time",
+          "type": "float",
+          "groups": [],
+          "hostType": "ai.UeCooldown"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.UeForceSuccess",
+      "name": "UeForceSuccess",
+      "namespace": "ai",
+      "parent": "ai.Decorator",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "flow_abort_mode",
+          "type": "EFlowAbortMode",
+          "groups": [],
+          "hostType": "ai.Decorator"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.UeLoop",
+      "name": "UeLoop",
+      "namespace": "ai",
+      "parent": "ai.Decorator",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "flow_abort_mode",
+          "type": "EFlowAbortMode",
+          "groups": [],
+          "hostType": "ai.Decorator"
+        },
+        {
+          "name": "num_loops",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.UeLoop"
+        },
+        {
+          "name": "infinite_loop",
+          "type": "bool",
+          "groups": [],
+          "hostType": "ai.UeLoop"
+        },
+        {
+          "name": "infinite_loop_timeout_time",
+          "type": "float",
+          "groups": [],
+          "hostType": "ai.UeLoop"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.UeTimeLimit",
+      "name": "UeTimeLimit",
+      "namespace": "ai",
+      "parent": "ai.Decorator",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "flow_abort_mode",
+          "type": "EFlowAbortMode",
+          "groups": [],
+          "hostType": "ai.Decorator"
+        },
+        {
+          "name": "limit_time",
+          "type": "float",
+          "groups": [],
+          "hostType": "ai.UeTimeLimit"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.FlowNode",
+      "name": "FlowNode",
+      "namespace": "ai",
+      "parent": "ai.Node",
+      "isAbstract": true,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "decorators",
+          "type": "list,Decorator",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "services",
+          "type": "list,Service",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        }
+      ],
+      "children": [
+        "ai.ComposeNode",
+        "ai.Task"
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.ComposeNode",
+      "name": "ComposeNode",
+      "namespace": "ai",
+      "parent": "ai.FlowNode",
+      "isAbstract": true,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "decorators",
+          "type": "list,Decorator",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "services",
+          "type": "list,Service",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        }
+      ],
+      "children": [
+        "ai.Sequence",
+        "ai.Selector",
+        "ai.SimpleParallel"
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.Selector",
+      "name": "Selector",
+      "namespace": "ai",
+      "parent": "ai.ComposeNode",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "decorators",
+          "type": "list,Decorator",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "services",
+          "type": "list,Service",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "children",
+          "type": "list,FlowNode",
+          "groups": [],
+          "hostType": "ai.Selector"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.Sequence",
+      "name": "Sequence",
+      "namespace": "ai",
+      "parent": "ai.ComposeNode",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "decorators",
+          "type": "list,Decorator",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "services",
+          "type": "list,Service",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "children",
+          "type": "list,FlowNode",
+          "groups": [],
+          "hostType": "ai.Sequence"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.SimpleParallel",
+      "name": "SimpleParallel",
+      "namespace": "ai",
+      "parent": "ai.ComposeNode",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "decorators",
+          "type": "list,Decorator",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "services",
+          "type": "list,Service",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "finish_mode",
+          "type": "EFinishMode",
+          "groups": [],
+          "hostType": "ai.SimpleParallel"
+        },
+        {
+          "name": "main_task",
+          "type": "Task",
+          "groups": [],
+          "hostType": "ai.SimpleParallel"
+        },
+        {
+          "name": "background_node",
+          "type": "FlowNode",
+          "groups": [],
+          "hostType": "ai.SimpleParallel"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.Task",
+      "name": "Task",
+      "namespace": "ai",
+      "parent": "ai.FlowNode",
+      "isAbstract": true,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "decorators",
+          "type": "list,Decorator",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "services",
+          "type": "list,Service",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "ignore_restart_self",
+          "type": "bool",
+          "groups": [],
+          "hostType": "ai.Task"
+        }
+      ],
+      "children": [
+        "ai.UeWait",
+        "ai.UeWaitBlackboardTime",
+        "ai.MoveToTarget",
+        "ai.ChooseSkill",
+        "ai.MoveToRandomLocation",
+        "ai.MoveToLocation",
+        "ai.DebugPrint"
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.ChooseSkill",
+      "name": "ChooseSkill",
+      "namespace": "ai",
+      "parent": "ai.Task",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "decorators",
+          "type": "list,Decorator",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "services",
+          "type": "list,Service",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "ignore_restart_self",
+          "type": "bool",
+          "groups": [],
+          "hostType": "ai.Task"
+        },
+        {
+          "name": "target_actor_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.ChooseSkill"
+        },
+        {
+          "name": "result_skill_id_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.ChooseSkill"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.DebugPrint",
+      "name": "DebugPrint",
+      "namespace": "ai",
+      "parent": "ai.Task",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "decorators",
+          "type": "list,Decorator",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "services",
+          "type": "list,Service",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "ignore_restart_self",
+          "type": "bool",
+          "groups": [],
+          "hostType": "ai.Task"
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.DebugPrint"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.MoveToLocation",
+      "name": "MoveToLocation",
+      "namespace": "ai",
+      "parent": "ai.Task",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "decorators",
+          "type": "list,Decorator",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "services",
+          "type": "list,Service",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "ignore_restart_self",
+          "type": "bool",
+          "groups": [],
+          "hostType": "ai.Task"
+        },
+        {
+          "name": "acceptable_radius",
+          "type": "float",
+          "groups": [],
+          "hostType": "ai.MoveToLocation"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.MoveToRandomLocation",
+      "name": "MoveToRandomLocation",
+      "namespace": "ai",
+      "parent": "ai.Task",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "decorators",
+          "type": "list,Decorator",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "services",
+          "type": "list,Service",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "ignore_restart_self",
+          "type": "bool",
+          "groups": [],
+          "hostType": "ai.Task"
+        },
+        {
+          "name": "origin_position_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.MoveToRandomLocation"
+        },
+        {
+          "name": "radius",
+          "type": "float",
+          "groups": [],
+          "hostType": "ai.MoveToRandomLocation"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.MoveToTarget",
+      "name": "MoveToTarget",
+      "namespace": "ai",
+      "parent": "ai.Task",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "decorators",
+          "type": "list,Decorator",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "services",
+          "type": "list,Service",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "ignore_restart_self",
+          "type": "bool",
+          "groups": [],
+          "hostType": "ai.Task"
+        },
+        {
+          "name": "target_actor_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.MoveToTarget"
+        },
+        {
+          "name": "acceptable_radius",
+          "type": "float",
+          "groups": [],
+          "hostType": "ai.MoveToTarget"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.UeWait",
+      "name": "UeWait",
+      "namespace": "ai",
+      "parent": "ai.Task",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "decorators",
+          "type": "list,Decorator",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "services",
+          "type": "list,Service",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "ignore_restart_self",
+          "type": "bool",
+          "groups": [],
+          "hostType": "ai.Task"
+        },
+        {
+          "name": "wait_time",
+          "type": "float",
+          "groups": [],
+          "hostType": "ai.UeWait"
+        },
+        {
+          "name": "random_deviation",
+          "type": "float",
+          "groups": [],
+          "hostType": "ai.UeWait"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.UeWaitBlackboardTime",
+      "name": "UeWaitBlackboardTime",
+      "namespace": "ai",
+      "parent": "ai.Task",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "decorators",
+          "type": "list,Decorator",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "services",
+          "type": "list,Service",
+          "groups": [],
+          "hostType": "ai.FlowNode"
+        },
+        {
+          "name": "ignore_restart_self",
+          "type": "bool",
+          "groups": [],
+          "hostType": "ai.Task"
+        },
+        {
+          "name": "blackboard_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.UeWaitBlackboardTime"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.Service",
+      "name": "Service",
+      "namespace": "ai",
+      "parent": "ai.Node",
+      "isAbstract": true,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        }
+      ],
+      "children": [
+        "ai.UeSetDefaultFocus",
+        "ai.ExecuteTimeStatistic",
+        "ai.ChooseTarget",
+        "ai.KeepFaceTarget",
+        "ai.GetOwnerPlayer",
+        "ai.UpdateDailyBehaviorProps"
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.ChooseTarget",
+      "name": "ChooseTarget",
+      "namespace": "ai",
+      "parent": "ai.Service",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "result_target_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.ChooseTarget"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.ExecuteTimeStatistic",
+      "name": "ExecuteTimeStatistic",
+      "namespace": "ai",
+      "parent": "ai.Service",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.GetOwnerPlayer",
+      "name": "GetOwnerPlayer",
+      "namespace": "ai",
+      "parent": "ai.Service",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "player_actor_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.GetOwnerPlayer"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.KeepFaceTarget",
+      "name": "KeepFaceTarget",
+      "namespace": "ai",
+      "parent": "ai.Service",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "target_actor_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.KeepFaceTarget"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.UeSetDefaultFocus",
+      "name": "UeSetDefaultFocus",
+      "namespace": "ai",
+      "parent": "ai.Service",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "keyboard_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.UeSetDefaultFocus"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.UpdateDailyBehaviorProps",
+      "name": "UpdateDailyBehaviorProps",
+      "namespace": "ai",
+      "parent": "ai.Service",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "node_name",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.Node"
+        },
+        {
+          "name": "satiety_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.UpdateDailyBehaviorProps"
+        },
+        {
+          "name": "energy_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.UpdateDailyBehaviorProps"
+        },
+        {
+          "name": "mood_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.UpdateDailyBehaviorProps"
+        },
+        {
+          "name": "satiety_lower_threshold_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.UpdateDailyBehaviorProps"
+        },
+        {
+          "name": "satiety_upper_threshold_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.UpdateDailyBehaviorProps"
+        },
+        {
+          "name": "energy_lower_threshold_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.UpdateDailyBehaviorProps"
+        },
+        {
+          "name": "energy_upper_threshold_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.UpdateDailyBehaviorProps"
+        },
+        {
+          "name": "mood_lower_threshold_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.UpdateDailyBehaviorProps"
+        },
+        {
+          "name": "mood_upper_threshold_key",
+          "type": "string",
+          "groups": [],
+          "hostType": "ai.UpdateDailyBehaviorProps"
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "AutoImport1",
+      "name": "AutoImport1",
+      "namespace": "",
+      "isAbstract": false,
+      "comment": "测试自动导入表1",
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "comment": "这是id",
+          "groups": [],
+          "hostType": "AutoImport1"
+        },
+        {
+          "name": "x1",
+          "type": "bool",
+          "comment": "字段x1",
+          "groups": [],
+          "hostType": "AutoImport1"
+        },
+        {
+          "name": "x5",
+          "type": "long",
+          "groups": [],
+          "hostType": "AutoImport1"
+        },
+        {
+          "name": "x6",
+          "type": "float",
+          "groups": [],
+          "hostType": "AutoImport1"
+        },
+        {
+          "name": "x8",
+          "type": "int",
+          "groups": [],
+          "hostType": "AutoImport1"
+        },
+        {
+          "name": "x10",
+          "type": "string",
+          "groups": [],
+          "hostType": "AutoImport1"
+        },
+        {
+          "name": "x13",
+          "type": "test.DemoEnum",
+          "groups": [],
+          "hostType": "AutoImport1"
+        },
+        {
+          "name": "x13_2",
+          "type": "test.DemoFlag",
+          "groups": [],
+          "hostType": "AutoImport1"
+        },
+        {
+          "name": "x14",
+          "type": "test.DemoDynamic#sep=,",
+          "groups": [],
+          "hostType": "AutoImport1"
+        },
+        {
+          "name": "x15",
+          "type": "test.Shape#sep=,",
+          "groups": [],
+          "hostType": "AutoImport1"
+        },
+        {
+          "name": "v2",
+          "type": "vec2",
+          "groups": [],
+          "hostType": "AutoImport1"
+        },
+        {
+          "name": "t1",
+          "type": "datetime",
+          "groups": [],
+          "hostType": "AutoImport1"
+        },
+        {
+          "name": "k1",
+          "type": "(array#sep=;),int",
+          "groups": [],
+          "hostType": "AutoImport1"
+        },
+        {
+          "name": "k2",
+          "type": "array,int",
+          "groups": [],
+          "hostType": "AutoImport1"
+        },
+        {
+          "name": "k8",
+          "type": "(map#sep=,),int,int",
+          "groups": [],
+          "hostType": "AutoImport1"
+        },
+        {
+          "name": "k9",
+          "type": "(list#sep=,),test.DemoE2",
+          "groups": [],
+          "hostType": "AutoImport1"
+        },
+        {
+          "name": "k10",
+          "type": "list,vec3",
+          "groups": [],
+          "hostType": "AutoImport1"
+        },
+        {
+          "name": "k11",
+          "type": "list,vec4",
+          "groups": [],
+          "hostType": "AutoImport1"
+        },
+        {
+          "name": "v11",
+          "type": "vec3?",
+          "groups": [],
+          "hostType": "AutoImport1"
+        }
+      ],
+      "source": {
+        "file": "Data/#AutoImport1-测试自动导入表1.xlsx"
+      }
+    },
+    {
+      "fullName": "common.DateTimeRange",
+      "name": "DateTimeRange",
+      "namespace": "common",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "start_time",
+          "type": "datetime?",
+          "groups": [],
+          "hostType": "common.DateTimeRange"
+        },
+        {
+          "name": "end_time",
+          "type": "datetime?",
+          "groups": [],
+          "hostType": "common.DateTimeRange"
+        }
+      ],
+      "source": {
+        "file": "Defines/common.xml"
+      }
+    },
+    {
+      "fullName": "common.FloatRange",
+      "name": "FloatRange",
+      "namespace": "common",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "min",
+          "type": "float",
+          "groups": [],
+          "hostType": "common.FloatRange"
+        },
+        {
+          "name": "max",
+          "type": "float",
+          "groups": [],
+          "hostType": "common.FloatRange"
+        }
+      ],
+      "source": {
+        "file": "Defines/common.xml"
+      }
+    },
+    {
+      "fullName": "common.GlobalConfig",
+      "name": "GlobalConfig",
+      "namespace": "common",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x1",
+          "type": "int",
+          "comment": "背包容量",
+          "groups": [],
+          "hostType": "common.GlobalConfig"
+        },
+        {
+          "name": "x2",
+          "type": "int",
+          "groups": [],
+          "hostType": "common.GlobalConfig"
+        },
+        {
+          "name": "x3",
+          "type": "int",
+          "groups": [],
+          "hostType": "common.GlobalConfig"
+        },
+        {
+          "name": "x4",
+          "type": "int",
+          "groups": [],
+          "hostType": "common.GlobalConfig"
+        },
+        {
+          "name": "x5",
+          "type": "int",
+          "groups": [],
+          "hostType": "common.GlobalConfig"
+        },
+        {
+          "name": "x6",
+          "type": "int",
+          "groups": [],
+          "hostType": "common.GlobalConfig"
+        },
+        {
+          "name": "x7",
+          "type": "(list#sep=|),int",
+          "groups": [],
+          "hostType": "common.GlobalConfig"
+        }
+      ],
+      "source": {
+        "file": "Defines/common.xml"
+      }
+    },
+    {
+      "fullName": "common.IntRange",
+      "name": "IntRange",
+      "namespace": "common",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "min",
+          "type": "int",
+          "groups": [],
+          "hostType": "common.IntRange"
+        },
+        {
+          "name": "max",
+          "type": "int",
+          "groups": [],
+          "hostType": "common.IntRange"
+        }
+      ],
+      "source": {
+        "file": "Defines/common.xml"
+      }
+    },
+    {
+      "fullName": "common.OneDayTimeRange",
+      "name": "OneDayTimeRange",
+      "namespace": "common",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "start_time",
+          "type": "TimeOfDay",
+          "groups": [],
+          "hostType": "common.OneDayTimeRange"
+        },
+        {
+          "name": "end_time",
+          "type": "TimeOfDay",
+          "groups": [],
+          "hostType": "common.OneDayTimeRange"
+        }
+      ],
+      "source": {
+        "file": "Defines/common.xml"
+      }
+    },
+    {
+      "fullName": "common.TimeOfDay",
+      "name": "TimeOfDay",
+      "namespace": "common",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "hour",
+          "type": "int",
+          "groups": [],
+          "hostType": "common.TimeOfDay"
+        },
+        {
+          "name": "minute",
+          "type": "int",
+          "groups": [],
+          "hostType": "common.TimeOfDay"
+        },
+        {
+          "name": "second",
+          "type": "int",
+          "groups": [],
+          "hostType": "common.TimeOfDay"
+        }
+      ],
+      "source": {
+        "file": "Defines/common.xml"
+      }
+    },
+    {
+      "fullName": "item.Item",
+      "name": "Item",
+      "namespace": "item",
+      "isAbstract": false,
+      "comment": "道具",
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "comment": "道具id",
+          "groups": [],
+          "hostType": "item.Item"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "groups": [],
+          "hostType": "item.Item"
+        },
+        {
+          "name": "major_type",
+          "type": "EMajorType",
+          "groups": [
+            "c",
+            "s"
+          ],
+          "hostType": "item.Item"
+        },
+        {
+          "name": "minor_type",
+          "type": "EMinorType",
+          "groups": [],
+          "hostType": "item.Item"
+        },
+        {
+          "name": "max_pile_num",
+          "type": "int",
+          "groups": [
+            "s"
+          ],
+          "hostType": "item.Item"
+        },
+        {
+          "name": "quality",
+          "type": "EItemQuality",
+          "groups": [],
+          "hostType": "item.Item"
+        },
+        {
+          "name": "icon",
+          "type": "string",
+          "groups": [
+            "c"
+          ],
+          "hostType": "item.Item"
+        },
+        {
+          "name": "icon_backgroud",
+          "type": "string",
+          "groups": [],
+          "hostType": "item.Item"
+        },
+        {
+          "name": "icon_mask",
+          "type": "string",
+          "groups": [],
+          "hostType": "item.Item"
+        },
+        {
+          "name": "desc",
+          "type": "string",
+          "groups": [],
+          "hostType": "item.Item"
+        },
+        {
+          "name": "show_order",
+          "type": "int",
+          "groups": [],
+          "hostType": "item.Item"
+        }
+      ],
+      "source": {
+        "file": "Defines/item.xml"
+      }
+    },
+    {
+      "fullName": "l10n.L10NDemo",
+      "name": "L10NDemo",
+      "namespace": "l10n",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "l10n.L10NDemo"
+        },
+        {
+          "name": "text",
+          "type": "text",
+          "groups": [],
+          "hostType": "l10n.L10NDemo"
+        }
+      ],
+      "source": {
+        "file": "Defines/l10n.xml"
+      }
+    },
+    {
+      "fullName": "l10n.PatchDemo",
+      "name": "PatchDemo",
+      "namespace": "l10n",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "l10n.PatchDemo"
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "groups": [],
+          "hostType": "l10n.PatchDemo"
+        }
+      ],
+      "source": {
+        "file": "Defines/l10n.xml"
+      }
+    },
+    {
+      "fullName": "tag.TestTag",
+      "name": "TestTag",
+      "namespace": "tag",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "tag.TestTag"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "groups": [],
+          "hostType": "tag.TestTag"
+        }
+      ],
+      "source": {
+        "file": "Defines/tag.xml"
+      }
+    },
+    {
+      "fullName": "test.AutoImport2",
+      "name": "AutoImport2",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "comment": "这是id",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        },
+        {
+          "name": "x1",
+          "type": "bool",
+          "comment": "字段x1",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        },
+        {
+          "name": "x5",
+          "type": "long",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        },
+        {
+          "name": "x6",
+          "type": "float",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        },
+        {
+          "name": "x8",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        },
+        {
+          "name": "x10",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        },
+        {
+          "name": "x13",
+          "type": "test.DemoEnum",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        },
+        {
+          "name": "x13_2",
+          "type": "test.DemoFlag",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        },
+        {
+          "name": "x14",
+          "type": "test.DemoDynamic#sep=,",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        },
+        {
+          "name": "x15",
+          "type": "test.Shape#sep=,",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        },
+        {
+          "name": "v2",
+          "type": "vec2",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        },
+        {
+          "name": "t1",
+          "type": "datetime",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        },
+        {
+          "name": "k1",
+          "type": "(array#sep=;),int",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        },
+        {
+          "name": "k2",
+          "type": "array,int",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        },
+        {
+          "name": "k8",
+          "type": "(map#sep=,),int,int",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        },
+        {
+          "name": "k9",
+          "type": "(list#sep=,),test.DemoE2",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        },
+        {
+          "name": "k10",
+          "type": "list,vec3",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        },
+        {
+          "name": "k11",
+          "type": "list,vec4",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        },
+        {
+          "name": "v11",
+          "type": "vec3?",
+          "groups": [],
+          "hostType": "test.AutoImport2"
+        }
+      ],
+      "source": {
+        "file": "Data/test/#AutoImport2.xlsx"
+      }
+    },
+    {
+      "fullName": "test.AutoImport3",
+      "name": "AutoImport3",
+      "namespace": "test",
+      "isAbstract": false,
+      "comment": "自动导入的表",
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "comment": "这是id",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        },
+        {
+          "name": "x1",
+          "type": "bool",
+          "comment": "字段x1",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        },
+        {
+          "name": "x5",
+          "type": "long",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        },
+        {
+          "name": "x6",
+          "type": "float",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        },
+        {
+          "name": "x8",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        },
+        {
+          "name": "x10",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        },
+        {
+          "name": "x13",
+          "type": "test.DemoEnum",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        },
+        {
+          "name": "x13_2",
+          "type": "test.DemoFlag",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        },
+        {
+          "name": "x14",
+          "type": "test.DemoDynamic#sep=,",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        },
+        {
+          "name": "x15",
+          "type": "test.Shape#sep=,",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        },
+        {
+          "name": "v2",
+          "type": "vec2",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        },
+        {
+          "name": "t1",
+          "type": "datetime",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        },
+        {
+          "name": "k1",
+          "type": "(array#sep=;),int",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        },
+        {
+          "name": "k2",
+          "type": "array,int",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        },
+        {
+          "name": "k8",
+          "type": "(map#sep=,),int,int",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        },
+        {
+          "name": "k9",
+          "type": "(list#sep=,),test.DemoE2",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        },
+        {
+          "name": "k10",
+          "type": "list,vec3",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        },
+        {
+          "name": "k11",
+          "type": "list,vec4",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        },
+        {
+          "name": "v11",
+          "type": "vec3?",
+          "groups": [],
+          "hostType": "test.AutoImport3"
+        }
+      ],
+      "source": {
+        "file": "Data/test/#AutoImport3-自动导入的表.xlsx"
+      }
+    },
+    {
+      "fullName": "test.CompactString",
+      "name": "CompactString",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.CompactString"
+        },
+        {
+          "name": "s2",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.CompactString"
+        },
+        {
+          "name": "s3",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.CompactString"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.CompositeJsonTable1",
+      "name": "CompositeJsonTable1",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.CompositeJsonTable1"
+        },
+        {
+          "name": "x",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.CompositeJsonTable1"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.CompositeJsonTable2",
+      "name": "CompositeJsonTable2",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.CompositeJsonTable2"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.CompositeJsonTable2"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.CompositeJsonTable3",
+      "name": "CompositeJsonTable3",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "a",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.CompositeJsonTable3"
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.CompositeJsonTable3"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.DateTimeRange",
+      "name": "DateTimeRange",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "start_time",
+          "type": "datetime",
+          "groups": [],
+          "hostType": "test.DateTimeRange"
+        },
+        {
+          "name": "end_time",
+          "type": "datetime",
+          "groups": [],
+          "hostType": "test.DateTimeRange"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.DefineFromExcel2",
+      "name": "DefineFromExcel2",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "comment": "这是id",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "x1",
+          "type": "bool",
+          "comment": "字段x1",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "x5",
+          "type": "long",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "x6",
+          "type": "float",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "x8",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "x10",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "x13",
+          "type": "test.DemoEnum",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "x13_2",
+          "type": "test.DemoFlag",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "x13_3",
+          "type": "test.DemoFlag#sep=,",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "x14",
+          "type": "test.DemoDynamic#sep=,",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "x15",
+          "type": "test.Shape#sep=,",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "v2",
+          "type": "vec2",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "t1",
+          "type": "datetime",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "k1",
+          "type": "(array#sep=;),int",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "k2",
+          "type": "array,int",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "k8",
+          "type": "(map#sep=,),int,int",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "k9",
+          "type": "(list#sep=,),test.DemoE2",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "k10",
+          "type": "list,vec3",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "k11",
+          "type": "list,vec4",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        },
+        {
+          "name": "v11",
+          "type": "vec3?",
+          "groups": [],
+          "hostType": "test.DefineFromExcel2"
+        }
+      ],
+      "source": {
+        "file": "Data/test/define_from_excel.xlsx"
+      }
+    },
+    {
+      "fullName": "test.DemoDynamic",
+      "name": "DemoDynamic",
+      "namespace": "test",
+      "isAbstract": true,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x1",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.DemoDynamic"
+        }
+      ],
+      "children": [
+        "test.DemoD2",
+        "test.DemoD3",
+        "test.DemoD5"
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.DemoD2",
+      "name": "DemoD2",
+      "namespace": "test",
+      "parent": "test.DemoDynamic",
+      "isAbstract": false,
+      "alias": "测试别名",
+      "groups": [],
+      "fields": [
+        {
+          "name": "x1",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.DemoDynamic"
+        },
+        {
+          "name": "x2",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.DemoD2"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.DemoD3",
+      "name": "DemoD3",
+      "namespace": "test",
+      "parent": "test.DemoDynamic",
+      "isAbstract": true,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x1",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.DemoDynamic"
+        },
+        {
+          "name": "x3",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.DemoD3"
+        }
+      ],
+      "children": [
+        "test.DemoE1",
+        "test.login.RoleInfo"
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.DemoE1",
+      "name": "DemoE1",
+      "namespace": "test",
+      "parent": "test.DemoD3",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x1",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.DemoDynamic"
+        },
+        {
+          "name": "x3",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.DemoD3"
+        },
+        {
+          "name": "x4",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.DemoE1"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.login.RoleInfo",
+      "name": "RoleInfo",
+      "namespace": "test.login",
+      "parent": "test.DemoD3",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x1",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.DemoDynamic"
+        },
+        {
+          "name": "x3",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.DemoD3"
+        },
+        {
+          "name": "role_id",
+          "type": "long",
+          "groups": [],
+          "hostType": "test.login.RoleInfo"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.DemoD5",
+      "name": "DemoD5",
+      "namespace": "test",
+      "parent": "test.DemoDynamic",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x1",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.DemoDynamic"
+        },
+        {
+          "name": "time",
+          "type": "DateTimeRange",
+          "groups": [],
+          "hostType": "test.DemoD5"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.DemoE2",
+      "name": "DemoE2",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "y1",
+          "type": "int?",
+          "groups": [],
+          "hostType": "test.DemoE2"
+        },
+        {
+          "name": "y2",
+          "type": "bool",
+          "groups": [],
+          "hostType": "test.DemoE2"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.DemoExplicitType",
+      "name": "DemoExplicitType",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x1",
+          "type": "uint8",
+          "groups": [],
+          "hostType": "test.DemoExplicitType"
+        },
+        {
+          "name": "x2",
+          "type": "int16",
+          "groups": [],
+          "hostType": "test.DemoExplicitType"
+        },
+        {
+          "name": "x3",
+          "type": "int32",
+          "groups": [],
+          "hostType": "test.DemoExplicitType"
+        },
+        {
+          "name": "x4",
+          "type": "int64",
+          "groups": [],
+          "hostType": "test.DemoExplicitType"
+        },
+        {
+          "name": "x5",
+          "type": "float32",
+          "groups": [],
+          "hostType": "test.DemoExplicitType"
+        },
+        {
+          "name": "x6",
+          "type": "float64",
+          "groups": [],
+          "hostType": "test.DemoExplicitType"
+        },
+        {
+          "name": "x7",
+          "type": "bigint",
+          "groups": [],
+          "hostType": "test.DemoExplicitType"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.DemoGroup",
+      "name": "DemoGroup",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.DemoGroup"
+        },
+        {
+          "name": "x1",
+          "type": "int#ref=test.TbDemoGroup_C",
+          "groups": [
+            "c"
+          ],
+          "hostType": "test.DemoGroup"
+        },
+        {
+          "name": "x2",
+          "type": "int#ref=test.TbDemoGroup_S",
+          "groups": [
+            "s"
+          ],
+          "hostType": "test.DemoGroup"
+        },
+        {
+          "name": "x3",
+          "type": "int#ref=test.TbDemoGroup_E",
+          "groups": [
+            "e"
+          ],
+          "hostType": "test.DemoGroup"
+        },
+        {
+          "name": "x4",
+          "type": "int",
+          "groups": [
+            "c",
+            "s"
+          ],
+          "hostType": "test.DemoGroup"
+        },
+        {
+          "name": "x5",
+          "type": "InnerGroup",
+          "groups": [
+            "c"
+          ],
+          "hostType": "test.DemoGroup"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.DemoPrimitiveTypesTable",
+      "name": "DemoPrimitiveTypesTable",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x1",
+          "type": "bool",
+          "groups": [],
+          "hostType": "test.DemoPrimitiveTypesTable"
+        },
+        {
+          "name": "x2",
+          "type": "byte",
+          "groups": [],
+          "hostType": "test.DemoPrimitiveTypesTable"
+        },
+        {
+          "name": "x3",
+          "type": "short",
+          "groups": [],
+          "hostType": "test.DemoPrimitiveTypesTable"
+        },
+        {
+          "name": "x4",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.DemoPrimitiveTypesTable"
+        },
+        {
+          "name": "x5",
+          "type": "long",
+          "groups": [],
+          "hostType": "test.DemoPrimitiveTypesTable"
+        },
+        {
+          "name": "x6",
+          "type": "float",
+          "groups": [],
+          "hostType": "test.DemoPrimitiveTypesTable"
+        },
+        {
+          "name": "x7",
+          "type": "double",
+          "groups": [],
+          "hostType": "test.DemoPrimitiveTypesTable"
+        },
+        {
+          "name": "s1",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.DemoPrimitiveTypesTable"
+        },
+        {
+          "name": "s2",
+          "type": "text",
+          "groups": [],
+          "hostType": "test.DemoPrimitiveTypesTable"
+        },
+        {
+          "name": "v2",
+          "type": "vec2",
+          "groups": [],
+          "hostType": "test.DemoPrimitiveTypesTable"
+        },
+        {
+          "name": "v3",
+          "type": "vec3",
+          "groups": [],
+          "hostType": "test.DemoPrimitiveTypesTable"
+        },
+        {
+          "name": "v4",
+          "type": "vec4",
+          "groups": [],
+          "hostType": "test.DemoPrimitiveTypesTable"
+        },
+        {
+          "name": "t1",
+          "type": "datetime",
+          "groups": [],
+          "hostType": "test.DemoPrimitiveTypesTable"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.DemoSingletonType",
+      "name": "DemoSingletonType",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.DemoSingletonType"
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "groups": [],
+          "hostType": "test.DemoSingletonType"
+        },
+        {
+          "name": "date",
+          "type": "DemoDynamic",
+          "groups": [],
+          "hostType": "test.DemoSingletonType"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.DemoType1",
+      "name": "DemoType1",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x1",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.DemoType1"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.DemoType2",
+      "name": "DemoType2",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "tags": {
+        "d": "5",
+        "a": "3"
+      },
+      "fields": [
+        {
+          "name": "x4",
+          "type": "int#range=[1,100]",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "x1",
+          "type": "bool#kind=cat#type=sss",
+          "groups": [],
+          "tags": {
+            "aa": "10",
+            "bb": "23"
+          },
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "x2",
+          "type": "byte#kind=mouse#name=yyy",
+          "groups": [],
+          "tags": {
+            "aa": "aa",
+            "dd": "32"
+          },
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "x3",
+          "type": "short",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "x5",
+          "type": "long",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "x6",
+          "type": "float",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "x7",
+          "type": "double",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "x8_0",
+          "type": "short",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "x8",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "x9",
+          "type": "long",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "x10",
+          "type": "string#res=demo",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "x12",
+          "type": "DemoType1",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "x13",
+          "type": "DemoEnum#sep=,",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "x14",
+          "type": "DemoDynamic#sep=,",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "s1",
+          "type": "text",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "t1",
+          "type": "datetime",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "k1",
+          "type": "array,int",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "k2",
+          "type": "list,int",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "k5",
+          "type": "set,int",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "k8",
+          "type": "(map#sep=,),int#ref=test.TbFullTypes,int#ref=test.TbFullTypes",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "k9",
+          "type": "(list#sep=;),DemoE2#sep=,",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        },
+        {
+          "name": "k15",
+          "type": "(array#sep=;),DemoDynamic#sep=,",
+          "groups": [],
+          "hostType": "test.DemoType2"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.DetectEncoding",
+      "name": "DetectEncoding",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.DetectEncoding"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.DetectEncoding"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.ExcelFromJson",
+      "name": "ExcelFromJson",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x4",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.ExcelFromJson"
+        },
+        {
+          "name": "x1",
+          "type": "bool",
+          "groups": [],
+          "hostType": "test.ExcelFromJson"
+        },
+        {
+          "name": "x5",
+          "type": "long",
+          "groups": [],
+          "hostType": "test.ExcelFromJson"
+        },
+        {
+          "name": "x6",
+          "type": "float",
+          "groups": [],
+          "hostType": "test.ExcelFromJson"
+        },
+        {
+          "name": "s1",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.ExcelFromJson"
+        },
+        {
+          "name": "s2",
+          "type": "text",
+          "groups": [],
+          "hostType": "test.ExcelFromJson"
+        },
+        {
+          "name": "t1",
+          "type": "datetime",
+          "groups": [],
+          "hostType": "test.ExcelFromJson"
+        },
+        {
+          "name": "x12",
+          "type": "DemoType1",
+          "groups": [],
+          "hostType": "test.ExcelFromJson"
+        },
+        {
+          "name": "x13",
+          "type": "DemoEnum",
+          "groups": [],
+          "hostType": "test.ExcelFromJson"
+        },
+        {
+          "name": "x14",
+          "type": "DemoDynamic",
+          "groups": [],
+          "hostType": "test.ExcelFromJson"
+        },
+        {
+          "name": "k1",
+          "type": "array,int",
+          "groups": [],
+          "hostType": "test.ExcelFromJson"
+        },
+        {
+          "name": "k8",
+          "type": "map,int,int",
+          "groups": [],
+          "hostType": "test.ExcelFromJson"
+        },
+        {
+          "name": "k9",
+          "type": "list,DemoE2",
+          "groups": [],
+          "hostType": "test.ExcelFromJson"
+        },
+        {
+          "name": "k15",
+          "type": "array,DemoDynamic",
+          "groups": [],
+          "hostType": "test.ExcelFromJson"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.ExcelFromJsonMultiRow",
+      "name": "ExcelFromJsonMultiRow",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.ExcelFromJsonMultiRow"
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.ExcelFromJsonMultiRow"
+        },
+        {
+          "name": "items",
+          "type": "list,TestRow",
+          "groups": [],
+          "hostType": "test.ExcelFromJsonMultiRow"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.Foo",
+      "name": "Foo",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "y1",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.Foo"
+        },
+        {
+          "name": "y2",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.Foo"
+        },
+        {
+          "name": "y3",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.Foo"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.H1",
+      "name": "H1",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "y2",
+          "type": "H2",
+          "groups": [],
+          "hostType": "test.H1"
+        },
+        {
+          "name": "y3",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.H1"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.H2",
+      "name": "H2",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "z2",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.H2"
+        },
+        {
+          "name": "z3",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.H2"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.InnerGroup",
+      "name": "InnerGroup",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [
+        "c"
+      ],
+      "fields": [
+        {
+          "name": "y1",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.InnerGroup"
+        },
+        {
+          "name": "y2",
+          "type": "int",
+          "groups": [
+            "c"
+          ],
+          "hostType": "test.InnerGroup"
+        },
+        {
+          "name": "y3",
+          "type": "int",
+          "groups": [
+            "s"
+          ],
+          "hostType": "test.InnerGroup"
+        },
+        {
+          "name": "y4",
+          "type": "int",
+          "groups": [
+            "c",
+            "s"
+          ],
+          "hostType": "test.InnerGroup"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.ItemBase",
+      "name": "ItemBase",
+      "namespace": "test",
+      "isAbstract": true,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.ItemBase"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.ItemBase"
+        },
+        {
+          "name": "desc",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.ItemBase"
+        }
+      ],
+      "children": [
+        "test.Item",
+        "test.Equipment",
+        "test.Decorator"
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.Decorator",
+      "name": "Decorator",
+      "namespace": "test",
+      "parent": "test.ItemBase",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.ItemBase"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.ItemBase"
+        },
+        {
+          "name": "desc",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.ItemBase"
+        },
+        {
+          "name": "duration",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.Decorator"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.Equipment",
+      "name": "Equipment",
+      "namespace": "test",
+      "parent": "test.ItemBase",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.ItemBase"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.ItemBase"
+        },
+        {
+          "name": "desc",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.ItemBase"
+        },
+        {
+          "name": "attr",
+          "type": "DemoEnum",
+          "groups": [],
+          "hostType": "test.Equipment"
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.Equipment"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.Item",
+      "name": "Item",
+      "namespace": "test",
+      "parent": "test.ItemBase",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.ItemBase"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.ItemBase"
+        },
+        {
+          "name": "desc",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.ItemBase"
+        },
+        {
+          "name": "num",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.Item"
+        },
+        {
+          "name": "price",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.Item"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.MultiIndexList",
+      "name": "MultiIndexList",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id1",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.MultiIndexList"
+        },
+        {
+          "name": "id2",
+          "type": "long",
+          "groups": [],
+          "hostType": "test.MultiIndexList"
+        },
+        {
+          "name": "id3",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.MultiIndexList"
+        },
+        {
+          "name": "num",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.MultiIndexList"
+        },
+        {
+          "name": "desc",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.MultiIndexList"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.MultiRowRecord",
+      "name": "MultiRowRecord",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.MultiRowRecord"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.MultiRowRecord"
+        },
+        {
+          "name": "one_rows",
+          "type": "list,MultiRowType1",
+          "groups": [],
+          "hostType": "test.MultiRowRecord"
+        },
+        {
+          "name": "multi_rows1",
+          "type": "list,MultiRowType1",
+          "groups": [],
+          "hostType": "test.MultiRowRecord"
+        },
+        {
+          "name": "multi_rows2",
+          "type": "array,MultiRowType1",
+          "groups": [],
+          "hostType": "test.MultiRowRecord"
+        },
+        {
+          "name": "multi_rows4",
+          "type": "map,int,MultiRowType2",
+          "groups": [],
+          "hostType": "test.MultiRowRecord"
+        },
+        {
+          "name": "multi_rows5",
+          "type": "list,MultiRowType3",
+          "groups": [],
+          "hostType": "test.MultiRowRecord"
+        },
+        {
+          "name": "multi_rows6",
+          "type": "map,int,MultiRowType2",
+          "groups": [],
+          "hostType": "test.MultiRowRecord"
+        },
+        {
+          "name": "multi_rows7",
+          "type": "map,int,int",
+          "groups": [],
+          "hostType": "test.MultiRowRecord"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.MultiRowTitle",
+      "name": "MultiRowTitle",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.MultiRowTitle"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.MultiRowTitle"
+        },
+        {
+          "name": "x1",
+          "type": "H1",
+          "groups": [],
+          "hostType": "test.MultiRowTitle"
+        },
+        {
+          "name": "x2_0",
+          "type": "H2?",
+          "groups": [],
+          "hostType": "test.MultiRowTitle"
+        },
+        {
+          "name": "x2",
+          "type": "list,H2",
+          "groups": [],
+          "hostType": "test.MultiRowTitle"
+        },
+        {
+          "name": "x3",
+          "type": "array,H2",
+          "groups": [],
+          "hostType": "test.MultiRowTitle"
+        },
+        {
+          "name": "x4",
+          "type": "array,H2",
+          "groups": [],
+          "hostType": "test.MultiRowTitle"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.MultiRowType1",
+      "name": "MultiRowType1",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.MultiRowType1"
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.MultiRowType1"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.MultiRowType2",
+      "name": "MultiRowType2",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.MultiRowType2"
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.MultiRowType2"
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "groups": [],
+          "hostType": "test.MultiRowType2"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.MultiRowType3",
+      "name": "MultiRowType3",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.MultiRowType3"
+        },
+        {
+          "name": "items",
+          "type": "list,MultiRowType1",
+          "groups": [],
+          "hostType": "test.MultiRowType3"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.MultiUnionIndexList",
+      "name": "MultiUnionIndexList",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id1",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.MultiUnionIndexList"
+        },
+        {
+          "name": "id2",
+          "type": "long",
+          "groups": [],
+          "hostType": "test.MultiUnionIndexList"
+        },
+        {
+          "name": "id3",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.MultiUnionIndexList"
+        },
+        {
+          "name": "num",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.MultiUnionIndexList"
+        },
+        {
+          "name": "desc",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.MultiUnionIndexList"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.NotIndexList",
+      "name": "NotIndexList",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.NotIndexList"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.NotIndexList"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.Path",
+      "name": "Path",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.Path"
+        },
+        {
+          "name": "res",
+          "type": "string#path=unity",
+          "groups": [],
+          "hostType": "test.Path"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.RefDynamicBase",
+      "name": "RefDynamicBase",
+      "namespace": "test",
+      "isAbstract": true,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x",
+          "type": "int#ref=test.TbTestBeRef",
+          "groups": [],
+          "hostType": "test.RefDynamicBase"
+        }
+      ],
+      "children": [
+        "test.RefBean"
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.RefBean",
+      "name": "RefBean",
+      "namespace": "test",
+      "parent": "test.RefDynamicBase",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x",
+          "type": "int#ref=test.TbTestBeRef",
+          "groups": [],
+          "hostType": "test.RefDynamicBase"
+        },
+        {
+          "name": "arr",
+          "type": "(list#sep=|),(int#ref=test.TbTestBeRef)",
+          "groups": [],
+          "hostType": "test.RefBean"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.SepBean1",
+      "name": "SepBean1",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "a",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.SepBean1"
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.SepBean1"
+        },
+        {
+          "name": "c",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.SepBean1"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.SepVector",
+      "name": "SepVector",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.SepVector"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.SepVector"
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.SepVector"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.Shape",
+      "name": "Shape",
+      "namespace": "test",
+      "isAbstract": true,
+      "groups": [],
+      "fields": [],
+      "children": [
+        "test.Circle",
+        "test2.Rectangle"
+      ],
+      "source": {
+        "file": "Data/__beans__.xlsx"
+      }
+    },
+    {
+      "fullName": "test.Circle",
+      "name": "Circle",
+      "namespace": "test",
+      "parent": "Shape",
+      "isAbstract": false,
+      "alias": "圆",
+      "comment": "圆",
+      "groups": [],
+      "fields": [
+        {
+          "name": "radius",
+          "type": "float",
+          "comment": "半径",
+          "groups": [],
+          "hostType": "test.Circle"
+        }
+      ],
+      "source": {
+        "file": "Data/__beans__.xlsx"
+      }
+    },
+    {
+      "fullName": "test2.Rectangle",
+      "name": "Rectangle",
+      "namespace": "test2",
+      "parent": "test.Shape",
+      "isAbstract": false,
+      "alias": "矩形",
+      "comment": "矩形",
+      "groups": [],
+      "fields": [
+        {
+          "name": "width",
+          "type": "float",
+          "comment": "宽度",
+          "groups": [],
+          "hostType": "test2.Rectangle"
+        },
+        {
+          "name": "height",
+          "type": "float",
+          "comment": "高度",
+          "groups": [],
+          "hostType": "test2.Rectangle"
+        }
+      ],
+      "source": {
+        "file": "Data/__beans__.xlsx"
+      }
+    },
+    {
+      "fullName": "test.Test3",
+      "name": "Test3",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.Test3"
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.Test3"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestBeRef",
+      "name": "TestBeRef",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestBeRef"
+        },
+        {
+          "name": "count",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestBeRef"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestConstAlias",
+      "name": "TestConstAlias",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestConstAlias"
+        },
+        {
+          "name": "x1",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestConstAlias"
+        },
+        {
+          "name": "x2",
+          "type": "long",
+          "groups": [],
+          "hostType": "test.TestConstAlias"
+        },
+        {
+          "name": "x3",
+          "type": "float",
+          "groups": [],
+          "hostType": "test.TestConstAlias"
+        },
+        {
+          "name": "x4",
+          "type": "double",
+          "groups": [],
+          "hostType": "test.TestConstAlias"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestExcelBean1",
+      "name": "TestExcelBean1",
+      "namespace": "test",
+      "isAbstract": false,
+      "comment": "这是个测试excel结构",
+      "groups": [
+        "c"
+      ],
+      "fields": [
+        {
+          "name": "x1",
+          "type": "int",
+          "comment": "最高品质",
+          "groups": [],
+          "hostType": "test.TestExcelBean1"
+        },
+        {
+          "name": "x2",
+          "type": "string",
+          "comment": "黑色的",
+          "groups": [],
+          "hostType": "test.TestExcelBean1"
+        },
+        {
+          "name": "x3",
+          "type": "int",
+          "comment": "蓝色的",
+          "groups": [],
+          "hostType": "test.TestExcelBean1"
+        },
+        {
+          "name": "x4",
+          "type": "float",
+          "comment": "最差品质",
+          "groups": [],
+          "hostType": "test.TestExcelBean1"
+        }
+      ],
+      "source": {
+        "file": "Data/__beans__.xlsx"
+      }
+    },
+    {
+      "fullName": "test.TestExcelBean2",
+      "name": "TestExcelBean2",
+      "namespace": "test",
+      "isAbstract": false,
+      "comment": "这是个测试excel结构",
+      "groups": [],
+      "fields": [
+        {
+          "name": "y1",
+          "type": "int",
+          "comment": "最高品质",
+          "groups": [],
+          "hostType": "test.TestExcelBean2"
+        },
+        {
+          "name": "y2",
+          "type": "string",
+          "comment": "黑色的",
+          "groups": [],
+          "hostType": "test.TestExcelBean2"
+        },
+        {
+          "name": "y3",
+          "type": "float",
+          "comment": "蓝色的",
+          "groups": [],
+          "hostType": "test.TestExcelBean2"
+        }
+      ],
+      "source": {
+        "file": "Data/__beans__.xlsx"
+      }
+    },
+    {
+      "fullName": "test.TestFieldAlias",
+      "name": "TestFieldAlias",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestFieldAlias"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "alias": "name2",
+          "groups": [],
+          "hostType": "test.TestFieldAlias"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestFieldVariant",
+      "name": "TestFieldVariant",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestFieldVariant"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.TestFieldVariant",
+          "variants": [
+            "zh",
+            "en"
+          ]
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestFieldVariant2",
+      "name": "TestFieldVariant2",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestFieldVariant2"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.TestFieldVariant2",
+          "variants": [
+            "en",
+            "zh"
+          ]
+        }
+      ],
+      "source": {
+        "file": "Data/test/field_variant2.xlsx"
+      }
+    },
+    {
+      "fullName": "test.TestFormat",
+      "name": "TestFormat",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "a1",
+          "type": "(array#sep=,),int",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "a2",
+          "type": "array,int",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "a3",
+          "type": "array,int",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "a4",
+          "type": "array,int",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "b1",
+          "type": "(list#sep=,),int",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "b2",
+          "type": "list,int",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "b3",
+          "type": "list,int",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "b4",
+          "type": "list,int",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "c1",
+          "type": "(set#sep=,),int",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "c2",
+          "type": "set,int",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "c3",
+          "type": "set,int",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "c4",
+          "type": "set,int",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "m1",
+          "type": "(map#sep=,|),int,int",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "m2",
+          "type": "map,int,int",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "m3",
+          "type": "map,int,int",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "m4",
+          "type": "map,int,int",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "v31",
+          "type": "vec3",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "v32",
+          "type": "vec3",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "v33",
+          "type": "vec3",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "v34",
+          "type": "vec3",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "v41",
+          "type": "(list#sep=|),vec3",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "v42",
+          "type": "list,vec3",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "v43",
+          "type": "list,vec3",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        },
+        {
+          "name": "v44",
+          "type": "list,vec3",
+          "groups": [],
+          "hostType": "test.TestFormat"
+        }
+      ],
+      "source": {
+        "file": "Data/test/#TestFormat.xlsx"
+      }
+    },
+    {
+      "fullName": "test.TestGlobal",
+      "name": "TestGlobal",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "unlock_equip",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestGlobal"
+        },
+        {
+          "name": "unlock_hero",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestGlobal"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestIndex",
+      "name": "TestIndex",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestIndex"
+        },
+        {
+          "name": "eles",
+          "type": "(list#index=x1),DemoType1",
+          "groups": [],
+          "hostType": "test.TestIndex"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestMap",
+      "name": "TestMap",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int#ref=test.TbTestIndex",
+          "groups": [],
+          "hostType": "test.TestMap"
+        },
+        {
+          "name": "x1",
+          "type": "map,int,int",
+          "groups": [],
+          "hostType": "test.TestMap"
+        },
+        {
+          "name": "x2",
+          "type": "map,long,int",
+          "groups": [],
+          "hostType": "test.TestMap"
+        },
+        {
+          "name": "x3",
+          "type": "map,string,int",
+          "groups": [],
+          "hostType": "test.TestMap"
+        },
+        {
+          "name": "x4",
+          "type": "map,DemoEnum,int",
+          "groups": [],
+          "hostType": "test.TestMap"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestMapper",
+      "name": "TestMapper",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestMapper"
+        },
+        {
+          "name": "audio_type",
+          "type": "AudioType",
+          "groups": [],
+          "hostType": "test.TestMapper"
+        },
+        {
+          "name": "v2",
+          "type": "vec2",
+          "groups": [],
+          "hostType": "test.TestMapper"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestMultiColumn",
+      "name": "TestMultiColumn",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestMultiColumn"
+        },
+        {
+          "name": "a",
+          "type": "Foo",
+          "groups": [],
+          "hostType": "test.TestMultiColumn"
+        },
+        {
+          "name": "b",
+          "type": "Foo",
+          "groups": [],
+          "hostType": "test.TestMultiColumn"
+        },
+        {
+          "name": "c",
+          "type": "Foo",
+          "groups": [],
+          "hostType": "test.TestMultiColumn"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestNull",
+      "name": "TestNull",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestNull"
+        },
+        {
+          "name": "x1",
+          "type": "int?",
+          "groups": [],
+          "hostType": "test.TestNull"
+        },
+        {
+          "name": "x2",
+          "type": "DemoEnum?",
+          "groups": [],
+          "hostType": "test.TestNull"
+        },
+        {
+          "name": "x3",
+          "type": "DemoType1?",
+          "groups": [],
+          "hostType": "test.TestNull"
+        },
+        {
+          "name": "x4",
+          "type": "DemoDynamic?",
+          "groups": [],
+          "hostType": "test.TestNull"
+        },
+        {
+          "name": "s1",
+          "type": "string?",
+          "groups": [],
+          "hostType": "test.TestNull"
+        },
+        {
+          "name": "s2",
+          "type": "text?",
+          "groups": [],
+          "hostType": "test.TestNull"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestRange",
+      "name": "TestRange",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestRange"
+        },
+        {
+          "name": "f1",
+          "type": "float#(range=[1.1, 2.2])",
+          "groups": [],
+          "hostType": "test.TestRange"
+        },
+        {
+          "name": "f2",
+          "type": "float#(range=[0.01, 0.02])",
+          "groups": [],
+          "hostType": "test.TestRange"
+        },
+        {
+          "name": "d1",
+          "type": "double#(range=[1.1, 2.2])",
+          "groups": [],
+          "hostType": "test.TestRange"
+        },
+        {
+          "name": "d2",
+          "type": "double#(range=[0.01, 0.02])",
+          "groups": [],
+          "hostType": "test.TestRange"
+        },
+        {
+          "name": "i1",
+          "type": "int#(range=[1, 10])",
+          "groups": [],
+          "hostType": "test.TestRange"
+        },
+        {
+          "name": "i2",
+          "type": "int#(range=(1, 10])",
+          "groups": [],
+          "hostType": "test.TestRange"
+        },
+        {
+          "name": "i3",
+          "type": "int#(range=(1, 10))",
+          "groups": [],
+          "hostType": "test.TestRange"
+        },
+        {
+          "name": "i4",
+          "type": "int#(range=[1, 10))",
+          "groups": [],
+          "hostType": "test.TestRange"
+        },
+        {
+          "name": "l1",
+          "type": "long#(range=[1, 10])",
+          "groups": [],
+          "hostType": "test.TestRange"
+        },
+        {
+          "name": "l2",
+          "type": "long#(range=(1, 10])",
+          "groups": [],
+          "hostType": "test.TestRange"
+        },
+        {
+          "name": "l3",
+          "type": "long#(range=(1, 10))",
+          "groups": [],
+          "hostType": "test.TestRange"
+        },
+        {
+          "name": "l4",
+          "type": "long#(range=[1, 10))",
+          "groups": [],
+          "hostType": "test.TestRange"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestRef",
+      "name": "TestRef",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "x1",
+          "type": "int#ref=test.TbTestBeRef",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "x1_2",
+          "type": "int#ref=test.TbTestBeRef",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "x2",
+          "type": "int#ref=test_ref_group2",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "x3",
+          "type": "int#ref=test_ref_group",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "x4",
+          "type": "int#ref=tag.TbTestTag?",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "a1",
+          "type": "array,(int#ref=test.TbTestBeRef)",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "a2",
+          "type": "array,(int#ref=test.TbTestBeRef)",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "b1",
+          "type": "list,(int#ref=test.TbTestBeRef)",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "b2",
+          "type": "list,(int#ref=test.TbTestBeRef)",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "c1",
+          "type": "set,(int#ref=test.TbTestBeRef)",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "c2",
+          "type": "set,(int#ref=test.TbTestBeRef)",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "d1",
+          "type": "(map#aaa=5),int#ref=test.TbTestBeRef,int#ref=test.TbTestBeRef",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "d2",
+          "type": "map#aaa=5;int#ref=test.TbTestBeRef;int#ref=test.TbTestBeRef",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "e1",
+          "type": "int#ref=id1@test.TbMultiIndexList",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "e2",
+          "type": "long#ref=id2@test.TbMultiIndexList",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "e3",
+          "type": "string#ref=id3@test.TbMultiIndexList",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "f1",
+          "type": "int#ref=id1@test.TbMultiIndexList",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "f2",
+          "type": "long#ref=id2@test.TbMultiIndexList",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "f3",
+          "type": "string#ref=id3@test.TbMultiIndexList",
+          "groups": [],
+          "hostType": "test.TestRef"
+        },
+        {
+          "name": "s1",
+          "type": "RefDynamicBase",
+          "groups": [],
+          "hostType": "test.TestRef"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestRow",
+      "name": "TestRow",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestRow"
+        },
+        {
+          "name": "y",
+          "type": "bool",
+          "groups": [],
+          "hostType": "test.TestRow"
+        },
+        {
+          "name": "z",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.TestRow"
+        },
+        {
+          "name": "a",
+          "type": "Test3",
+          "groups": [],
+          "hostType": "test.TestRow"
+        },
+        {
+          "name": "b",
+          "type": "list,int",
+          "groups": [],
+          "hostType": "test.TestRow"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestScriptableObject",
+      "name": "TestScriptableObject",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestScriptableObject"
+        },
+        {
+          "name": "desc",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.TestScriptableObject"
+        },
+        {
+          "name": "rate",
+          "type": "float",
+          "groups": [],
+          "hostType": "test.TestScriptableObject"
+        },
+        {
+          "name": "num",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestScriptableObject"
+        },
+        {
+          "name": "v2",
+          "type": "vec2",
+          "groups": [],
+          "hostType": "test.TestScriptableObject"
+        },
+        {
+          "name": "v3",
+          "type": "vec3",
+          "groups": [],
+          "hostType": "test.TestScriptableObject"
+        },
+        {
+          "name": "v4",
+          "type": "vec4",
+          "groups": [],
+          "hostType": "test.TestScriptableObject"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestSep",
+      "name": "TestSep",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestSep"
+        },
+        {
+          "name": "a1",
+          "type": "(list#sep=;),int",
+          "groups": [],
+          "hostType": "test.TestSep"
+        },
+        {
+          "name": "a2",
+          "type": "(list#sep=\\#),int",
+          "groups": [],
+          "hostType": "test.TestSep"
+        },
+        {
+          "name": "a3",
+          "type": "(list#sep=&),int",
+          "groups": [],
+          "hostType": "test.TestSep"
+        },
+        {
+          "name": "x2",
+          "type": "SepBean1#sep=,",
+          "groups": [],
+          "hostType": "test.TestSep"
+        },
+        {
+          "name": "x3",
+          "type": "SepVector",
+          "comment": "SepVector已经定义了sep=,属性",
+          "groups": [],
+          "hostType": "test.TestSep"
+        },
+        {
+          "name": "x4",
+          "type": "(list#sep=;),SepVector",
+          "comment": "用;来分割数据，然后顺序读入SepVector",
+          "groups": [],
+          "hostType": "test.TestSep"
+        },
+        {
+          "name": "x6",
+          "type": "(list#sep=;),SepBean1#sep=,",
+          "comment": "用;分割数据，然后再将每个数据用,分割，读入",
+          "groups": [],
+          "hostType": "test.TestSep"
+        }
+      ],
+      "source": {
+        "file": "Data/test/test_sep.xlsx"
+      }
+    },
+    {
+      "fullName": "test.TestSet",
+      "name": "TestSet",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestSet"
+        },
+        {
+          "name": "x0",
+          "type": "string#(set=ab,cd)",
+          "groups": [],
+          "hostType": "test.TestSet"
+        },
+        {
+          "name": "x1",
+          "type": "list,int#set=1,2,3,4,5",
+          "groups": [],
+          "hostType": "test.TestSet"
+        },
+        {
+          "name": "x2",
+          "type": "list,long#set=2,3,4,5",
+          "groups": [],
+          "hostType": "test.TestSet"
+        },
+        {
+          "name": "x3",
+          "type": "list,string#set=ab,cd",
+          "groups": [],
+          "hostType": "test.TestSet"
+        },
+        {
+          "name": "x4",
+          "type": "list,DemoEnum#set=A,B",
+          "groups": [],
+          "hostType": "test.TestSet"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestSize",
+      "name": "TestSize",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestSize"
+        },
+        {
+          "name": "x1",
+          "type": "(array#size=2),int",
+          "groups": [],
+          "hostType": "test.TestSize"
+        },
+        {
+          "name": "x2",
+          "type": "(list#(size=[1, 3])),int",
+          "groups": [],
+          "hostType": "test.TestSize"
+        },
+        {
+          "name": "x3",
+          "type": "(set#(size=[1,])),int",
+          "groups": [],
+          "hostType": "test.TestSize"
+        },
+        {
+          "name": "x4",
+          "type": "(map#(size=(1, 3))),int,int",
+          "groups": [],
+          "hostType": "test.TestSize"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestString",
+      "name": "TestString",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.TestString"
+        },
+        {
+          "name": "s1",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.TestString"
+        },
+        {
+          "name": "s2",
+          "type": "string#escape=1",
+          "groups": [],
+          "hostType": "test.TestString"
+        },
+        {
+          "name": "cs1",
+          "type": "CompactString",
+          "groups": [],
+          "hostType": "test.TestString"
+        },
+        {
+          "name": "cs2",
+          "type": "CompactString",
+          "groups": [],
+          "hostType": "test.TestString"
+        },
+        {
+          "name": "css",
+          "type": "(list#sep=,),string",
+          "groups": [],
+          "hostType": "test.TestString"
+        },
+        {
+          "name": "css2",
+          "type": "(list#sep=,),string",
+          "groups": [],
+          "hostType": "test.TestString"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestTableVariant",
+      "name": "TestTableVariant",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "id",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestTableVariant"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.TestTableVariant"
+        },
+        {
+          "name": "desc",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.TestTableVariant"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.TestUeType",
+      "name": "TestUeType",
+      "namespace": "test",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x1",
+          "type": "bool",
+          "groups": [],
+          "hostType": "test.TestUeType"
+        },
+        {
+          "name": "x2",
+          "type": "byte",
+          "groups": [],
+          "hostType": "test.TestUeType"
+        },
+        {
+          "name": "x3",
+          "type": "short",
+          "groups": [],
+          "hostType": "test.TestUeType"
+        },
+        {
+          "name": "x4",
+          "type": "int",
+          "groups": [],
+          "hostType": "test.TestUeType"
+        },
+        {
+          "name": "x5",
+          "type": "long",
+          "groups": [],
+          "hostType": "test.TestUeType"
+        },
+        {
+          "name": "x6",
+          "type": "float",
+          "groups": [],
+          "hostType": "test.TestUeType"
+        },
+        {
+          "name": "x10",
+          "type": "string",
+          "groups": [],
+          "hostType": "test.TestUeType"
+        },
+        {
+          "name": "x12",
+          "type": "DemoType1",
+          "groups": [],
+          "hostType": "test.TestUeType"
+        },
+        {
+          "name": "x13",
+          "type": "ETestUeType",
+          "groups": [],
+          "hostType": "test.TestUeType"
+        },
+        {
+          "name": "t1",
+          "type": "datetime",
+          "groups": [],
+          "hostType": "test.TestUeType"
+        },
+        {
+          "name": "k1",
+          "type": "array,int",
+          "groups": [],
+          "hostType": "test.TestUeType"
+        },
+        {
+          "name": "k2",
+          "type": "list,int",
+          "groups": [],
+          "hostType": "test.TestUeType"
+        },
+        {
+          "name": "k5",
+          "type": "set,int",
+          "groups": [],
+          "hostType": "test.TestUeType"
+        },
+        {
+          "name": "k8",
+          "type": "map,int,int",
+          "groups": [],
+          "hostType": "test.TestUeType"
+        },
+        {
+          "name": "k9",
+          "type": "list,DemoE2",
+          "groups": [],
+          "hostType": "test.TestUeType"
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "vec2",
+      "name": "vec2",
+      "namespace": "",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x",
+          "type": "float",
+          "groups": [],
+          "hostType": "vec2"
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "groups": [],
+          "hostType": "vec2"
+        }
+      ],
+      "source": {
+        "file": "Defines/builtin.xml"
+      }
+    },
+    {
+      "fullName": "vec3",
+      "name": "vec3",
+      "namespace": "",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x",
+          "type": "float",
+          "groups": [],
+          "hostType": "vec3"
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "groups": [],
+          "hostType": "vec3"
+        },
+        {
+          "name": "z",
+          "type": "float",
+          "groups": [],
+          "hostType": "vec3"
+        }
+      ],
+      "source": {
+        "file": "Defines/builtin.xml"
+      }
+    },
+    {
+      "fullName": "vec4",
+      "name": "vec4",
+      "namespace": "",
+      "isAbstract": false,
+      "groups": [],
+      "fields": [
+        {
+          "name": "x",
+          "type": "float",
+          "groups": [],
+          "hostType": "vec4"
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "groups": [],
+          "hostType": "vec4"
+        },
+        {
+          "name": "z",
+          "type": "float",
+          "groups": [],
+          "hostType": "vec4"
+        },
+        {
+          "name": "w",
+          "type": "float",
+          "groups": [],
+          "hostType": "vec4"
+        }
+      ],
+      "source": {
+        "file": "Defines/builtin.xml"
+      }
+    }
+  ],
+  "enums": [
+    {
+      "fullName": "ai.EExecutor",
+      "name": "EExecutor",
+      "namespace": "ai",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "CLIENT",
+          "value": 0
+        },
+        {
+          "name": "SERVER",
+          "value": 1
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.EFinishMode",
+      "name": "EFinishMode",
+      "namespace": "ai",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "IMMEDIATE",
+          "value": 0
+        },
+        {
+          "name": "DELAYED",
+          "value": 1
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.EFlowAbortMode",
+      "name": "EFlowAbortMode",
+      "namespace": "ai",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "NONE",
+          "value": 0
+        },
+        {
+          "name": "LOWER_PRIORITY",
+          "value": 1
+        },
+        {
+          "name": "SELF",
+          "value": 2
+        },
+        {
+          "name": "BOTH",
+          "value": 3
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.EKeyType",
+      "name": "EKeyType",
+      "namespace": "ai",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "BOOL",
+          "value": 1
+        },
+        {
+          "name": "INT",
+          "value": 2
+        },
+        {
+          "name": "FLOAT",
+          "value": 3
+        },
+        {
+          "name": "STRING",
+          "value": 4
+        },
+        {
+          "name": "VECTOR",
+          "value": 5
+        },
+        {
+          "name": "ROTATOR",
+          "value": 6
+        },
+        {
+          "name": "NAME",
+          "value": 7
+        },
+        {
+          "name": "CLASS1",
+          "value": 8
+        },
+        {
+          "name": "ENUM1",
+          "value": 9
+        },
+        {
+          "name": "OBJECT",
+          "value": 10
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.ENotifyObserverMode",
+      "name": "ENotifyObserverMode",
+      "namespace": "ai",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "ON_VALUE_CHANGE",
+          "value": 0
+        },
+        {
+          "name": "ON_RESULT_CHANGE",
+          "value": 1
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "ai.EOperator",
+      "name": "EOperator",
+      "namespace": "ai",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "IS_EQUAL_TO",
+          "value": 0
+        },
+        {
+          "name": "IS_NOT_EQUAL_TO",
+          "value": 1
+        },
+        {
+          "name": "IS_LESS_THAN",
+          "value": 2
+        },
+        {
+          "name": "IS_LESS_THAN_OR_EQUAL_TO",
+          "value": 3
+        },
+        {
+          "name": "IS_GREAT_THAN",
+          "value": 4
+        },
+        {
+          "name": "IS_GREAT_THAN_OR_EQUAL_TO",
+          "value": 5
+        },
+        {
+          "name": "CONTAINS",
+          "value": 6
+        },
+        {
+          "name": "NOT_CONTAINS",
+          "value": 7
+        }
+      ],
+      "source": {
+        "file": "Defines/ai.xml"
+      }
+    },
+    {
+      "fullName": "AudioType",
+      "name": "AudioType",
+      "namespace": "",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "UNKNOWN",
+          "value": 0
+        },
+        {
+          "name": "ACC",
+          "value": 1
+        },
+        {
+          "name": "AIFF",
+          "value": 2
+        }
+      ],
+      "source": {
+        "file": "Defines/builtin.xml"
+      }
+    },
+    {
+      "fullName": "common.EBoolOperator",
+      "name": "EBoolOperator",
+      "namespace": "common",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "AND",
+          "value": 0
+        },
+        {
+          "name": "OR",
+          "value": 1
+        }
+      ],
+      "source": {
+        "file": "Defines/common.xml"
+      }
+    },
+    {
+      "fullName": "item.EClothersStarQualityType",
+      "name": "EClothersStarQualityType",
+      "namespace": "item",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "ONE",
+          "value": 1,
+          "alias": "一星",
+          "comment": "一星"
+        },
+        {
+          "name": "TWO",
+          "value": 2,
+          "alias": "二星",
+          "comment": "二星"
+        },
+        {
+          "name": "THREE",
+          "value": 3,
+          "alias": "三星",
+          "comment": "三星"
+        },
+        {
+          "name": "FOUR",
+          "value": 4,
+          "alias": "四星",
+          "comment": "四星"
+        },
+        {
+          "name": "FIVE",
+          "value": 5,
+          "alias": "五星",
+          "comment": "五星"
+        },
+        {
+          "name": "SIX",
+          "value": 6,
+          "alias": "六星",
+          "comment": "六星"
+        },
+        {
+          "name": "SEVEN",
+          "value": 7,
+          "alias": "七星",
+          "comment": "七星"
+        },
+        {
+          "name": "EIGHT",
+          "value": 8,
+          "alias": "八星",
+          "comment": "八星"
+        },
+        {
+          "name": "NINE",
+          "value": 9,
+          "alias": "九星",
+          "comment": "九星"
+        },
+        {
+          "name": "TEN",
+          "value": 10,
+          "alias": "十星",
+          "comment": "十星"
+        }
+      ],
+      "source": {
+        "file": "Defines/item.xml"
+      }
+    },
+    {
+      "fullName": "item.EClothersTag",
+      "name": "EClothersTag",
+      "namespace": "item",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "FANG_SHAI",
+          "value": 1,
+          "alias": "防晒",
+          "comment": "防晒"
+        },
+        {
+          "name": "WU_ZHE",
+          "value": 2,
+          "alias": "舞者",
+          "comment": "舞者"
+        }
+      ],
+      "source": {
+        "file": "Defines/item.xml"
+      }
+    },
+    {
+      "fullName": "item.EClothesHidePartType",
+      "name": "EClothesHidePartType",
+      "namespace": "item",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "CHEST",
+          "value": 0,
+          "alias": "胸部",
+          "comment": "胸部"
+        },
+        {
+          "name": "HEAD",
+          "value": 1,
+          "alias": "手",
+          "comment": "手"
+        },
+        {
+          "name": "SPINE_UPPER",
+          "value": 2,
+          "alias": "脊柱上",
+          "comment": "脊柱上"
+        },
+        {
+          "name": "SPINE_LOWER",
+          "value": 3,
+          "alias": "脊柱下",
+          "comment": "脊柱下"
+        },
+        {
+          "name": "HIP",
+          "value": 4,
+          "alias": "臀部",
+          "comment": "臀部"
+        },
+        {
+          "name": "LEG_UPPER",
+          "value": 5,
+          "alias": "腿上",
+          "comment": "腿上"
+        },
+        {
+          "name": "LEG_MIDDLE",
+          "value": 6,
+          "alias": "腿中",
+          "comment": "腿中"
+        },
+        {
+          "name": "LEG_LOWER",
+          "value": 7,
+          "alias": "腿下",
+          "comment": "腿下"
+        }
+      ],
+      "source": {
+        "file": "Defines/item.xml"
+      }
+    },
+    {
+      "fullName": "item.EClothesPropertyType",
+      "name": "EClothesPropertyType",
+      "namespace": "item",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "JIAN_YUE",
+          "value": 1,
+          "alias": "简约",
+          "comment": "简约"
+        },
+        {
+          "name": "HUA_LI",
+          "value": 2,
+          "alias": "华丽",
+          "comment": "华丽"
+        },
+        {
+          "name": "KE_AI",
+          "value": 3,
+          "alias": "可爱",
+          "comment": "可爱"
+        },
+        {
+          "name": "CHENG_SHU",
+          "value": 4,
+          "alias": "成熟",
+          "comment": "成熟"
+        },
+        {
+          "name": "HUO_PO",
+          "value": 5,
+          "alias": "活泼",
+          "comment": "活泼"
+        },
+        {
+          "name": "YOU_YA",
+          "value": 6,
+          "alias": "优雅",
+          "comment": "优雅"
+        },
+        {
+          "name": "QING_CHUN",
+          "value": 7,
+          "alias": "清纯",
+          "comment": "清纯"
+        },
+        {
+          "name": "XING_GAN",
+          "value": 8,
+          "alias": "性感",
+          "comment": "性感"
+        },
+        {
+          "name": "QING_LIANG",
+          "value": 9,
+          "alias": "清凉",
+          "comment": "清凉"
+        },
+        {
+          "name": "BAO_NUAN",
+          "value": 10,
+          "alias": "保暖",
+          "comment": "保暖"
+        }
+      ],
+      "source": {
+        "file": "Defines/item.xml"
+      }
+    },
+    {
+      "fullName": "item.ECurrencyType",
+      "name": "ECurrencyType",
+      "namespace": "item",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "DIAMOND",
+          "value": 1,
+          "alias": "钻石",
+          "comment": "钻石"
+        },
+        {
+          "name": "GOLD",
+          "value": 2,
+          "alias": "金币",
+          "comment": "金币"
+        },
+        {
+          "name": "SILVER",
+          "value": 3,
+          "alias": "银币",
+          "comment": "银币"
+        },
+        {
+          "name": "EXP",
+          "value": 4,
+          "alias": "经验",
+          "comment": "经验"
+        },
+        {
+          "name": "POWER_POINT",
+          "value": 5,
+          "alias": "能量点",
+          "comment": "能量点"
+        }
+      ],
+      "source": {
+        "file": "Defines/item.xml"
+      }
+    },
+    {
+      "fullName": "item.EItemQuality",
+      "name": "EItemQuality",
+      "namespace": "item",
+      "isFlags": false,
+      "comment": "道具品质",
+      "groups": [],
+      "items": [
+        {
+          "name": "WHITE",
+          "value": 0,
+          "alias": "白",
+          "comment": "白"
+        },
+        {
+          "name": "GREEN",
+          "value": 1,
+          "alias": "绿",
+          "comment": "绿"
+        },
+        {
+          "name": "BLUE",
+          "value": 2,
+          "alias": "蓝",
+          "comment": "蓝"
+        },
+        {
+          "name": "PURPLE",
+          "value": 3,
+          "alias": "紫",
+          "comment": "紫"
+        },
+        {
+          "name": "GOLDEN",
+          "value": 4,
+          "alias": "金",
+          "comment": "金"
+        }
+      ],
+      "source": {
+        "file": "Defines/item.xml"
+      }
+    },
+    {
+      "fullName": "item.EMajorType",
+      "name": "EMajorType",
+      "namespace": "item",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "CURRENCY",
+          "value": 1,
+          "alias": "货币",
+          "comment": "货币"
+        },
+        {
+          "name": "CLOTH",
+          "value": 2,
+          "alias": "服装",
+          "comment": "服装"
+        },
+        {
+          "name": "QUEST",
+          "value": 3,
+          "alias": "任务",
+          "comment": "任务"
+        },
+        {
+          "name": "CONSUMABLES",
+          "value": 4,
+          "alias": "消耗品",
+          "comment": "消耗品"
+        },
+        {
+          "name": "TREASURE_BOX",
+          "value": 5,
+          "alias": "宝箱",
+          "comment": "宝箱"
+        },
+        {
+          "name": "ACHIEVEMENT_AND_TITLE",
+          "value": 6,
+          "alias": "成就和称谓",
+          "comment": "成就和称谓"
+        },
+        {
+          "name": "HEAD_FRAME",
+          "value": 7,
+          "alias": "头像框",
+          "comment": "头像框"
+        },
+        {
+          "name": "VOICE",
+          "value": 8,
+          "alias": "语音",
+          "comment": "语音"
+        },
+        {
+          "name": "ACTION",
+          "value": 9,
+          "alias": "动作",
+          "comment": "动作"
+        },
+        {
+          "name": "EXPANSION",
+          "value": 10,
+          "alias": "扩容道具",
+          "comment": "扩容道具"
+        },
+        {
+          "name": "MATERIAL",
+          "value": 11,
+          "alias": "制作材料",
+          "comment": "制作材料"
+        }
+      ],
+      "source": {
+        "file": "Defines/item.xml"
+      }
+    },
+    {
+      "fullName": "item.EMinorType",
+      "name": "EMinorType",
+      "namespace": "item",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "DIAMOND",
+          "value": 101,
+          "alias": "钻石",
+          "comment": "钻石"
+        },
+        {
+          "name": "GOLD",
+          "value": 102,
+          "alias": "金币",
+          "comment": "金币"
+        },
+        {
+          "name": "SILVER",
+          "value": 103,
+          "alias": "银币",
+          "comment": "银币"
+        },
+        {
+          "name": "EXP",
+          "value": 104,
+          "alias": "经验",
+          "comment": "经验"
+        },
+        {
+          "name": "POWER_POINT",
+          "value": 105,
+          "alias": "能量点",
+          "comment": "能量点"
+        },
+        {
+          "name": "HAIR_STYLE",
+          "value": 210,
+          "alias": "发型",
+          "comment": "发型"
+        },
+        {
+          "name": "COAT",
+          "value": 220,
+          "alias": "外套",
+          "comment": "外套"
+        },
+        {
+          "name": "UPPER_JACKET",
+          "value": 230,
+          "alias": "上衣",
+          "comment": "上衣"
+        },
+        {
+          "name": "TROUSERS",
+          "value": 241,
+          "alias": "裤子",
+          "comment": "裤子"
+        },
+        {
+          "name": "SKIRT",
+          "value": 242,
+          "alias": "裙子",
+          "comment": "裙子"
+        },
+        {
+          "name": "SOCKS",
+          "value": 250,
+          "alias": "袜子",
+          "comment": "袜子"
+        },
+        {
+          "name": "SHOES",
+          "value": 260,
+          "alias": "鞋子",
+          "comment": "鞋子"
+        },
+        {
+          "name": "HAIR_ACCESSORY",
+          "value": 271,
+          "alias": "发饰",
+          "comment": "发饰"
+        },
+        {
+          "name": "HAT",
+          "value": 272,
+          "alias": "帽子",
+          "comment": "帽子"
+        },
+        {
+          "name": "EARRING",
+          "value": 273,
+          "alias": "耳饰",
+          "comment": "耳饰"
+        },
+        {
+          "name": "NECKLACE",
+          "value": 274,
+          "alias": "颈饰",
+          "comment": "颈饰"
+        },
+        {
+          "name": "BRACELET",
+          "value": 275,
+          "alias": "腕饰",
+          "comment": "腕饰"
+        },
+        {
+          "name": "HAIR_CLASP",
+          "value": 276,
+          "alias": "发箍",
+          "comment": "发箍"
+        },
+        {
+          "name": "GLOVE",
+          "value": 277,
+          "alias": "手套",
+          "comment": "手套"
+        },
+        {
+          "name": "HANDHELD_OBJECT",
+          "value": 278,
+          "alias": "手持物",
+          "comment": "手持物"
+        },
+        {
+          "name": "SPECIAL",
+          "value": 279,
+          "alias": "特殊",
+          "comment": "特殊"
+        },
+        {
+          "name": "BASE_COSMETIC",
+          "value": 281,
+          "alias": "底妆",
+          "comment": "底妆"
+        },
+        {
+          "name": "EYEBROW_COSMETIC",
+          "value": 282,
+          "alias": "眉妆",
+          "comment": "眉妆"
+        },
+        {
+          "name": "EYELASH",
+          "value": 283,
+          "alias": "睫毛",
+          "comment": "睫毛"
+        },
+        {
+          "name": "COSMETIC_CONTACT_LENSES",
+          "value": 284,
+          "alias": "美瞳",
+          "comment": "美瞳"
+        },
+        {
+          "name": "LIP_COSMETIC",
+          "value": 285,
+          "alias": "唇妆",
+          "comment": "唇妆"
+        },
+        {
+          "name": "SKIN_COLOR",
+          "value": 286,
+          "alias": "肤色",
+          "comment": "肤色"
+        },
+        {
+          "name": "ONE_PIECE_DRESS",
+          "value": 290,
+          "alias": "连衣裙",
+          "comment": "连衣裙"
+        },
+        {
+          "name": "SWITCH_CLOTHES_SCENE",
+          "value": 291,
+          "alias": "换装场景",
+          "comment": "换装场景"
+        },
+        {
+          "name": "QUEST",
+          "value": 301,
+          "alias": "任务道具",
+          "comment": "任务道具"
+        },
+        {
+          "name": "CAST",
+          "value": 401,
+          "alias": "投掷物",
+          "comment": "投掷物"
+        },
+        {
+          "name": "SWORD",
+          "value": 421,
+          "alias": "刀剑",
+          "comment": "刀剑"
+        },
+        {
+          "name": "BOW_ARROW",
+          "value": 422,
+          "alias": "弓箭",
+          "comment": "弓箭"
+        },
+        {
+          "name": "WANDS",
+          "value": 423,
+          "alias": "法杖",
+          "comment": "法杖"
+        },
+        {
+          "name": "SPECIAL_TOOL",
+          "value": 424,
+          "alias": "特殊工具",
+          "comment": "特殊工具"
+        },
+        {
+          "name": "FOOD",
+          "value": 403,
+          "alias": "食物",
+          "comment": "食物"
+        },
+        {
+          "name": "TREASURE_BOX",
+          "value": 501,
+          "alias": "宝箱",
+          "comment": "宝箱"
+        },
+        {
+          "name": "KEY",
+          "value": 502,
+          "alias": "钥匙",
+          "comment": "钥匙"
+        },
+        {
+          "name": "MULTI_CHOOSE_TREASURE_BOX",
+          "value": 503,
+          "alias": "多选一宝箱",
+          "comment": "多选一宝箱"
+        },
+        {
+          "name": "ACHIEVEMENT",
+          "value": 601,
+          "alias": "成就相关",
+          "comment": "成就相关"
+        },
+        {
+          "name": "TITLE",
+          "value": 602,
+          "alias": "称谓相关",
+          "comment": "称谓相关"
+        },
+        {
+          "name": "AVATAR_FRAME",
+          "value": 701,
+          "alias": "头像框",
+          "comment": "头像框"
+        },
+        {
+          "name": "VOICE",
+          "value": 801,
+          "alias": "语音",
+          "comment": "语音"
+        },
+        {
+          "name": "IDLE_POSE",
+          "value": 901,
+          "alias": "特殊待机动作",
+          "comment": "特殊待机动作"
+        },
+        {
+          "name": "PHOTO_POSE",
+          "value": 902,
+          "alias": "拍照动作",
+          "comment": "拍照动作"
+        },
+        {
+          "name": "BAG",
+          "value": 1001,
+          "alias": "背包",
+          "comment": "背包"
+        },
+        {
+          "name": "FRIEND_CAPACITY",
+          "value": 1002,
+          "alias": "好友数量",
+          "comment": "好友数量"
+        },
+        {
+          "name": "CONSTRUCTION_MATERIAL",
+          "value": 1101,
+          "alias": "制作材料",
+          "comment": "制作材料"
+        },
+        {
+          "name": "DESIGN_DRAWING",
+          "value": 1102,
+          "alias": "设计图纸",
+          "comment": "设计图纸"
+        }
+      ],
+      "source": {
+        "file": "Defines/item.xml"
+      }
+    },
+    {
+      "fullName": "item.EUseType",
+      "name": "EUseType",
+      "namespace": "item",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "MANUAL",
+          "value": 0,
+          "alias": "手动",
+          "comment": "手动"
+        },
+        {
+          "name": "AUTO",
+          "value": 1,
+          "alias": "自动",
+          "comment": "自动"
+        }
+      ],
+      "source": {
+        "file": "Defines/item.xml"
+      }
+    },
+    {
+      "fullName": "test.AccessFlag",
+      "name": "AccessFlag",
+      "namespace": "test",
+      "isFlags": true,
+      "groups": [],
+      "items": [
+        {
+          "name": "WRITE",
+          "value": 1
+        },
+        {
+          "name": "READ",
+          "value": 2
+        },
+        {
+          "name": "TRUNCATE",
+          "value": 4
+        },
+        {
+          "name": "NEW",
+          "value": 8
+        },
+        {
+          "name": "READ_WRITE",
+          "value": 3
+        }
+      ],
+      "source": {
+        "file": "Data/__enums__.xlsx"
+      }
+    },
+    {
+      "fullName": "test.AudioType2",
+      "name": "AudioType2",
+      "namespace": "test",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "UNKNOWN",
+          "value": 0
+        },
+        {
+          "name": "ACC",
+          "value": 1
+        },
+        {
+          "name": "AIFF",
+          "value": 2
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.DemoEnum",
+      "name": "DemoEnum",
+      "namespace": "test",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "NONE",
+          "value": 0
+        },
+        {
+          "name": "A",
+          "value": 1,
+          "alias": "aa",
+          "comment": "aa"
+        },
+        {
+          "name": "B",
+          "value": 2,
+          "alias": "bb",
+          "comment": "bb"
+        },
+        {
+          "name": "C",
+          "value": 4,
+          "alias": "cc",
+          "comment": "cc"
+        },
+        {
+          "name": "D",
+          "value": 5,
+          "alias": "dd",
+          "comment": "dd"
+        },
+        {
+          "name": "Any",
+          "value": 6
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.DemoFlag",
+      "name": "DemoFlag",
+      "namespace": "test",
+      "isFlags": true,
+      "groups": [],
+      "items": [
+        {
+          "name": "A",
+          "value": 1
+        },
+        {
+          "name": "B",
+          "value": 2
+        },
+        {
+          "name": "C",
+          "value": 4
+        },
+        {
+          "name": "D",
+          "value": 8
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.ETestEmptyEnum",
+      "name": "ETestEmptyEnum",
+      "namespace": "test",
+      "isFlags": false,
+      "groups": [],
+      "items": [],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.ETestEmptyEnum2",
+      "name": "ETestEmptyEnum2",
+      "namespace": "test",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "SMALL_THAN_256",
+          "value": 255
+        },
+        {
+          "name": "X_256",
+          "value": 256
+        },
+        {
+          "name": "X_257",
+          "value": 257
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    },
+    {
+      "fullName": "test.ETestQuality",
+      "name": "ETestQuality",
+      "namespace": "test",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "A",
+          "value": 1,
+          "alias": "白",
+          "comment": "最高品质"
+        },
+        {
+          "name": "B",
+          "value": 2,
+          "alias": "黑",
+          "comment": "黑色的"
+        },
+        {
+          "name": "C",
+          "value": 3,
+          "alias": "蓝",
+          "comment": "蓝色的"
+        },
+        {
+          "name": "D",
+          "value": 4,
+          "alias": "红",
+          "comment": "最差品质"
+        }
+      ],
+      "source": {
+        "file": "Data/__enums__.xlsx"
+      }
+    },
+    {
+      "fullName": "test.ETestUeType",
+      "name": "ETestUeType",
+      "namespace": "test",
+      "isFlags": false,
+      "groups": [],
+      "items": [
+        {
+          "name": "WHITE",
+          "value": 0,
+          "alias": "白",
+          "comment": "白"
+        },
+        {
+          "name": "BLACK",
+          "value": 1
+        }
+      ],
+      "source": {
+        "file": "Defines/test.xml"
+      }
+    }
+  ]
+}

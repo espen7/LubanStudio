@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "ok": false,
+  "exitCode": 1,
+  "errors": [
+    {
+      "category": "data",
+      "code": "error.data.parse_failed",
+      "message": "abc 不是 int 类型值",
+      "file": "通用道具表@D:\\workspace\\github\\LubanStudio\\.sandbox\\run\\err-v5\\Data\\item/道具系统表.xlsx",
+      "location": "Sheet:通用道具表 字段:max_pile_num 位置:[G4] abc",
+      "fieldPath": "{item.Item}.max_pile_num"
+    }
+  ]
+}

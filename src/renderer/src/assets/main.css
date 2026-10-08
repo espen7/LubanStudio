@@ -1,0 +1,52 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --app-bg: #fafafa;
+  --panel-bg: #ffffff;
+  --line: #e4e4e7;
+  --fg: #18181b;
+  --fg-muted: #71717a;
+  --accent: #2563eb;
+  --error: #dc2626;
+  --warn: #d97706;
+}
+
+.dark {
+  --app-bg: #1e1e1e;
+  --panel-bg: #252526;
+  --line: #3f3f46;
+  --fg: #d4d4d8;
+  --fg-muted: #a1a1aa;
+  --accent: #3b82f6;
+  --error: #f87171;
+  --warn: #fbbf24;
+}
+
+@theme inline {
+  --color-app: var(--app-bg);
+  --color-panel: var(--panel-bg);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-muted: var(--fg-muted);
+  --color-accent: var(--accent);
+  --color-error: var(--error);
+  --color-warn: var(--warn);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Courier New', monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC',
+    'Hiragino Sans GB', sans-serif;
+  font-size: 13px;
+  overflow: hidden;
+}

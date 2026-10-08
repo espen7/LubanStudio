@@ -1,0 +1,21 @@
+2026/10/08 11:17:29.361|INFO| ==========================================================================================
+2026/10/08 11:17:29.362|INFO|
+2026/10/08 11:17:29.362|INFO|  Luban is developed by Code Philosophy Technology Co., LTD. https://code-philosophy.com
+2026/10/08 11:17:29.362|INFO|  Github: https://github.com/focus-creative-games/luban
+2026/10/08 11:17:29.362|INFO|  Document: https://www.datable.cn
+2026/10/08 11:17:29.362|INFO|
+2026/10/08 11:17:29.362|INFO| ==========================================================================================
+2026/10/08 11:17:29.396|INFO|load schema. collector: "default"
+2026/10/08 11:17:29.495|WARN|表:'test.TbTestTableVariant' 未设置 variant，使用 fallback 定义。请通过命令行选项 '--variant test.TbTestTableVariant=<variantName>' 设置
+2026/10/08 11:17:29.502|WARN|未找到选项 '-x pathValidator.rootDir=<rootValidationDir>'，path 校验已禁用
+2026/10/08 11:17:29.502|WARN|类型:'test.TestFieldVariant' 字段:'name' 未设置 variant。请通过命令行选项 '--variant test.TestFieldVariant.name=<variantName>' 设置
+2026/10/08 11:17:29.502|WARN|类型:'test.TestFieldVariant2' 字段:'name' 未设置 variant。请通过命令行选项 '--variant test.TestFieldVariant2.name=<variantName>' 设置
+2026/10/08 11:17:29.502|INFO|load datas begin
+2026/10/08 11:17:29.581|ERROR|=======================================================================
+2026/10/08 11:17:29.581|ERROR|解析失败!
+2026/10/08 11:17:29.581|ERROR|文件:        通用道具表@D:\workspace\github\LubanStudio\.sandbox\run\err-v5\Data\item/道具系统表.xlsx
+2026/10/08 11:17:29.581|ERROR|错误位置:    Sheet:通用道具表 字段:max_pile_num 位置:[G4] abc
+2026/10/08 11:17:29.581|ERROR|错误:        abc 不是 int 类型值
+2026/10/08 11:17:29.581|ERROR|字段:        {item.Item}.max_pile_num
+2026/10/08 11:17:29.581|ERROR|=======================================================================
+2026/10/08 11:17:29.581|ERROR|运行失败!!!

@@ -1,0 +1,14 @@
+2026/10/08 11:13:35.108|INFO| ==========================================================================================
+2026/10/08 11:13:35.108|INFO|
+2026/10/08 11:13:35.108|INFO|  Luban is developed by Code Philosophy Technology Co., LTD. https://code-philosophy.com
+2026/10/08 11:13:35.108|INFO|
+2026/10/08 11:13:35.108|INFO| ==========================================================================================
+2026/10/08 11:13:35.180|INFO|load schema. collector: "default"
+2026/10/08 11:13:35.307|INFO|load datas begin
+2026/10/08 11:13:35.307|INFO|load datas end
+2026/10/08 11:13:35.307|INFO|validation begin
+2026/10/08 11:13:35.307|INFO|validation end
+2026/10/08 11:13:35.307|INFO|process data target:"json" begin
+2026/10/08 11:13:35.320|INFO|[new] out-json/demo_tbitem.json 
+2026/10/08 11:13:35.320|INFO|process data target:"json" end
+2026/10/08 11:13:35.320|INFO|bye~

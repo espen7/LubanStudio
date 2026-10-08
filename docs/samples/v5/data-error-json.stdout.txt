@@ -1,0 +1,13 @@
+2026/10/08 11:17:29.737|INFO| ==========================================================================================
+2026/10/08 11:17:29.737|INFO|
+2026/10/08 11:17:29.737|INFO|  Luban is developed by Code Philosophy Technology Co., LTD. https://code-philosophy.com
+2026/10/08 11:17:29.737|INFO|  Github: https://github.com/focus-creative-games/luban
+2026/10/08 11:17:29.737|INFO|  Document: https://www.datable.cn
+2026/10/08 11:17:29.737|INFO|
+2026/10/08 11:17:29.737|INFO| ==========================================================================================
+2026/10/08 11:17:29.769|INFO|load schema. collector: "default"
+2026/10/08 11:17:29.866|WARN|表:'test.TbTestTableVariant' 未设置 variant，使用 fallback 定义。请通过命令行选项 '--variant test.TbTestTableVariant=<variantName>' 设置
+2026/10/08 11:17:29.866|WARN|未找到选项 '-x pathValidator.rootDir=<rootValidationDir>'，path 校验已禁用
+2026/10/08 11:17:29.866|WARN|类型:'test.TestFieldVariant' 字段:'name' 未设置 variant。请通过命令行选项 '--variant test.TestFieldVariant.name=<variantName>' 设置
+2026/10/08 11:17:29.866|WARN|类型:'test.TestFieldVariant2' 字段:'name' 未设置 variant。请通过命令行选项 '--variant test.TestFieldVariant2.name=<variantName>' 设置
+2026/10/08 11:17:29.881|INFO|load datas begin
