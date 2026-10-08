@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import type { LubanProject, RecentProject } from '@shared/types/project'
+import { useSchemaStore } from './schemaStore'
 
 interface ProjectState {
   project: LubanProject | null
@@ -39,6 +40,7 @@ export const useProjectStore = create<ProjectState>((set, get) => ({
       }
       const project = await api.project.open(path)
       set({ project, recent: await api.project.recent(), opening: false })
+      void useSchemaStore.getState().load()
     } catch (e) {
       set({ error: e instanceof Error ? e.message : String(e), opening: false })
     }

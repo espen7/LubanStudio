@@ -1,9 +1,11 @@
 import { useProjectStore } from '@renderer/stores/projectStore'
+import { useSchemaStore } from '@renderer/stores/schemaStore'
 
 export function StatusBar(): React.JSX.Element {
   const project = useProjectStore((s) => s.project)
   const error = useProjectStore((s) => s.error)
   const opening = useProjectStore((s) => s.opening)
+  const schema = useSchemaStore((s) => s.model)
 
   let left: string
   if (opening) {
@@ -24,13 +26,12 @@ export function StatusBar(): React.JSX.Element {
         <span className={error ? 'text-error' : ''}>{left}</span>
       </div>
       <div className="flex shrink-0 items-center gap-3 font-mono">
-        <span>
-          dotnet {runtime?.dotnetVersion ?? '-'}
-        </span>
+        <span>dotnet {runtime?.dotnetVersion ?? '-'}</span>
         <span>
           {runtime?.lubanVersion ? `Luban ${runtime.lubanVersion}` : 'Luban -'}
           {runtime && !runtime.available ? '（不可用）' : ''}
         </span>
+        {schema && <span>Schema: {schema.tables.length} 表 · {schema.source}</span>}
       </div>
     </div>
   )

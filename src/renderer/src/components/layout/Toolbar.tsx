@@ -2,11 +2,14 @@ import { useEffect } from 'react'
 import { FolderOpen, CircleCheck, Upload, RefreshCw, Settings2 } from 'lucide-react'
 import { cn } from '@renderer/lib/utils'
 import { useProjectStore } from '@renderer/stores/projectStore'
+import { useSchemaStore } from '@renderer/stores/schemaStore'
 
 export function Toolbar(): React.JSX.Element {
   const openProject = useProjectStore((s) => s.openProject)
   const opening = useProjectStore((s) => s.opening)
   const project = useProjectStore((s) => s.project)
+  const reloadSchema = useSchemaStore((s) => s.reload)
+  const schemaLoading = useSchemaStore((s) => s.loading)
 
   useEffect(() => {
     void useProjectStore.getState().loadRecent()
@@ -23,7 +26,12 @@ export function Toolbar(): React.JSX.Element {
       <ToolbarButton icon={<CircleCheck size={15} />} label="校验" disabled={!project} />
       <ToolbarButton icon={<Upload size={15} />} label="导出" disabled={!project} />
       <div className="mx-1 h-4 w-px bg-line" />
-      <ToolbarButton icon={<RefreshCw size={15} />} label="重载 Schema" disabled={!project} />
+      <ToolbarButton
+        icon={<RefreshCw size={15} />}
+        label="重载 Schema"
+        disabled={!project || schemaLoading}
+        onClick={(): void => void reloadSchema()}
+      />
       <div className="flex-1" />
       <ToolbarButton icon={<Settings2 size={15} />} label="设置" />
     </div>

@@ -3,6 +3,7 @@ import { join } from 'node:path'
 import { is } from '@electron-toolkit/utils'
 import { registerProjectIpc } from './ipc/project'
 import { registerSettingsIpc } from './ipc/settings'
+import { registerSchemaIpc } from './ipc/schema'
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -36,6 +37,7 @@ function createWindow(): void {
 app.whenReady().then(() => {
   registerProjectIpc()
   registerSettingsIpc()
+  registerSchemaIpc()
   createWindow()
 
   app.on('activate', () => {
