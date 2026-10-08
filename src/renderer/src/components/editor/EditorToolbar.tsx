@@ -18,7 +18,7 @@ export function EditorToolbar({
 }): React.JSX.Element {
   const data = useEditorStore((s) => s.data[tableId])
   const selected = useEditorStore((s) => s.selection[tableId])
-  const groupFilter = useEditorStore((s) => s.groupFilter[tableId]) ?? ''
+  const groupFilter = useEditorStore((s) => s.groupFilter[tableId]) ?? []
   const refresh = useEditorStore((s) => s.refresh)
   const addRow = useEditorStore((s) => s.addRow)
   const deleteRow = useEditorStore((s) => s.deleteRow)
@@ -43,7 +43,7 @@ export function EditorToolbar({
     }
   }, [menu])
 
-  // 候选组：luban.conf 声明的组在前，再补数据里出现过的组；带命中列数便于判断过滤效果
+  // 候选组：luban.conf 声明的组在前，再补数据里出现过的组；数字 = 显式属于该组的列数
   const options = useMemo(() => {
     if (!data) return []
     const names: string[] = []
@@ -55,14 +55,20 @@ export function EditorToolbar({
     }
     return names.map((name) => ({
       name,
-      count: data.columns.filter((c) => c.groups.length === 0 || c.groups.includes(name)).length
+      count: data.columns.filter((c) => c.groups.includes(name)).length
     }))
   }, [data, project])
 
   if (!data) return <div className="h-8 shrink-0 border-b border-line bg-panel" />
 
   const rowOps = data.rowOps
-  const active = groupFilter || ''
+  const filtering = groupFilter.length > 0
+  const toggleGroup = (name: string): void => {
+    setGroupFilter(
+      tableId,
+      groupFilter.includes(name) ? groupFilter.filter((g) => g !== name) : [...groupFilter, name]
+    )
+  }
 
   return (
     <div className="flex h-8 shrink-0 items-center gap-1 border-b border-line bg-panel px-2">
@@ -97,24 +103,24 @@ export function EditorToolbar({
       <Divider />
       <button
         type="button"
-        title="按分组过滤列"
+        title="按分组过滤列（可多选，取并集）"
         onClick={(e): void => {
           const rect = e.currentTarget.getBoundingClientRect()
           setMenu({ x: rect.left, y: rect.bottom + 2 })
         }}
         className={cn(
           'flex h-7 items-center gap-1.5 rounded-sm px-2 text-[12px]',
-          active ? 'bg-app text-accent' : 'text-fg hover:bg-app active:bg-app'
+          filtering ? 'bg-app text-accent' : 'text-fg hover:bg-app active:bg-app'
         )}
       >
         <Filter size={15} />
-        {active ? `分组: ${active}` : '全部分组'}
+        {filtering ? `分组: ${groupFilter.join(',')}` : '全部分组'}
       </button>
-      {active && (
+      {filtering && (
         <button
           type="button"
           title="清除分组过滤"
-          onClick={(): void => setGroupFilter(tableId, '')}
+          onClick={(): void => setGroupFilter(tableId, [])}
           className="flex h-7 items-center rounded-sm px-1.5 text-[11px] text-muted hover:bg-app hover:text-fg"
         >
           清除
@@ -132,21 +138,19 @@ export function EditorToolbar({
         >
           <MenuItem
             label="全部分组"
-            checked={!active}
+            checked={!filtering}
             onClick={(): void => {
-              setGroupFilter(tableId, '')
+              setGroupFilter(tableId, [])
               setMenu(null)
             }}
           />
+          {options.length > 0 && <div className="my-1 h-px bg-line" />}
           {options.map((o) => (
-            <MenuItem
+            <CheckItem
               key={o.name}
               label={`${o.name}（${o.count} 列）`}
-              checked={active === o.name}
-              onClick={(): void => {
-                setGroupFilter(tableId, o.name)
-                setMenu(null)
-              }}
+              checked={groupFilter.includes(o.name)}
+              onClick={(): void => toggleGroup(o.name)}
             />
           ))}
         </div>
@@ -207,6 +211,38 @@ function MenuItem({
     >
       <span className={cn('w-3 shrink-0', !checked && 'opacity-0')}>
         <Check size={12} />
+      </span>
+      <span className="truncate">{label}</span>
+    </button>
+  )
+}
+
+/** 多选条目：方框勾选态，点击后菜单保持打开以便继续勾选 */
+function CheckItem({
+  label,
+  checked,
+  onClick
+}: {
+  label: string
+  checked: boolean
+  onClick: () => void
+}): React.JSX.Element {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        'flex h-6 w-full items-center gap-2 px-3 text-left text-[12px]',
+        checked ? 'text-accent' : 'text-fg hover:bg-app'
+      )}
+    >
+      <span
+        className={cn(
+          'flex h-3 w-3 shrink-0 items-center justify-center rounded-[2px] border',
+          checked ? 'border-accent bg-accent' : 'border-line'
+        )}
+      >
+        {checked && <Check size={10} className="text-panel" />}
       </span>
       <span className="truncate">{label}</span>
     </button>

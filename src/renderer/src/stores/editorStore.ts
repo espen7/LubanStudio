@@ -29,14 +29,14 @@ interface EditorState {
   activeId: string
   data: Record<string, TableData>
   dirtyCells: DirtyCellMap
-  /** tableId → 选中的 group 过滤（'' 表示不过滤） */
-  groupFilter: Record<string, string>
+  /** tableId → 选中的 group 过滤（多选，取并集；空数组 = 不过滤） */
+  groupFilter: Record<string, string[]>
   selection: Record<string, CellPos | undefined>
   open: (tableId: string, tableName: string) => Promise<void>
   activate: (tableId: string) => void
   setCellText: (tableId: string, rowNumber: number, excelCol: number, text: string) => Promise<void>
   setSelection: (tableId: string, pos: CellPos | undefined) => void
-  setGroupFilter: (tableId: string, group: string) => void
+  setGroupFilter: (tableId: string, groups: string[]) => void
   refresh: (tableId: string) => Promise<boolean>
   addRow: (tableId: string) => Promise<void>
   deleteRow: (tableId: string) => Promise<void>
@@ -96,7 +96,6 @@ export const useEditorStore = create<EditorState>((set, get) => {
   dirtyCells: {},
   groupFilter: {},
   selection: {},
-
   open: async (tableId, tableName) => {
     if (!window.api) return
     const existing = get().tabs.find((t) => t.tableId === tableId)
@@ -136,9 +135,9 @@ export const useEditorStore = create<EditorState>((set, get) => {
     set((s) => ({ selection: { ...s.selection, [tableId]: pos } }))
   },
 
-  setGroupFilter: (tableId, group) => {
+  setGroupFilter: (tableId, groups) => {
     set((s) => ({
-      groupFilter: { ...s.groupFilter, [tableId]: group },
+      groupFilter: { ...s.groupFilter, [tableId]: groups },
       selection: { ...s.selection, [tableId]: undefined }
     }))
   },

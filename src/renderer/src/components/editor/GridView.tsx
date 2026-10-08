@@ -59,12 +59,12 @@ export function GridView({ tableId }: { tableId: string }): React.JSX.Element {
   // 可见列 → data.columns 下标；无 group 的列在任何过滤下都保留（Luban 语义），主键列始终保留
   const colIndex = useMemo(() => {
     const all = data?.columns.map((_, i) => i) ?? []
-    const f = groupFilter ?? ''
-    if (!data || !f) return all
+    const sel = groupFilter ?? []
+    if (!data || sel.length === 0) return all
     return all.filter((i) => {
       const c = data.columns[i]
       if (indexField && c.fieldName === indexField) return true
-      return c.groups.length === 0 || c.groups.includes(f)
+      return c.groups.length === 0 || c.groups.some((g) => sel.includes(g))
     })
   }, [data, groupFilter, indexField])
 
