@@ -11,6 +11,8 @@ export interface ColumnBinding {
   groups: string[]
   editable: boolean
   readOnlyReason?: string
+  /** 注释列（横向表 ## 列）：编辑器按代码注释样式弱化绘制 */
+  comment?: boolean
 }
 
 /** 行增删能力：横向表（行=字段）与多级表头不支持 */

@@ -150,12 +150,24 @@ export function GridView({ tableId }: { tableId: string }): React.JSX.Element {
 
   const drawCell = useCallback<DrawCellCallback>(
     (args, drawContent) => {
-      drawContent()
+      const binding = data?.columns[colIndex[args.col]]
+      if (binding?.comment) {
+        // 注释列按代码注释样式绘制（灰色斜体）。选中环在单元格之后绘制，跳过默认文本不影响选中态
+        const { ctx, theme } = args
+        const prevFont = ctx.font
+        const prevFill = ctx.fillStyle
+        ctx.font = `italic ${theme.baseFontStyle} ${theme.fontFamily}`
+        ctx.fillStyle = theme.textMedium
+        drawContent()
+        ctx.font = prevFont
+        ctx.fillStyle = prevFill
+      } else {
+        drawContent()
+      }
       const dirty = dirtyRef.current
-      if (!dirty || !data) return
-      const binding = data.columns[colIndex[args.col]]
+      if (!dirty || !data || !binding) return
       const rowData = data.rows[args.row]
-      if (!binding || !rowData) return
+      if (!rowData) return
       if (dirty.has(`${rowData.rowNumber}:${binding.excelCol}`)) {
         const { ctx, rect } = args
         ctx.fillStyle = 'rgba(79, 93, 255, 0.14)'

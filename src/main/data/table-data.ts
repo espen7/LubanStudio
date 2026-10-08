@@ -271,7 +271,15 @@ function buildHorizontalTableData(
     readOnlyReason: undefined
   })
   if (hh.commentCol) {
-    columns.push({ excelCol: hh.commentCol, fieldName: null, label: '注释', typeText: '', groups: [], editable: false })
+    columns.push({
+      excelCol: hh.commentCol,
+      fieldName: null,
+      label: '注释',
+      typeText: '',
+      groups: [],
+      editable: false,
+      comment: true
+    })
   }
 
   const rows: DataRow[] = []

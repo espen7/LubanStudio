@@ -6,7 +6,8 @@ export function toGridColumns(columns: ColumnBinding[], widthOverride?: Record<s
   return columns.map((c) => ({
     id: String(c.excelCol),
     title: c.label,
-    width: widthOverride?.[String(c.excelCol)] ?? 132
+    // 注释列文本长，默认给更宽的起步宽度
+    width: widthOverride?.[String(c.excelCol)] ?? (c.comment ? 280 : 132)
   }))
 }
 
