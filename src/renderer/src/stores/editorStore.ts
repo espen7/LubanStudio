@@ -1,5 +1,11 @@
 import { create } from 'zustand'
 import type { TableData } from '@shared/types/data'
+import { useSchemaStore } from './schemaStore'
+
+// 激活的 tab 即"当前查看的表"，Schema 面板与树高亮跟随它（与点树叶子行为一致）
+const showTableInSchema = (tableId: string): void => {
+  if (tableId) useSchemaStore.getState().selectTable(tableId)
+}
 
 export interface OpenTab {
   tableId: string
@@ -30,12 +36,14 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     const existing = get().tabs.find((t) => t.tableId === tableId)
     if (existing) {
       set({ activeId: tableId })
+      showTableInSchema(tableId)
       return
     }
     set((s) => ({
       tabs: [...s.tabs, { tableId, tableName, loading: true, dirty: false, error: '' }],
       activeId: tableId
     }))
+    showTableInSchema(tableId)
     try {
       const data = await window.api.data.open(tableId)
       set((s) => ({
@@ -53,7 +61,10 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     }
   },
 
-  activate: (tableId) => set({ activeId: tableId }),
+  activate: (tableId) => {
+    set({ activeId: tableId })
+    showTableInSchema(tableId)
+  },
 
   setCellText: async (tableId, rowNumber, excelCol, text) => {
     if (!window.api) return
@@ -122,5 +133,6 @@ export const useEditorStore = create<EditorState>((set, get) => ({
         s.activeId === tableId ? (tabs[tabs.length - 1]?.tableId ?? '') : s.activeId
       return { tabs, data, activeId }
     })
+    showTableInSchema(get().activeId)
   }
 }))
