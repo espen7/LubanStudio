@@ -1,3 +1,4 @@
+import '@glideapps/glide-data-grid/dist/index.css'
 import { DataEditor, GridCellKind, type EditableGridCell, type GridCell, type Item, type Theme } from '@glideapps/glide-data-grid'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useEditorStore } from '@renderer/stores/editorStore'

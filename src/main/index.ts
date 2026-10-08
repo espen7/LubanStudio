@@ -22,6 +22,11 @@ function createWindow(): void {
   })
 
   mainWindow.on('ready-to-show', () => mainWindow.show())
+  // ready-to-show 偶发不触发（Electron 竞态）会导致窗口永久隐藏，页面 rAF/ResizeObserver
+  // 全部冻结；加载完成仍未显示时兜底 show
+  mainWindow.webContents.on('did-finish-load', () => {
+    if (!mainWindow.isVisible()) mainWindow.show()
+  })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
