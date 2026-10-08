@@ -1,6 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import type {
   CellEdit,
+  CellValue,
   DataCloseRequest,
   DataSaveResult,
   RowDeleteRequest,
@@ -24,7 +25,7 @@ const api = {
   },
   data: {
     open: (tableId: string): Promise<TableData> => ipcRenderer.invoke('data:open', { tableId }),
-    updateCell: (edit: CellEdit): Promise<{ applied: boolean }> =>
+    updateCell: (edit: CellEdit): Promise<{ applied: boolean; value: CellValue }> =>
       ipcRenderer.invoke('data:update-cell', edit),
     addRow: (tableId: string): Promise<TableData> => ipcRenderer.invoke('data:add-row', { tableId }),
     deleteRow: (req: RowDeleteRequest): Promise<TableData> =>

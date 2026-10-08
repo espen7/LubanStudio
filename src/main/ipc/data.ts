@@ -6,6 +6,7 @@ import {
   getOpenedTable,
   closeOpenedTable,
   listOpenedOnFile,
+  normalizeBool,
   addBlankRow,
   deleteDataRow
 } from '@main/data/table-data'
@@ -44,11 +45,15 @@ export function registerDataIpc(): void {
       throw new Error(`字段 ${field.name}（${field.rawType || '未知类型'}）是只读类型，不能编辑`)
     }
     const { wb } = await getWorkbook(opened.file)
-    applyEdits(wb, opened.sheetName, [
-      { rowNumber: req.rowNumber, excelCol: req.excelCol, field, text: req.text }
+    const boolForm =
+      opened.boolByCol?.get(req.excelCol) ??
+      (opened.valueCol === req.excelCol ? opened.boolByRow?.get(req.rowNumber) : undefined)
+    const [stored] = applyEdits(wb, opened.sheetName, [
+      { rowNumber: req.rowNumber, excelCol: req.excelCol, field, text: req.text, boolForm }
     ])
     markDirty(opened.file)
-    return { applied: true }
+    // 回填给界面的必须是与读取时一致的归一值：1/0 列写回的是数字 1，界面要看到的是勾选框
+    return { applied: true, value: normalizeBool(stored, boolForm) }
   })
 
   handle('data:add-row', async (req) => {

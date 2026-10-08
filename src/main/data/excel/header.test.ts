@@ -80,6 +80,25 @@ describe('parseDataHeader', () => {
     expect(warnings.some((w) => w.includes('多级表头'))).toBe(true)
   })
 
+  it('##type 行在 ##var 之上（szfc 真实布局）也能取到类型与分组', () => {
+    const warnings: string[] = []
+    const ws = buildSheet([
+      ['##type', 'int', 'bool', 'basic.HeroType'],
+      ['##var', 'id', 'flag', 'type'],
+      ['##comment', '主键', '是否投放', '类型'],
+      ['##group', 'c,s', 'c', 'c,s'],
+      [undefined, 1, 1, 1],
+      [undefined, 2, 0, 2]
+    ])
+    const header = parseDataHeader(ws, warnings)!
+    expect(header.dataFirstRow).toBe(5)
+    expect(header.columns.map((c) => [c.name, c.rawType, c.groups, c.comment])).toEqual([
+      ['id', 'int', ['c', 's'], '主键'],
+      ['flag', 'bool', ['c'], '是否投放'],
+      ['type', 'basic.HeroType', ['c', 's'], '类型']
+    ])
+  })
+
   it('无表头块返回 null', () => {
     const warnings: string[] = []
     const ws = buildSheet([[undefined, 1, 'a']])

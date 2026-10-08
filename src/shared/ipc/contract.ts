@@ -1,5 +1,6 @@
 import type {
   CellEdit,
+  CellValue,
   DataCloseRequest,
   DataSaveResult,
   RowAddRequest,
@@ -18,7 +19,8 @@ export interface IpcContract {
   'schema:get': { req: void; res: SchemaModel }
   'schema:reload': { req: void; res: SchemaModel }
   'data:open': { req: { tableId: string }; res: TableData }
-  'data:update-cell': { req: CellEdit; res: { applied: boolean } }
+  /** res.value = main 侧解析后的规范值，界面据此回填（bool 勾选框不能退化成文本） */
+  'data:update-cell': { req: CellEdit; res: { applied: boolean; value: CellValue } }
   'data:add-row': { req: RowAddRequest; res: TableData }
   'data:delete-row': { req: RowDeleteRequest; res: TableData }
   'data:refresh': { req: { tableId: string }; res: TableData }

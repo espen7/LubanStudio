@@ -6,7 +6,14 @@ import type { CellValue, ColumnBinding, DataRow, RowOps, TableData } from '@shar
 import type { FieldSchema, TableSchema } from '@shared/types/schema'
 import { getWorkbook, markDirty } from './excel/workbook'
 import { parseDataHeader, parseHorizontalHeader, readCellValue, type HorizontalHeader } from './excel/header'
-import { classifyType, isEditableField } from './excel/cell-io'
+import {
+  boolFormFromValues,
+  boolKindFromTypeText,
+  classifyType,
+  isEditableField,
+  toBoolValue,
+  type BoolForm
+} from './excel/cell-io'
 import { resolveDataFile } from '@main/schema/normalizer'
 
 interface OpenedTable {
@@ -21,6 +28,10 @@ interface OpenedTable {
   dataFirstRow: number
   /** 数据列的 Excel 列号，判空行用 */
   dataCols: number[]
+  /** 判定为 bool 的列 → 写回形态（list 表按列） */
+  boolByCol?: Map<number, BoolForm>
+  /** 判定为 bool 的字段行 → 写回形态（横向表值列按行） */
+  boolByRow?: Map<number, BoolForm>
   rowOps: RowOps
 }
 
@@ -52,6 +63,25 @@ function mustSheet(wb: ExcelJS.Workbook, sheetName: string): ExcelJS.Worksheet {
   const ws = wb.getWorksheet(sheetName)
   if (!ws) throw new Error(`Sheet 不存在: ${sheetName}`)
   return ws
+}
+
+/**
+ * bool 判定不依赖外部 schema：先看数据文件自己的 ##type 行，
+ * 该行缺失或不可解析时退到整列实际值（有些项目用 1/0 表示 bool）。
+ */
+function detectBoolForm(typeText: string, values: CellValue[]): BoolForm | null {
+  const declared = boolKindFromTypeText(typeText)
+  if (declared === 'other') return null
+  if (declared === 'bool') return boolFormFromValues(values) ?? 'boolean'
+  // 类型未知时要求列内 0/1 都出现过，全 0 的 int/枚举列不是 bool
+  return boolFormFromValues(values, true)
+}
+
+/** bool 单元格的值归一为布尔（编辑器据此渲染勾选框）；解释不了的值原样留给校验层 */
+export function normalizeBool(raw: CellValue, form: BoolForm | null | undefined): CellValue {
+  if (!form) return raw
+  const b = toBoolValue(raw)
+  return b === null ? raw : b
 }
 
 /** 从最下行往上找最后一条非空数据行（Excel 的 rowCount 常被空样式行灌水） */
@@ -204,13 +234,26 @@ export async function openTableData(table: TableSchema, conf: LubanConf): Promis
   }
 
   const dataCols = columns.map((c) => c.excelCol)
-  const rows: DataRow[] = []
+  const rawRows: CellValue[][] = []
+  const rowNumbers: number[] = []
   for (let r = header.dataFirstRow; r <= ws.actualRowCount; r++) {
     const row = ws.getRow(r)
     const cells: CellValue[] = columns.map((c) => readCellValue(row.getCell(c.excelCol)))
     if (cells.every((v) => v === null || v === '')) continue
-    rows.push({ rowNumber: r, cells })
+    rawRows.push(cells)
+    rowNumbers.push(r)
   }
+
+  const boolByCol = new Map<number, BoolForm>()
+  columns.forEach((c, i) => {
+    // header.columns 与 columns 一一对应，##type 文本取自数据文件本身
+    const form = detectBoolForm(header.columns[i].rawType, rawRows.map((r) => r[i]))
+    if (form) boolByCol.set(c.excelCol, form)
+  })
+  const rows: DataRow[] = rawRows.map((rawCells, i) => ({
+    rowNumber: rowNumbers[i],
+    cells: rawCells.map((v, j) => normalizeBool(v, boolByCol.get(columns[j].excelCol)))
+  }))
   const lastReal = rows.length ? rows[rows.length - 1].rowNumber : header.dataFirstRow - 1
   const blankUntil = blankTailUntilRow.get(table.id) ?? 0
   for (let r = lastReal + 1; r <= blankUntil; r++) {
@@ -227,6 +270,7 @@ export async function openTableData(table: TableSchema, conf: LubanConf): Promis
     fieldByCol,
     dataFirstRow: header.dataFirstRow,
     dataCols,
+    boolByCol,
     rowOps
   })
   return {
@@ -284,6 +328,7 @@ function buildHorizontalTableData(
 
   const rows: DataRow[] = []
   const fieldByRow = new Map<number, FieldSchema>()
+  const boolByRow = new Map<number, BoolForm>()
   for (let r = hh.headerRow + 1; r <= ws.actualRowCount; r++) {
     const row = ws.getRow(r)
     const name = String(readCellValue(row.getCell(hh.varCol)) ?? '').trim()
@@ -293,6 +338,8 @@ function buildHorizontalTableData(
     const comment = hh.commentCol ? String(readCellValue(row.getCell(hh.commentCol)) ?? '') : ''
     const value = readCellValue(row.getCell(hh.valueCol))
     const field = fieldByName.get(name)
+    const boolForm = detectBoolForm(typeText, [value])
+    if (boolForm) boolByRow.set(r, boolForm)
     fieldByRow.set(
       r,
       field ?? {
@@ -309,7 +356,7 @@ function buildHorizontalTableData(
         if (c.excelCol === hh.varCol) return name
         if (c.excelCol === hh.typeCol) return typeText
         if (c.excelCol === hh.groupCol) return groupText
-        if (c.excelCol === hh.valueCol) return value
+        if (c.excelCol === hh.valueCol) return normalizeBool(value, boolForm)
         return comment
       }),
       cellEditable: columns.map((c) =>
@@ -329,6 +376,7 @@ function buildHorizontalTableData(
     fieldByCol: new Map(),
     fieldByRow,
     valueCol: hh.valueCol,
+    boolByRow,
     dataFirstRow: hh.headerRow + 1,
     dataCols: [hh.varCol],
     rowOps

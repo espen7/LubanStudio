@@ -1,5 +1,6 @@
 import type {
   CellEdit,
+  CellValue,
   DataCloseRequest,
   DataSaveResult,
   RowDeleteRequest,
@@ -24,7 +25,7 @@ declare global {
       }
       data: {
         open(tableId: string): Promise<TableData>
-        updateCell(edit: CellEdit): Promise<{ applied: boolean }>
+        updateCell(edit: CellEdit): Promise<{ applied: boolean; value: CellValue }>
         addRow(tableId: string): Promise<TableData>
         deleteRow(req: RowDeleteRequest): Promise<TableData>
         refresh(tableId: string): Promise<TableData>

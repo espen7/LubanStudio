@@ -6,7 +6,13 @@ import { join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
 import { parseLubanConf } from '../project/conf-parser'
 import { buildSchemaFromSources } from '../schema/normalizer'
-import { addBlankRow, closeOpenedTable, deleteDataRow, openTableData } from './table-data'
+import {
+  addBlankRow,
+  closeOpenedTable,
+  deleteDataRow,
+  getOpenedTable,
+  openTableData
+} from './table-data'
 import {
   forceReleaseWorkbook,
   getWorkbook,
@@ -207,5 +213,111 @@ describe('行增删 + 列分组（自建临时表）', () => {
     const data = await openTableData(ROWOPS_TABLE, conf)
     expect(data.rowOps.canAdd).toBe(false)
     await expect(addBlankRow(TABLE_ID)).rejects.toThrow(/多级表头/)
+  })
+})
+
+describe('bool 列按内容判定（自建临时表）', () => {
+  const BOOL_ID = 'test.Tbool'
+  const BOOL_FIELDS = [
+    mkField('id', 'int', []),
+    mkField('flag', 'bool', []),
+    mkField('cnt', 'int', []),
+    mkField('weird', 'bool', []),
+    mkField('zero', 'int', []),
+    mkField('always', 'int', [])
+  ]
+  const BOOL_TABLE: TableSchema = {
+    id: BOOL_ID,
+    module: 'test',
+    name: 'Tbool',
+    mode: 'map',
+    index: 'id',
+    valueType: 'Bool',
+    inputs: [{ tableName: 'Tbool', file: 'Tbool.xlsx' }],
+    groups: [],
+    readSchemaFromFile: false,
+    fields: BOOL_FIELDS
+  }
+
+  let dir = ''
+  const file = (): string => join(dir, 'Tbool.xlsx')
+  const confOf = (): LubanConf => ({
+    root: dir,
+    dataDir: dir,
+    groups: [],
+    schemaFiles: [],
+    targets: [],
+    xargs: []
+  })
+
+  /**
+   * flag/weird/always 的值全是 1/0；zero 全是 0 且 ##type 空缺。
+   * flag 的 ##type 是 bool，cnt 是 int，weird 故意写不可解析文本，always 故意让 schema 说 int。
+   */
+  async function setupBool(): Promise<void> {
+    dir = mkdtempSync(join(tmpdir(), 'luban-bool-'))
+    const wb = new ExcelJS.Workbook()
+    const ws = wb.addWorksheet('Tbool')
+    ws.getRow(1).values = ['##var', 'id', 'flag', 'cnt', 'weird', 'zero', 'always']
+    ws.getRow(2).values = ['##type', 'int', 'bool', 'int', '标记位', '', 'bool']
+    ws.getRow(3).values = [null, 1, 1, 1, 1, 0, 1]
+    ws.getRow(4).values = [null, 2, 0, 0, 0, 0, 1]
+    await wb.xlsx.writeFile(file())
+  }
+
+  afterEach(() => {
+    closeOpenedTable(BOOL_ID)
+    if (dir) {
+      forceReleaseWorkbook(file())
+      rmSync(dir, { recursive: true, force: true })
+    }
+  })
+
+  it('##type 说 bool 就归一为布尔；int 列即使全是 0/1 也不动；类型不可解析时按列值兜底', async () => {
+    await setupBool()
+    const data = await openTableData(BOOL_TABLE, confOf())
+    expect(data.rows.map((r) => r.cells[1])).toEqual([true, false])
+    expect(data.rows.map((r) => r.cells[2])).toEqual([1, 0])
+    expect(data.rows.map((r) => r.cells[3])).toEqual([true, false])
+    // 全 0 且类型未知 → 不当 bool；全 1 但 ##type 明确是 bool → 仍然是勾选框（哪怕 schema 说是 int）
+    expect(data.rows.map((r) => r.cells[4])).toEqual([0, 0])
+    expect(data.rows.map((r) => r.cells[5])).toEqual([true, true])
+    const label = (name: string): number => data.columns.find((c) => c.label === name)!.excelCol
+    // 三列的值都是 1/0 数字，所以判定为 bool 后写回形态跟随原内容是 'number'
+    expect(getOpenedTable(BOOL_ID).boolByCol).toEqual(
+      new Map([
+        [label('flag'), 'number'],
+        [label('weird'), 'number'],
+        [label('always'), 'number']
+      ])
+    )
+  })
+
+  it('写回跟随该列原有形态：1/0 列写回数字而不是布尔单元格', async () => {
+    await setupBool()
+    const data = await openTableData(BOOL_TABLE, confOf())
+    const numCol = data.columns.find((c) => c.label === 'cnt')!
+    const boolCol = data.columns.find((c) => c.label === 'flag')!
+    const opened = getOpenedTable(BOOL_ID)
+    const { wb } = await getWorkbook(file())
+    applyEdits(wb, data.sheetName, [
+      {
+        rowNumber: data.rows[0].rowNumber,
+        excelCol: boolCol.excelCol,
+        field: BOOL_FIELDS[1],
+        text: 'false',
+        boolForm: opened.boolByCol!.get(boolCol.excelCol)
+      },
+      {
+        rowNumber: data.rows[0].rowNumber,
+        excelCol: numCol.excelCol,
+        field: BOOL_FIELDS[2],
+        text: '0'
+      }
+    ])
+    const r = data.rows[0].rowNumber
+    const ws = wb.getWorksheet(data.sheetName)!
+    expect(ws.getRow(r).getCell(boolCol.excelCol).value).toBe(0)
+    expect(ws.getRow(r).getCell(numCol.excelCol).value).toBe(0)
   })
 })

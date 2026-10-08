@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { TableData } from '@shared/types/data'
+import type { CellValue, TableData } from '@shared/types/data'
 import { useSchemaStore } from './schemaStore'
 
 // 激活的 tab 即"当前查看的表"，Schema 面板与树高亮跟随它（与点树叶子行为一致）
@@ -214,18 +214,28 @@ export const useEditorStore = create<EditorState>((set, get) => {
     if (!window.api) return
     const data = get().data[tableId]
     if (!data) return
+    const colIdx = data.columns.findIndex((c) => c.excelCol === excelCol)
+    if (colIdx < 0) return
     const key = `${rowNumber}:${excelCol}`
+    const withCell = (src: TableData, value: CellValue): TableData => ({
+      ...src,
+      rows: src.rows.map((r) => {
+        if (r.rowNumber !== rowNumber) return r
+        const cells = [...r.cells]
+        cells[colIdx] = value
+        return { ...r, cells }
+      })
+    })
     // 乐观更新：本地先显示输入文本，main 侧解析失败再回滚
     const prev = data
-    const rows = data.rows.map((r) => {
-      if (r.rowNumber !== rowNumber) return r
-      const idx = data.columns.findIndex((c) => c.excelCol === excelCol)
-      const cells = [...r.cells]
-      cells[idx] = text === '' ? null : text
-      return { ...r, cells }
-    })
+    const prevCell = data.rows.find((r) => r.rowNumber === rowNumber)?.cells[colIdx] ?? null
+    const inputText: string | null = text === '' ? null : text
+    const input: CellValue =
+      inputText !== null && typeof prevCell === 'boolean'
+        ? inputText === 'true' || inputText === '1'
+        : inputText
     set((s) => ({
-      data: { ...s.data, [tableId]: { ...data, rows } },
+      data: { ...s.data, [tableId]: withCell(data, input) },
       tabs: s.tabs.map((t) => (t.tableId === tableId ? { ...t, dirty: true } : t)),
       dirtyCells: {
         ...s.dirtyCells,
@@ -233,7 +243,18 @@ export const useEditorStore = create<EditorState>((set, get) => {
       }
     }))
     try {
-      await window.api.data.updateCell({ tableId, rowNumber, excelCol, text: text === '' ? null : text })
+      const res = await window.api.data.updateCell({
+        tableId,
+        rowNumber,
+        excelCol,
+        text: inputText
+      })
+      // 回填 main 侧解析后的规范值：勾选框的值若按输入文本存成 'true'/'false' 会退化成原文本
+      set((s) => {
+        const cur = s.data[tableId]
+        if (!cur) return s
+        return { data: { ...s.data, [tableId]: withCell(cur, res.value) } }
+      })
     } catch (e) {
       set((s) => {
         const rollback = new Set(s.dirtyCells[tableId])

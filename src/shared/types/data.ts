@@ -22,7 +22,7 @@ export interface RowOps {
   reason?: string
 }
 
-/** 单元格原始值：string/number/boolean/null（日期与公式结果统一转 string） */
+/** 单元格值：按 Schema 类型归一后的 string/number/boolean/null（日期与公式结果统一转 string；bool 列的 1/0 归一为布尔） */
 export type CellValue = string | number | boolean | null
 
 export interface DataRow {

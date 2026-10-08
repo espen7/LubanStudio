@@ -86,6 +86,19 @@ export function parseDataHeader(ws: ExcelJS.Worksheet, warnings: string[]): Data
   }
   if (varRows.length === 0) return null
 
+  // ##type/##group/##comment 也可能排在 ##var 之上（部分项目先写类型再写变量名），
+  // 只向上补齐下方没找到的标记行；遇到非标记行即停
+  for (let r = firstVarRow - 1; r >= 1; r--) {
+    const a = mergedText(ws, r, 1)
+    if (a === '##type') {
+      if (!typeRow) typeRow = r
+    } else if (a === '##group') {
+      if (!groupRow) groupRow = r
+    } else if (a === '##comment') {
+      if (!commentRow) commentRow = r
+    } else break
+  }
+
   const multiLevel = varRows.length > 1
   if (multiLevel) warnings.push(`${ws.name}: 多级表头（嵌套 bean），列只读展示`)
 

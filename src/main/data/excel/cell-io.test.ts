@@ -1,7 +1,15 @@
 import { describe, expect, it } from 'vitest'
 import type { FieldSchema, TypeRef } from '@shared/types/schema'
 import { parseType } from '@main/schema/type-parser'
-import { classifyType, isEditableField, parseCellText } from './cell-io'
+import {
+  boolFormFromValues,
+  boolKindFromTypeText,
+  classifyType,
+  isEditableField,
+  parseBoolText,
+  parseCellText,
+  toBoolValue
+} from './cell-io'
 
 function mkField(rawType: string, resolved?: TypeRef, name = 'f'): FieldSchema {
   const { type, options } = parseType(rawType)
@@ -84,5 +92,49 @@ describe('parseCellText', () => {
 
   it('只读类型抛错', () => {
     expect(() => parseCellText(mkField('DemoBean', { kind: 'bean', ref: 'item.TestBean' }), 'x')).toThrow(/只读/)
+  })
+})
+
+describe('bool 按内容判定', () => {
+  it('##type 文本判定 bool，int 明确否掉，缺失或不可解析为未知', () => {
+    expect(boolKindFromTypeText('bool')).toBe('bool')
+    expect(boolKindFromTypeText('bool?')).toBe('bool')
+    expect(boolKindFromTypeText('int')).toBe('other')
+    expect(boolKindFromTypeText('')).toBe('unknown')
+    expect(boolKindFromTypeText('hero.BattleHero')).toBe('unknown')
+  })
+
+  it('整列都落在 bool 取值域才算 bool 列，并给出存储形态', () => {
+    expect(boolFormFromValues([1, 0, 1])).toBe('number')
+    expect(boolFormFromValues([true, false])).toBe('boolean')
+    expect(boolFormFromValues(['true', 'false'])).toBe('string')
+    expect(boolFormFromValues([1, null, '', 0])).toBe('number')
+    expect(boolFormFromValues([1, 0, 2])).toBeNull()
+    expect(boolFormFromValues(['yolo'])).toBeNull()
+    expect(boolFormFromValues([null, ''])).toBeNull()
+  })
+
+  it('类型未知时的兜底要求真假值都出现，全 0/全 1 列不算 bool', () => {
+    expect(boolFormFromValues([0, 0, null], true)).toBeNull()
+    expect(boolFormFromValues([1, 1], true)).toBeNull()
+    expect(boolFormFromValues([1, 0], true)).toBe('number')
+  })
+
+  it('bool 列取值归一为布尔，解释不了的交给校验层', () => {
+    expect(toBoolValue(1)).toBe(true)
+    expect(toBoolValue(0)).toBe(false)
+    expect(toBoolValue('TRUE')).toBe(true)
+    expect(toBoolValue(false)).toBe(false)
+    expect(toBoolValue(2)).toBeNull()
+    expect(toBoolValue(null)).toBeNull()
+  })
+
+  it('写回跟随该列原有形态', () => {
+    expect(parseBoolText('true', 'number')).toBe(1)
+    expect(parseBoolText('false', 'number')).toBe(0)
+    expect(parseBoolText('true', 'string')).toBe('true')
+    expect(parseBoolText('1', 'boolean')).toBe(true)
+    expect(parseBoolText('', 'boolean')).toBeNull()
+    expect(() => parseBoolText('yolo', 'boolean')).toThrow(/不是 bool/)
   })
 })
