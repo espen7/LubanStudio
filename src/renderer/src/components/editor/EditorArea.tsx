@@ -62,8 +62,9 @@ export function EditorArea(): React.JSX.Element {
       ) : (
         <>
           <GridView tableId={activeId} />
-          {(notice || data.warnings.length > 0) && (
+          {(notice || activeTab.error || data.warnings.length > 0) && (
             <div className="shrink-0 border-t border-line px-2 py-1 text-[11px] leading-4">
+              {activeTab.error && <div className="text-error">{activeTab.error}</div>}
               {notice && <div className="text-fg">{notice}</div>}
               {data.warnings.slice(0, 2).map((w, i) => (
                 <div key={i} className="truncate text-warn" title={w}>
