@@ -6,8 +6,6 @@ import { registerSettingsIpc } from './ipc/settings'
 import { registerSchemaIpc } from './ipc/schema'
 import { registerDataIpc } from './ipc/data'
 
-app.commandLine.appendSwitch('remote-debugging-port', '9333')
-
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
     width: 1440,
