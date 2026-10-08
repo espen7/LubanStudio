@@ -10,6 +10,7 @@ export function EditorArea(): React.JSX.Element {
   const data = useEditorStore((s) => s.data[activeId])
   const save = useEditorStore((s) => s.save)
   const close = useEditorStore((s) => s.close)
+  const activate = useEditorStore((s) => s.activate)
   const [notice, setNotice] = useState('')
 
   useEffect(() => {
@@ -24,11 +25,19 @@ export function EditorArea(): React.JSX.Element {
       } else if (e.ctrlKey && e.key.toLowerCase() === 'w') {
         e.preventDefault()
         if (activeId) void close(activeId)
+      } else if (e.ctrlKey && (e.key === 'PageDown' || e.key === 'PageUp')) {
+        e.preventDefault()
+        if (tabs.length < 2) return
+        const idx = tabs.findIndex((t) => t.tableId === activeId)
+        const cur = idx === -1 ? 0 : idx
+        const next = e.key === 'PageDown' ? (cur + 1) % tabs.length : (cur - 1 + tabs.length) % tabs.length
+        activate(tabs[next].tableId)
       }
     }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [activeId, save, close])
+    // 捕获阶段：GDG 网格聚焦时其内部 keydown 处理可能吞掉冒泡，快捷键需优先于它
+    window.addEventListener('keydown', onKey, true)
+    return () => window.removeEventListener('keydown', onKey, true)
+  }, [activeId, tabs, save, close, activate])
 
   useEffect(() => {
     if (!notice) return

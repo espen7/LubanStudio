@@ -28,9 +28,45 @@ interface EditorState {
   setCellText: (tableId: string, rowNumber: number, excelCol: number, text: string) => Promise<void>
   save: (tableId: string) => Promise<string | null>
   close: (tableId: string) => Promise<void>
+  closeOthers: (tableId: string) => Promise<void>
+  closeAll: () => Promise<void>
 }
 
-export const useEditorStore = create<EditorState>((set, get) => ({
+export const useEditorStore = create<EditorState>((set, get) => {
+  // 释放 main 侧 workbook 并清理本地状态；preferActive 用于批量关闭后保住被右键的 tab
+  const closeTabs = async (ids: string[], preferActive: string): Promise<void> => {
+    if (!window.api) return
+    for (const tableId of ids) {
+      const tab = get().tabs.find((t) => t.tableId === tableId)
+      await window.api.data.close({ tableId, force: !!tab?.dirty }).catch(() => undefined)
+    }
+    set((s) => {
+      const tabs = s.tabs.filter((t) => !ids.includes(t.tableId))
+      const data = { ...s.data }
+      const dirtyCells = { ...s.dirtyCells }
+      for (const id of ids) {
+        delete data[id]
+        delete dirtyCells[id]
+      }
+      let activeId = s.activeId
+      if (ids.includes(activeId)) {
+        activeId = tabs.some((t) => t.tableId === preferActive)
+          ? preferActive
+          : (tabs[tabs.length - 1]?.tableId ?? '')
+      }
+      return { tabs, data, dirtyCells, activeId }
+    })
+    showTableInSchema(get().activeId)
+  }
+
+  const confirmDiscard = (targets: OpenTab[]): boolean => {
+    const dirtyNames = targets.filter((t) => t.dirty).map((t) => t.tableName)
+    if (dirtyNames.length === 0) return true
+    const suffix = dirtyNames.length > 1 ? '确定全部丢弃并关闭？' : '确定丢弃并关闭？'
+    return window.confirm(`${dirtyNames.join('、')} 有未保存的修改，${suffix}`)
+  }
+
+  return {
   tabs: [],
   activeId: '',
   data: {},
@@ -136,21 +172,24 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   },
 
   close: async (tableId) => {
-    if (!window.api) return
     const tab = get().tabs.find((t) => t.tableId === tableId)
     if (!tab) return
-    if (tab.dirty && !window.confirm(`${tab.tableName} 有未保存的修改，确定丢弃并关闭？`)) return
-    await window.api.data.close({ tableId, force: tab.dirty }).catch(() => undefined)
-    set((s) => {
-      const tabs = s.tabs.filter((t) => t.tableId !== tableId)
-      const data = { ...s.data }
-      delete data[tableId]
-      const dirtyCells = { ...s.dirtyCells }
-      delete dirtyCells[tableId]
-      const activeId =
-        s.activeId === tableId ? (tabs[tabs.length - 1]?.tableId ?? '') : s.activeId
-      return { tabs, data, dirtyCells, activeId }
-    })
-    showTableInSchema(get().activeId)
+    if (!confirmDiscard([tab])) return
+    await closeTabs([tableId], '')
+  },
+
+  closeOthers: async (tableId) => {
+    const targets = get().tabs.filter((t) => t.tableId !== tableId)
+    if (targets.length === 0) return
+    if (!confirmDiscard(targets)) return
+    await closeTabs(targets.map((t) => t.tableId), tableId)
+  },
+
+  closeAll: async () => {
+    const targets = get().tabs
+    if (targets.length === 0) return
+    if (!confirmDiscard(targets)) return
+    await closeTabs(targets.map((t) => t.tableId), '')
   }
-}))
+  }
+})
