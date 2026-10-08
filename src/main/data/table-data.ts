@@ -5,7 +5,7 @@ import type { LubanConf } from '@shared/types/project'
 import type { CellValue, ColumnBinding, DataRow, TableData } from '@shared/types/data'
 import type { FieldSchema, TableSchema } from '@shared/types/schema'
 import { getWorkbook } from './excel/workbook'
-import { parseDataHeader, readCellValue } from './excel/header'
+import { parseDataHeader, parseHorizontalHeader, readCellValue, type HorizontalHeader } from './excel/header'
 import { classifyType, isEditableField } from './excel/cell-io'
 import { resolveDataFile } from '@main/schema/normalizer'
 
@@ -13,6 +13,10 @@ interface OpenedTable {
   file: string
   sheetName: string
   fieldByCol: Map<number, FieldSchema>
+  /** 横向表：行号 → 行字段（值列编辑用；不可编辑行也记录，用于报错提示） */
+  fieldByRow?: Map<number, FieldSchema>
+  /** 横向表值列 */
+  valueCol?: number
 }
 
 const opened = new Map<string, OpenedTable>()
@@ -45,14 +49,15 @@ function pickWorksheet(
     if (!ws) throw new Error(`${data.file} 中不存在 Sheet: ${data.sheetName}`)
     return ws
   }
-  for (const candidate of [data.tableName]) {
-    if (candidate) {
-      const ws = wb.getWorksheet(candidate)
-      if (ws) return ws
-    }
+  const candidates = [data.tableName].filter(Boolean)
+  for (const candidate of candidates) {
+    const ws = wb.getWorksheet(candidate)
+    if (ws) return ws
   }
   const first = wb.worksheets[0]
-  warnings.push(`${data.file}: 未匹配到 Sheet「${data.tableName}」，使用第一个 Sheet「${first.name}」`)
+  if (candidates.length > 0) {
+    warnings.push(`${data.file}: 未匹配到 Sheet「${data.tableName}」，使用第一个 Sheet「${first.name}」`)
+  }
   return first
 }
 
@@ -70,10 +75,17 @@ export async function openTableData(table: TableSchema, conf: LubanConf): Promis
   const { wb, warnings: loadWarnings } = await getWorkbook(abs)
   warnings.push(...loadWarnings)
   const ws = pickWorksheet(wb, { sheetName, tableName, file }, warnings)
-  const header = parseDataHeader(ws, warnings)
-  if (!header) throw new Error(`${file}: 未找到 ##var 表头块（Sheet「${ws.name}」）`)
 
+  const horizontal = parseHorizontalHeader(ws)
   const fieldByName = new Map(table.fields.map((f) => [f.name, f]))
+  if (horizontal) {
+    return buildHorizontalTableData(table, ws, horizontal, fieldByName, abs, warnings)
+  }
+
+  const header = parseDataHeader(ws, warnings)
+  if (!header) {
+    throw new Error(`${file}: 未找到 ##var 表头块或横向表标记行（Sheet「${ws.name}」）`)
+  }
   const columns: ColumnBinding[] = header.columns.map((c) => {
     const field = fieldByName.get(c.name)
     if (!field) {
@@ -132,6 +144,86 @@ export async function openTableData(table: TableSchema, conf: LubanConf): Promis
   }
 
   opened.set(table.id, { file: abs, sheetName: ws.name, fieldByCol })
+  return {
+    tableId: table.id,
+    tableName: table.name,
+    file: abs,
+    sheetName: ws.name,
+    columns,
+    rows,
+    warnings
+  }
+}
+
+/** 横向表（one 表转置格式）：行=字段，值列编辑。列固定为 字段/类型/分组/值/注释 */
+function buildHorizontalTableData(
+  table: TableSchema,
+  ws: ExcelJS.Worksheet,
+  hh: HorizontalHeader,
+  fieldByName: Map<string, FieldSchema>,
+  abs: string,
+  warnings: string[]
+): TableData {
+  warnings.push(
+    `${ws.name}: 横向表（one 单例格式），每行一个字段；支持编辑「值」列`
+  )
+
+  const columns: ColumnBinding[] = [
+    { excelCol: hh.varCol, fieldName: null, label: '字段', typeText: '', editable: false },
+    { excelCol: hh.typeCol, fieldName: null, label: '类型', typeText: '', editable: false }
+  ]
+  if (hh.groupCol) {
+    columns.push({ excelCol: hh.groupCol, fieldName: null, label: '分组', typeText: '', editable: false })
+  }
+  columns.push({
+    excelCol: hh.valueCol,
+    fieldName: null,
+    label: '值',
+    typeText: '',
+    editable: true,
+    readOnlyReason: undefined
+  })
+  if (hh.commentCol) {
+    columns.push({ excelCol: hh.commentCol, fieldName: null, label: '注释', typeText: '', editable: false })
+  }
+
+  const rows: DataRow[] = []
+  const fieldByRow = new Map<number, FieldSchema>()
+  for (let r = hh.headerRow + 1; r <= ws.actualRowCount; r++) {
+    const row = ws.getRow(r)
+    const name = String(readCellValue(row.getCell(hh.varCol)) ?? '').trim()
+    if (!name || name.startsWith('#')) continue
+    const typeText = hh.typeCol ? String(readCellValue(row.getCell(hh.typeCol)) ?? '') : ''
+    const groupText = hh.groupCol ? String(readCellValue(row.getCell(hh.groupCol)) ?? '') : ''
+    const comment = hh.commentCol ? String(readCellValue(row.getCell(hh.commentCol)) ?? '') : ''
+    const value = readCellValue(row.getCell(hh.valueCol))
+    const field = fieldByName.get(name)
+    fieldByRow.set(
+      r,
+      field ?? {
+        name,
+        type: { kind: 'unresolved', ref: typeText },
+        rawType: typeText,
+        options: { attrs: {} },
+        groups: []
+      }
+    )
+    rows.push({
+      rowNumber: r,
+      cells: columns.map((c) => {
+        if (c.excelCol === hh.varCol) return name
+        if (c.excelCol === hh.typeCol) return typeText
+        if (c.excelCol === hh.groupCol) return groupText
+        if (c.excelCol === hh.valueCol) return value
+        return comment
+      }),
+      cellEditable: columns.map((c) =>
+        c.excelCol === hh.valueCol ? (field ? isEditableField(field) : false) : false
+      )
+    })
+  }
+
+  opened.set(table.id, { file: abs, sheetName: ws.name, fieldByCol: new Map(), fieldByRow, valueCol: hh.valueCol })
   return {
     tableId: table.id,
     tableName: table.name,

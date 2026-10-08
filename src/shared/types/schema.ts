@@ -20,6 +20,8 @@ export interface FieldOptions {
   ref?: RefOption
   path?: string
   default?: string
+  /** 类型串 `!` 后缀：必填，不允许用默认值填充 */
+  required?: boolean
   /** 其余校验器/属性原样保留（range/set/size/escape/...） */
   attrs: Record<string, string>
 }

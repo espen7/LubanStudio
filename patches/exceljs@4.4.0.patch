@@ -1,0 +1,75 @@
+diff --git a/lib/doc/defined-names.js b/lib/doc/defined-names.js
+index cb3a4942f2b46b3076f2c6a09a883fa932954553..3ddeaab2e7eb3761675e11d0a2e6b1122b90f35a 100644
+--- a/lib/doc/defined-names.js
++++ b/lib/doc/defined-names.js
+@@ -26,6 +26,12 @@ class DefinedNames {
+   addEx(location, name) {
+     const matrix = this.getMatrix(name);
+     if (location.top) {
++      const area = (location.right - location.left + 1) * (location.bottom - location.top + 1);
++      // WPS/Excel auto-filter names (e.g. _xlnm._FilterDatabase) can span entire
++      // sheets ($A$1:$XFC$6699); expanding cell-by-cell exhausts the heap.
++      if (area > 100000) {
++        return;
++      }
+       for (let col = location.left; col <= location.right; col++) {
+         for (let row = location.top; row <= location.bottom; row++) {
+           const address = {
+diff --git a/lib/utils/cell-matrix.js b/lib/utils/cell-matrix.js
+index 7c0956b76a916dd3d796c7f7d1e2db6adac60fcb..897e623a610732994301fc8ea1e66a72264267fb 100644
+--- a/lib/utils/cell-matrix.js
++++ b/lib/utils/cell-matrix.js
+@@ -27,6 +27,12 @@ class CellMatrix {
+ 
+   addCellEx(address) {
+     if (address.top) {
++      const area = (address.right - address.left + 1) * (address.bottom - address.top + 1);
++      // WPS/Excel auto-filter defined names (e.g. _xlnm._FilterDatabase) can span
++      // entire sheets ($A$1:$XFC$6699); expanding cell-by-cell exhausts the heap.
++      if (area > 100000) {
++        return;
++      }
+       for (let row = address.top; row <= address.bottom; row++) {
+         for (let col = address.left; col <= address.right; col++) {
+           this.getCellAt(address.sheetName, row, col);
+diff --git a/lib/utils/parse-sax.js b/lib/utils/parse-sax.js
+index 14c682a731b5e51f999859a03ce4dd4e0bfcbb26..14f5f5d2489498b8d5a7747b87aeea59724b49d9 100644
+--- a/lib/utils/parse-sax.js
++++ b/lib/utils/parse-sax.js
+@@ -2,6 +2,20 @@ const {SaxesParser} = require('saxes');
+ const {PassThrough} = require('readable-stream');
+ const {bufferToString} = require('./browser-buffer-decode');
+ 
++// OOXML allows arbitrary namespace prefixes (e.g. openpyxl writes <ns0:worksheet>),
++// but exceljs xforms dispatch on unprefixed element names for the main parts.
++// Normalise element names to their local part, except for prefixes whose qualified
++// names are matched verbatim by xforms (docProps: dc/cp/dcterms/dcmitype/xsi/vt;
++// drawings: xdr/a). Attribute keys are left untouched ('r:id' etc.).
++const KEEP_PREFIX = new Set(['dc', 'cp', 'dcterms', 'dcmitype', 'xsi', 'vt', 'xdr', 'a']);
++const localName = name => {
++  if (typeof name !== 'string') return name;
++  const i = name.indexOf(':');
++  if (i <= 0) return name;
++  if (KEEP_PREFIX.has(name.slice(0, i))) return name;
++  return name.slice(i + 1);
++};
++
+ module.exports = async function* (iterable) {
+   // TODO: Remove once node v8 is deprecated
+   // Detect and upgrade old streams
+@@ -14,9 +28,13 @@ module.exports = async function* (iterable) {
+     error = err;
+   });
+   let events = [];
+-  saxesParser.on('opentag', value => events.push({eventType: 'opentag', value}));
++  saxesParser.on('opentag', value =>
++    events.push({eventType: 'opentag', value: {...value, name: localName(value.name)}})
++  );
+   saxesParser.on('text', value => events.push({eventType: 'text', value}));
+-  saxesParser.on('closetag', value => events.push({eventType: 'closetag', value}));
++  saxesParser.on('closetag', value =>
++    events.push({eventType: 'closetag', value: {...value, name: localName(value.name)}})
++  );
+   for await (const chunk of iterable) {
+     saxesParser.write(bufferToString(chunk));
+     // saxesParser.write and saxesParser.on() are synchronous,

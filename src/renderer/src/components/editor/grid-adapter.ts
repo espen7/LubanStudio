@@ -10,8 +10,9 @@ export function toGridColumns(columns: ColumnBinding[]): GridColumn[] {
   }))
 }
 
-export function toGridCell(column: ColumnBinding, value: CellValue): GridCell {
-  if (column.editable && typeof value === 'number') {
+export function toGridCell(column: ColumnBinding, value: CellValue, cellEditable?: boolean): GridCell {
+  const editable = cellEditable ?? column.editable
+  if (editable && typeof value === 'number') {
     return {
       kind: GridCellKind.Number,
       data: value,
@@ -19,7 +20,7 @@ export function toGridCell(column: ColumnBinding, value: CellValue): GridCell {
       allowOverlay: true
     }
   }
-  if (column.editable && typeof value === 'boolean') {
+  if (editable && typeof value === 'boolean') {
     return {
       kind: GridCellKind.Boolean,
       data: value,
@@ -32,7 +33,7 @@ export function toGridCell(column: ColumnBinding, value: CellValue): GridCell {
     data: display,
     displayData: display,
     allowOverlay: true,
-    readonly: !column.editable
+    readonly: !editable
   }
 }
 

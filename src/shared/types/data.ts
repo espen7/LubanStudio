@@ -18,6 +18,8 @@ export interface DataRow {
   /** Excel 实际行号（1-based），写回与错误定位共用 */
   rowNumber: number
   cells: CellValue[]
+  /** 行级可编辑覆写（横向表：值列按每行字段类型判定）；不填时以列级 editable 为准 */
+  cellEditable?: boolean[]
 }
 
 export interface TableData {

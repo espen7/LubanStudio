@@ -96,6 +96,7 @@ function makeField(
       ref: parsed.options.ref,
       path: parsed.options.path,
       default: parsed.options.default,
+      required: parsed.options.required,
       attrs: parsed.options.attrs
     },
     groups: raw.groups,
@@ -215,7 +216,6 @@ export async function buildSchemaFromSources(conf: LubanConf): Promise<SchemaMod
       beanById.set(implicit.id, implicit)
     }
   }
-
   const dupCheck = (items: { id: string }[], what: string): void => {
     const seen = new Set<string>()
     for (const it of items) {

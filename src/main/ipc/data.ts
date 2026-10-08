@@ -4,6 +4,7 @@ import { getCachedSchema, loadSchema } from './schema'
 import { openTableData, getOpenedTable, closeOpenedTable } from '@main/data/table-data'
 import { getWorkbook, markDirty, saveWorkbook, releaseWorkbook, forceReleaseWorkbook } from '@main/data/excel/workbook'
 import { applyEdits } from '@main/data/excel/writer'
+import { isEditableField } from '@main/data/excel/cell-io'
 import type { CellEdit, DataCloseRequest } from '@shared/types/data'
 
 export function registerDataIpc(): void {
@@ -18,8 +19,14 @@ export function registerDataIpc(): void {
 
   handle('data:update-cell', async (req: CellEdit) => {
     const opened = getOpenedTable(req.tableId)
-    const field = opened.fieldByCol.get(req.excelCol)
+    let field = opened.fieldByCol.get(req.excelCol)
+    if (!field && opened.fieldByRow && opened.valueCol === req.excelCol) {
+      field = opened.fieldByRow.get(req.rowNumber)
+    }
     if (!field) throw new Error(`列 ${req.excelCol} 不可编辑`)
+    if (!isEditableField(field)) {
+      throw new Error(`字段 ${field.name}（${field.rawType || '未知类型'}）是只读类型，不能编辑`)
+    }
     const { wb } = await getWorkbook(opened.file)
     applyEdits(wb, opened.sheetName, [
       { rowNumber: req.rowNumber, excelCol: req.excelCol, field, text: req.text }

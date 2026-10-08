@@ -122,6 +122,11 @@ function splitContainer(s: string): Segments | null {
           .filter(Boolean)
         return { head: c, elements }
       }
+      // list#sep=|,int：属性链后跟 `,元素`，属性值内逗号已由 splitTopLevel 处理
+      if (trimmed.startsWith(`${c}#`)) {
+        const parts = splitTopLevel(trimmed, ',').map((x) => x.trim())
+        if (parts.length > 1) return { head: parts[0], elements: parts.slice(1).filter(Boolean) }
+      }
       return { head: trimmed, elements: [] }
     }
   }
@@ -272,18 +277,24 @@ export function parseType(raw: string): ParsedType {
     return { type, options }
   }
 
-  // 基础类型 + 可空 + 属性链
+  // 基础类型 + 可空/必填后缀 + 属性链
   const m = /^([A-Za-z_][A-Za-z0-9_.]*)/.exec(s)
   if (!m) throw new Error(`无法解析类型: ${raw}`)
   let name = m[1]
   s = s.slice(name.length)
   let nullable = false
+  let required = false
   if (s.startsWith('?')) {
     nullable = true
     s = s.slice(1)
   }
+  if (s.startsWith('!')) {
+    required = true
+    s = s.slice(1)
+  }
   s = parseAttrs(s, options)
   if (s.trim()) throw new Error(`类型串有剩余内容: ${raw}（剩余 "${s}"）`)
+  if (required) options.required = true
 
   let base: TypeRef = PRIMITIVES.has(name)
     ? { kind: 'primitive', name }

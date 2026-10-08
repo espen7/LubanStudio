@@ -30,7 +30,7 @@ export function GridView({ tableId }: { tableId: string }): React.JSX.Element {
       if (!binding || !rowData) {
         return { kind: GridCellKind.Text, data: '', displayData: '', allowOverlay: false }
       }
-      return toGridCell(binding, rowData.cells[col] ?? null)
+      return toGridCell(binding, rowData.cells[col] ?? null, rowData.cellEditable?.[col])
     },
     [data]
   )
@@ -40,7 +40,8 @@ export function GridView({ tableId }: { tableId: string }): React.JSX.Element {
       if (!data) return
       const binding = data.columns[cell[0]]
       const rowData = data.rows[cell[1]]
-      if (!binding || !rowData || !binding.editable) return
+      if (!binding || !rowData) return
+      if (!(rowData.cellEditable ? rowData.cellEditable[cell[0]] : binding.editable)) return
       void setCellText(data.tableId, rowData.rowNumber, binding.excelCol, editToText(newVal))
     },
     [data, setCellText]

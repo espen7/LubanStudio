@@ -32,6 +32,19 @@ export interface DataHeader {
   columns: HeaderColumn[]
 }
 
+/** 横向表（转置，one 表常用）：标记行一行含 ##column#var/##type/##group/##，每行一个字段 */
+export interface HorizontalHeader {
+  sheetName: string
+  /** 标记行行号 */
+  headerRow: number
+  varCol: number
+  typeCol: number
+  groupCol: number
+  commentCol: number
+  /** 无标记的值列（取第一个） */
+  valueCol: number
+}
+
 /** 取单元格文本；合并单元格取 master 值（多级表头父字段跨列合并） */
 function mergedText(ws: ExcelJS.Worksheet, row: number, col: number): string {
   const cell = ws.getRow(row).getCell(col)
@@ -107,6 +120,65 @@ export function parseDataHeader(ws: ExcelJS.Worksheet, warnings: string[]): Data
 
   const headerLast = Math.max(...varRows, typeRow, groupRow, commentRow)
   return { sheetName: ws.name, dataFirstRow: headerLast + 1, multiLevel, columns }
+}
+
+/** 识别横向表标记行（`##column#var` 等标记横排一行）；不是横向表返回 null */
+export function parseHorizontalHeader(ws: ExcelJS.Worksheet): HorizontalHeader | null {
+  for (let r = 1; r <= Math.min(ws.rowCount, 20); r++) {
+    let headerRow = 0
+    ws.getRow(r).eachCell({ includeEmpty: false }, (cell) => {
+      if (typeof cell.value === 'string' && cell.value.trim().startsWith('##column')) {
+        headerRow = r
+      }
+    })
+    if (!headerRow) continue
+
+    let varCol = 0
+    let typeCol = 0
+    let groupCol = 0
+    let commentCol = 0
+    let valueCol = 0
+    const unmarked: number[] = []
+    for (let c = 1; c <= ws.columnCount; c++) {
+      const text = cellText(ws.getRow(headerRow).getCell(c).value).trim()
+      if (!text) {
+        unmarked.push(c)
+        continue
+      }
+      if (text.startsWith('##column')) {
+        if (!varCol) varCol = c
+      } else if (text.startsWith('##type')) {
+        typeCol = c
+      } else if (text.startsWith('##group')) {
+        groupCol = c
+      } else if (text.startsWith('##')) {
+        if (!commentCol) commentCol = c
+      } else {
+        unmarked.push(c)
+      }
+    }
+    // 值列 = 第一个「未标记且数据区有内容」的列（标记行夹在标记列之间的空列也算）
+    for (const c of unmarked) {
+      for (let r = headerRow + 1; r <= ws.actualRowCount; r++) {
+        if (ws.getRow(r).getCell(c).value !== null && ws.getRow(r).getCell(c).value !== undefined) {
+          valueCol = c
+          break
+        }
+      }
+      if (valueCol) break
+    }
+    if (!varCol || !valueCol) return null
+    return {
+      sheetName: ws.name,
+      headerRow,
+      varCol,
+      typeCol,
+      groupCol,
+      commentCol,
+      valueCol
+    }
+  }
+  return null
 }
 
 /** 单元格读值 → 展示值（日期/公式/富文本统一转 string） */

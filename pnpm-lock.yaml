@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  exceljs@4.4.0: 4be38f576864b288f0be874e25f654559d12a468f782a5e842a4d0c961ee6a46
+
 importers:
 
   .:
@@ -22,7 +25,7 @@ importers:
         version: 2.1.1
       exceljs:
         specifier: ^4.4.0
-        version: 4.4.0
+        version: 4.4.0(patch_hash=4be38f576864b288f0be874e25f654559d12a468f782a5e842a4d0c961ee6a46)
       fast-xml-parser:
         specifier: ^5.11.2
         version: 5.11.2
@@ -3818,7 +3821,7 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.9
 
-  exceljs@4.4.0:
+  exceljs@4.4.0(patch_hash=4be38f576864b288f0be874e25f654559d12a468f782a5e842a4d0c961ee6a46):
     dependencies:
       archiver: 5.3.2
       dayjs: 1.11.23
