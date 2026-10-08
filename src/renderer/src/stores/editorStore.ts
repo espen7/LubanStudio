@@ -15,10 +15,14 @@ export interface OpenTab {
   error: string
 }
 
+/** 已修改未保存的单元格：tableId → Set<"rowNumber:excelCol"> */
+export type DirtyCellMap = Record<string, Set<string>>
+
 interface EditorState {
   tabs: OpenTab[]
   activeId: string
   data: Record<string, TableData>
+  dirtyCells: DirtyCellMap
   open: (tableId: string, tableName: string) => Promise<void>
   activate: (tableId: string) => void
   setCellText: (tableId: string, rowNumber: number, excelCol: number, text: string) => Promise<void>
@@ -30,6 +34,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   tabs: [],
   activeId: '',
   data: {},
+  dirtyCells: {},
 
   open: async (tableId, tableName) => {
     if (!window.api) return
@@ -70,6 +75,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     if (!window.api) return
     const data = get().data[tableId]
     if (!data) return
+    const key = `${rowNumber}:${excelCol}`
     // 乐观更新：本地先显示输入文本，main 侧解析失败再回滚
     const prev = data
     const rows = data.rows.map((r) => {
@@ -81,19 +87,28 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     })
     set((s) => ({
       data: { ...s.data, [tableId]: { ...data, rows } },
-      tabs: s.tabs.map((t) => (t.tableId === tableId ? { ...t, dirty: true } : t))
+      tabs: s.tabs.map((t) => (t.tableId === tableId ? { ...t, dirty: true } : t)),
+      dirtyCells: {
+        ...s.dirtyCells,
+        [tableId]: new Set(s.dirtyCells[tableId]).add(key)
+      }
     }))
     try {
       await window.api.data.updateCell({ tableId, rowNumber, excelCol, text: text === '' ? null : text })
     } catch (e) {
-      set((s) => ({
-        data: { ...s.data, [tableId]: prev },
-        tabs: s.tabs.map((t) =>
-          t.tableId === tableId
-            ? { ...t, error: e instanceof Error ? e.message : String(e) }
-            : t
-        )
-      }))
+      set((s) => {
+        const rollback = new Set(s.dirtyCells[tableId])
+        rollback.delete(key)
+        return {
+          data: { ...s.data, [tableId]: prev },
+          tabs: s.tabs.map((t) =>
+            t.tableId === tableId
+              ? { ...t, error: e instanceof Error ? e.message : String(e) }
+              : t
+          ),
+          dirtyCells: { ...s.dirtyCells, [tableId]: rollback }
+        }
+      })
     }
   },
 
@@ -107,7 +122,8 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       const data = await window.api.data.open(tableId)
       set((s) => ({
         data: { ...s.data, [tableId]: data },
-        tabs: s.tabs.map((t) => (t.tableId === tableId ? { ...t, dirty: false, error: '' } : t))
+        tabs: s.tabs.map((t) => (t.tableId === tableId ? { ...t, dirty: false, error: '' } : t)),
+        dirtyCells: { ...s.dirtyCells, [tableId]: new Set() }
       }))
       return result.backupPath ?? null
     } catch (e) {
@@ -129,9 +145,11 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       const tabs = s.tabs.filter((t) => t.tableId !== tableId)
       const data = { ...s.data }
       delete data[tableId]
+      const dirtyCells = { ...s.dirtyCells }
+      delete dirtyCells[tableId]
       const activeId =
         s.activeId === tableId ? (tabs[tabs.length - 1]?.tableId ?? '') : s.activeId
-      return { tabs, data, activeId }
+      return { tabs, data, dirtyCells, activeId }
     })
     showTableInSchema(get().activeId)
   }

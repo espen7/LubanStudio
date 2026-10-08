@@ -2,11 +2,11 @@ import { GridCellKind } from '@glideapps/glide-data-grid'
 import type { GridColumn, GridCell, EditableGridCell } from '@glideapps/glide-data-grid'
 import type { CellValue, ColumnBinding } from '@shared/types/data'
 
-export function toGridColumns(columns: ColumnBinding[]): GridColumn[] {
+export function toGridColumns(columns: ColumnBinding[], widthOverride?: Record<string, number>): GridColumn[] {
   return columns.map((c) => ({
     id: String(c.excelCol),
     title: c.label,
-    width: 132
+    width: widthOverride?.[String(c.excelCol)] ?? 132
   }))
 }
 
