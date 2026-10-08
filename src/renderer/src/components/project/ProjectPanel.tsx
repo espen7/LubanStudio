@@ -90,14 +90,21 @@ function SchemaTree(): React.JSX.Element {
     const f = filter.trim().toLowerCase()
     const match = (...parts: (string | undefined)[]): boolean =>
       !f || parts.some((p) => p?.toLowerCase().includes(f))
-    const byModule = <T extends { module: string }>(items: T[]): Map<string, T[]> => {
+    const asc = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0)
+    const byModule = <T extends { module: string; name: string }>(items: T[]): Map<string, T[]> => {
       const m = new Map<string, T[]>()
       for (const it of items) {
         const list = m.get(it.module) ?? []
         list.push(it)
         m.set(it.module, list)
       }
-      return m
+      // 分组节点在上（组名 ASCII 序），散条目在下；组内条目按名 ASCII 序
+      const sorted = [...m.entries()].sort(([a], [b]) => {
+        if (!a !== !b) return a ? -1 : 1
+        return asc(a, b)
+      })
+      for (const [, list] of sorted) list.sort((x, y) => asc(x.name, y.name))
+      return new Map(sorted)
     }
     const tables = model.tables.filter((t) => match(t.name, t.id, t.comment))
     const beans = model.beans.filter((b) => match(b.name, b.id, b.comment))
