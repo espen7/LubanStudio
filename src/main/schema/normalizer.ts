@@ -34,8 +34,12 @@ function parseInput(raw: string): TableInput[] {
     })
 }
 
-/** input 描述的文件路径相对 dataDir（Luban 约定），`#` 前缀剥掉 */
+/** input 描述的文件路径相对 dataDir（Luban 约定）。磁盘文件名本身可带 `#`
+ * 前缀（自动注册文件），优先按原样解析，不存在再尝试剥 `#` 的形态 */
 export function resolveDataFile(conf: LubanConf, file: string): string {
+  if (isAbsolute(file)) return file
+  const raw = join(conf.dataDir, file)
+  if (existsSync(raw)) return raw
   const clean = file.replace(/^#/, '')
   return isAbsolute(clean) ? clean : join(conf.dataDir, clean)
 }

@@ -3,6 +3,7 @@ import { Search, FolderOpen, Clock, ChevronRight, Table2, Box, Braces } from 'lu
 import { cn } from '@renderer/lib/utils'
 import { useProjectStore } from '@renderer/stores/projectStore'
 import { useSchemaStore } from '@renderer/stores/schemaStore'
+import { useEditorStore } from '@renderer/stores/editorStore'
 import type { TableSchema } from '@shared/types/schema'
 
 export function ProjectPanel(): React.JSX.Element {
@@ -204,11 +205,15 @@ function ModuleNode({
 function TableLeaf({ table }: { table: TableSchema }): React.JSX.Element {
   const selectedTableId = useSchemaStore((s) => s.selectedTableId)
   const selectTable = useSchemaStore((s) => s.selectTable)
+  const openEditor = useEditorStore((s) => s.open)
   const selected = selectedTableId === table.id
   return (
     <button
       type="button"
-      onClick={(): void => selectTable(table.id)}
+      onClick={(): void => {
+        selectTable(table.id)
+        void openEditor(table.id, table.name)
+      }}
       title={table.comment ? `${table.id} — ${table.comment}` : table.id}
       className={cn(
         'flex h-6 w-full items-center gap-1.5 pl-9 pr-2 text-left',

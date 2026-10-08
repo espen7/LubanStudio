@@ -6,6 +6,10 @@ import type { SchemaModel } from '@shared/types/schema'
 
 let cached: SchemaModel | null = null
 
+export function getCachedSchema(): SchemaModel | null {
+  return cached
+}
+
 function lubanMajor(version?: string): number {
   return Number.parseInt(version?.split('.')[0] ?? '0', 10)
 }

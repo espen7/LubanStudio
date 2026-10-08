@@ -1,3 +1,4 @@
+import type { CellEdit, DataCloseRequest, DataSaveResult, TableData } from '@shared/types/data'
 import type { LubanProject, RecentProject } from '@shared/types/project'
 import type { AppSettings } from '@shared/types/settings'
 import type { SchemaModel } from '@shared/types/schema'
@@ -14,6 +15,12 @@ declare global {
       schema: {
         get(): Promise<SchemaModel>
         reload(): Promise<SchemaModel>
+      }
+      data: {
+        open(tableId: string): Promise<TableData>
+        updateCell(edit: CellEdit): Promise<{ applied: boolean }>
+        save(tableId: string): Promise<DataSaveResult>
+        close(req: DataCloseRequest): Promise<void>
       }
       settings: {
         get(): Promise<AppSettings>

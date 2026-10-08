@@ -160,7 +160,7 @@ export async function scanAutoImportFiles(
         name: `Tb${beanName}`,
         mode: 'map',
         valueType: module ? `${module}.${beanName}` : beanName,
-        input: name,
+        input: relative(conf.dataDir, p).replaceAll('\\', '/'),
         groups: [],
         readSchemaFromFile: true
       })

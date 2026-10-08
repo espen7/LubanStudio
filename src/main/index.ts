@@ -4,6 +4,7 @@ import { is } from '@electron-toolkit/utils'
 import { registerProjectIpc } from './ipc/project'
 import { registerSettingsIpc } from './ipc/settings'
 import { registerSchemaIpc } from './ipc/schema'
+import { registerDataIpc } from './ipc/data'
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -38,6 +39,7 @@ app.whenReady().then(() => {
   registerProjectIpc()
   registerSettingsIpc()
   registerSchemaIpc()
+  registerDataIpc()
   createWindow()
 
   app.on('activate', () => {
