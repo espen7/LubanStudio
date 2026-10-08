@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 import { Search, FolderOpen, Clock, ChevronRight, Table2, Box, Braces } from 'lucide-react'
 import { cn } from '@renderer/lib/utils'
 import { useProjectStore } from '@renderer/stores/projectStore'
@@ -112,33 +112,37 @@ function SchemaTree(): React.JSX.Element {
   return (
     <div className="text-[12px]">
       <TreeSection label="数据表" icon={<Table2 size={12} />} defaultOpen>
-        {[...groups.tables.entries()].map(([module, tables]) => (
-          <ModuleNode key={module || '_'} module={module} count={tables.length}>
-            {tables.map((t) => (
-              <TableLeaf key={t.id} table={t} />
-            ))}
-          </ModuleNode>
+        {renderModuleGroups(groups.tables, (t, indent) => (
+          <TableLeaf key={t.id} table={t} indent={indent} />
         ))}
       </TreeSection>
       <TreeSection label="结构" icon={<Box size={12} />} defaultOpen={false}>
-        {[...groups.beans.entries()].map(([module, beans]) => (
-          <ModuleNode key={module || '_'} module={module} count={beans.length}>
-            {beans.map((b) => (
-              <DefLeaf key={b.id} id={b.id} name={b.name} kind="bean" />
-            ))}
-          </ModuleNode>
+        {renderModuleGroups(groups.beans, (b, indent) => (
+          <DefLeaf key={b.id} id={b.id} name={b.name} kind="bean" indent={indent} />
         ))}
       </TreeSection>
       <TreeSection label="枚举" icon={<Braces size={12} />} defaultOpen={false}>
-        {[...groups.enums.entries()].map(([module, enums]) => (
-          <ModuleNode key={module || '_'} module={module} count={enums.length}>
-            {enums.map((e) => (
-              <DefLeaf key={e.id} id={e.id} name={e.name} kind="enum" />
-            ))}
-          </ModuleNode>
+        {renderModuleGroups(groups.enums, (e, indent) => (
+          <DefLeaf key={e.id} id={e.id} name={e.name} kind="enum" indent={indent} />
         ))}
       </TreeSection>
     </div>
+  )
+}
+
+// module 为空时条目直接挂在分组下，避免多一层无意义的展开
+function renderModuleGroups<T extends { id: string }>(
+  groups: Map<string, T[]>,
+  leaf: (item: T, indent: string) => React.JSX.Element
+): React.JSX.Element[] {
+  return [...groups.entries()].map(([module, items]) =>
+    module ? (
+      <ModuleNode key={module} module={module} count={items.length}>
+        {items.map((it) => leaf(it, 'pl-9'))}
+      </ModuleNode>
+    ) : (
+      <Fragment key="_root">{items.map((it) => leaf(it, 'pl-5'))}</Fragment>
+    )
   )
 }
 
@@ -192,9 +196,7 @@ function ModuleNode({
         className="flex h-6 w-full items-center gap-1 pl-5 pr-2 text-left text-muted hover:text-fg"
       >
         <ChevronRight size={12} className={cn('shrink-0', open && 'rotate-90')} strokeWidth={2} />
-        <span className="truncate font-mono text-[11px]">
-          {module === '_' ? '（根）' : module}
-        </span>
+        <span className="truncate font-mono text-[11px]">{module}</span>
         <span className="ml-auto font-mono text-[10px] text-muted">{count}</span>
       </button>
       {open && <div>{children}</div>}
@@ -202,7 +204,7 @@ function ModuleNode({
   )
 }
 
-function TableLeaf({ table }: { table: TableSchema }): React.JSX.Element {
+function TableLeaf({ table, indent }: { table: TableSchema; indent: string }): React.JSX.Element {
   const selectedTableId = useSchemaStore((s) => s.selectedTableId)
   const selectTable = useSchemaStore((s) => s.selectTable)
   const openEditor = useEditorStore((s) => s.open)
@@ -216,7 +218,8 @@ function TableLeaf({ table }: { table: TableSchema }): React.JSX.Element {
       }}
       title={table.comment ? `${table.id} — ${table.comment}` : table.id}
       className={cn(
-        'flex h-6 w-full items-center gap-1.5 pl-9 pr-2 text-left',
+        'flex h-6 w-full items-center gap-1.5 pr-2 text-left',
+        indent,
         selected ? 'bg-app text-accent' : 'text-fg hover:bg-app'
       )}
     >
@@ -229,7 +232,17 @@ function TableLeaf({ table }: { table: TableSchema }): React.JSX.Element {
   )
 }
 
-function DefLeaf({ id, name, kind }: { id: string; name: string; kind: 'bean' | 'enum' }): React.JSX.Element {
+function DefLeaf({
+  id,
+  name,
+  kind,
+  indent
+}: {
+  id: string
+  name: string
+  kind: 'bean' | 'enum'
+  indent: string
+}): React.JSX.Element {
   const selectedDefId = useSchemaStore((s) => s.selectedDefId)
   const selectDef = useSchemaStore((s) => s.selectDef)
   const selected = selectedDefId === id
@@ -239,7 +252,8 @@ function DefLeaf({ id, name, kind }: { id: string; name: string; kind: 'bean' | 
       onClick={(): void => selectDef(id)}
       title={id}
       className={cn(
-        'flex h-6 w-full items-center gap-1.5 pl-9 pr-2 text-left',
+        'flex h-6 w-full items-center gap-1.5 pr-2 text-left',
+        indent,
         selected ? 'bg-app text-accent' : 'text-fg hover:bg-app'
       )}
     >
